@@ -1,5 +1,5 @@
 import java.util.Scanner;
-//wrong
+
 public class Function {
 
     public static void areaOfRectangle() {
@@ -19,7 +19,7 @@ public class Function {
         System.out.println("Enter height of triangle : ");
 
         double height = scan.nextDouble();
-        double area = (1 / 2) * base * height;
+        double area = 0.5 * base * height;
         return (area);
     }
 
@@ -50,7 +50,7 @@ public class Function {
         System.out.println("Enter breadth of rectangle : ");
         float rectangleBreadth = scan.nextFloat();
         float rectanglePerimeter = perimeterOfRectangle(rectangleLength, rectangleBreadth);
-        System.out.println("Perimeter of Rectangle =" + rectanglePerimeter);
+        System.out.println("Perimeter of Rectangle = " + rectanglePerimeter);
     }
 
 }
