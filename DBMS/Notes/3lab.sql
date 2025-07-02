@@ -16,7 +16,7 @@ ALTER TABLE Student DROP COLUMN Address;
 ALTER TABLE Student MODIFY Marks INT;
 
 INSERT INTO Student VALUES
-	(11,'Gareth Bale',12,92),
+	(11,'Gareth Bale',12,99),
 	(9,'Karim Benzema',15,15),
 	(7,'Cristiano Ronaldo',5,100),
 	(1,'Iker Casillas',12,13),
