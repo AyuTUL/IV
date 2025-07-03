@@ -1,3 +1,7 @@
 *.exe
 /Java/RunTimePolymorphism/nbproject/private/
 /Java/RuntimePolymorphis/nbproject/private/
+/Java/iwillrun/nbproject/private/
+/Java/iwillrun/build/
+/Java/TryCatch/nbproject/private/
+/Java/TryCatch/build/
