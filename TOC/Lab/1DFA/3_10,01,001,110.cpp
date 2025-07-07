@@ -40,8 +40,8 @@ int main()
 		}
 	}
 	if(state=='C')
-		cout<<input<<" is accepted by the DFA";
+		cout<<"DFA accepts the string : "<<input;
 	else
-		cout<<input<<" is rejected by the DFA";
+		cout<<"DFA rejects the string : "<<input;
 	return 0;
 }
