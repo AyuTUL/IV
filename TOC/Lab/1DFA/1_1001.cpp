@@ -1,3 +1,4 @@
+//Lab 1.1: WAP to contruct DFA that accepts 1001
 #include<iostream>
 #include<cstring>
 using namespace std;
@@ -5,8 +6,14 @@ int main()
 {
 	string input;
 	char state='A';
-	cout<<"Enter input string : ";
+	cout<<"Enter input : ";
 	cin>>input;
+	for(int i=0;i<input.length();i++)
+		if(input[i]!='0' && input[i]!='1')
+		{
+			cout<<"Invalid input. The alphabet is {0,1}.";
+			return 0;
+		}
 	for(int i=0;i<input.length();i++)
 	{
 		switch(state)
@@ -24,16 +31,14 @@ int main()
 				state=(input[i]=='1')?'E':'X';
 				break;
 			case 'E':
-				state='X';
-				break;
 			case 'X':
 				state='X';
 				break;
 		}
 	}
 	if(state=='E')
-		cout<<"DFA accepts the string : "<<input;
+		cout<<input<<" is accepted by the DFA";
 	else
-		cout<<"DFA rejects the string : "<<input;
+		cout<<input<<" is rejected by the DFA";
 	return 0;
 }
