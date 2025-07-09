@@ -21,7 +21,6 @@ public class StudentList extends Student{
         address=scan.next();        
     }
     public void outputDetails(){
-        System.out.println("Student Details:");
         System.out.println("Name : "+name);
         System.out.println("Roll : "+roll);
         System.out.println("Address : "+address);

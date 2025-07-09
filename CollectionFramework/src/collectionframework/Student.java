@@ -1,24 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package collectionframework;
 
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author user
- */
-public class Student{
+public class Student {
+
     public static void main(String[] args) {
-        int numOfStudents;
-        List<StudentList> students=new ArrayList<>();
-        StudentList sl = new StudentList();
-        sl.inputDetails();
-        sl.outputDetails();
-        students.add(sl);
-        for()
+        Scanner scan = new Scanner(System.in);
+        List<StudentList> students = new ArrayList<>();
+        char choice;
+        do {
+            StudentList student = new StudentList();
+            student.inputDetails();
+            students.add(student);
+            System.out.println("Add another student ? (Y/N) :");
+            choice = scan.next().toUpperCase().charAt(0);
+        } while (choice == 'Y');
+        System.out.println("Student Details : ");
+        for(StudentList student: students){
+            student.outputDetails();
+        }  
+        System.out.println("Enter index of student record to be deleted : ");
+        int delete=scan.nextInt();
+        students.remove(delete);
+        System.out.println("Student Details after deletion : ");
+        for(StudentList student: students){
+            student.outputDetails();
+        }
+        System.out.println("Enter index of student record to be updated : ");
+        int updata=scan.nextInt();
+        students.get(updata).inputDetails();
+        System.out.println("Student Details after update: ");
+        for(StudentList student: students){
+            student.outputDetails();
+        }
     }
 }
