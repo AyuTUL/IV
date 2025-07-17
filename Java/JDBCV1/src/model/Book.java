@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package org.personal.booksmgmt.model;
+package model;
 
 /**
  *
@@ -16,21 +16,25 @@ public class Book {
 
     private String author;
 
+    private String publication;
+
     private Double price;
 
     public Book() {
     }
 
-    public Book(String name, String author, Double price) {
+    public Book(String name, String author, String publication, Double price) {
         this.name = name;
         this.author = author;
+        this.publication = publication;
         this.price = price;
     }
 
-    public Book(int id, String name, String author, Double price) {
+    public Book(int id, String name, String author, String publication, Double price) {
         this.id = id;
         this.name = name;
         this.author = author;
+        this.publication = publication;
         this.price = price;
     }
 
@@ -58,6 +62,14 @@ public class Book {
         this.author = author;
     }
 
+    public String getPublication() {
+        return publication;
+    }
+
+    public void setPublication(String publication) {
+        this.publication = publication;
+    }
+
     public Double getPrice() {
         return price;
     }
@@ -68,8 +80,9 @@ public class Book {
 
     @Override
     public String toString() {
-        return this.getId() + "," + this.getName() + ","
-                        + this.getAuthor() + "," + this.getPrice() + "\n";
+        return "Book{" + "id=" + id + ", name=" + name + ", author=" + author + ", publication=" + publication + ", price=" + price + '}';
     }
+    
+    
 
 }
