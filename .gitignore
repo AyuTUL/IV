@@ -1,5 +1,6 @@
 *.exe
 /Java/RunTimePolymorphism/nbproject/private/
+<<<<<<< Updated upstream
 /Java/RuntimePolymorphis/nbproject/private/
 /Java/iwillrun/nbproject/private/
 /Java/iwillrun/build/
@@ -13,3 +14,6 @@
 /CollectionFramework/build/
 /Java/DAOPattern/nbproject/private/
 /Java/JDBC/nbproject/private/
+=======
+/Java/RunTimePolymorphism/build/
+>>>>>>> Stashed changes
