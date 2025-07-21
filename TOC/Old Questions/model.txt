@@ -1,0 +1,23 @@
+extened function of dfa:
+transition function that takes state q and string W as input and gives new state p as output
+
+CNF:
+A Context-Free Grammar (CFG) is in Chomsky Normal Form (CNF) if every production rule is of 
+one of the following forms:
+    A→BC
+        Where A,B,C∈V (non-terminals) and B, C are not the start symbol
+    A→a
+        Where a∈Σa∈Σ (a terminal)
+
+E-NFA:
+An ε-NFA (Epsilon Non-deterministic Finite Automaton) is an NFA that allows
+ transitions without consuming any input symbol, called epsilon (ε) transitions.
+
+Formally, ε-NFA is a 5-tuple:
+(Q, Σ, δ, q₀, F) where:
+    Q: set of states
+    Σ: input alphabet
+    δ: transition function → Q × (Σ ∪ {ε}) → P(Q)
+    q₀: start state
+    F: set of final states
+

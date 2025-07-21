@@ -1,0 +1,31 @@
+An NFA (Nondeterministic Finite Automaton) is a finite automaton where:
+    For a given state and input symbol, the machine can transition to zero, one, or many next states.
+    It can have multiple transitions for the same input.
+    It accepts a string if at least one path leads to an accepting (final) state.
+NFA is a 5-tuple:
+(Q, Σ, δ, q₀, F) where:
+    Q: set of states
+    Σ: input alphabet
+    δ: transition function → Q × Σ → 2^Q
+    q₀: start state, q brlongs to Q
+    F: set of final states, F subset of Q
+
+CFG:
+A Context-Free Grammar (CFG) is a formal grammar used to describe the 
+syntax of languages (especially programming languages and natural languages).
+Definition:
+A CFG is a 4-tuple G=(V,T,P,S), where:
+    V is a finite set of variables (non-terminal symbols),
+    T is a finite set of terminal symbols (alphabet of the language),
+    P is a finite set of production rules of the form 
+		A→αA→α, where A∈V and α∈(V∪T)∗ (a string of terminals and/or non-terminals),
+	S∈V is the start symbol.
+
+pumping lemma:
+Let L be a regular language. Then there exists a pumping length p such that for
+ any string w∈L, if ∣w∣≥p, then we can write:
+w=xyz
+such that:
+    ∣y∣>0
+    ∣xy∣≤p
+    For all n≥0, the string xynz∈L

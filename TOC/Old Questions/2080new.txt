@@ -1,0 +1,27 @@
+extended transistion function of NFA:
+delta cap is a function taht takes a state q and a string of input symbols W as input and
+gives set of states as outpout. It can return 1/more states.
+
+CFG:
+CFG is a formal grammar used to gegenrate context free language\
+it is defined as a 4 tuple: G=(V,T,P,S)
+V: set of variables/non-terminals
+T: set of termianls
+P: production rules, A->alpha where alpha=(V U T)* and A belongs to V
+S: starting symbol
+
+kleen vs positive closure:
+length os tring 0/more 		1/more
+contains empty string epsilon	no epsilon
+sigma*				sigma+
+
+pupming lemma:
+if A is a regular language then A has pumping length P such that any string S where |S|>=P
+may be divided into 3 parts,z S=xyz such that follkowing coniitons ,must be true:
+	xy^iz belognms to a for all i>=0
+	|y|>0
+	|xy|<=P
+
+Arden's therom:
+if P and Q are 2 regular expressions and P doesnt contain empty string epsilon then eqn R=Q+RP
+has unique soln R=QP*

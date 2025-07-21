@@ -1,0 +1,6 @@
+The ε-closure of a state (or set of states) in an ε-NFA is:
+    The set of all states that can be reached from that state 
+by taking any number (including zero) of ε-transitions only.
+This includes:
+    The state itself
+    All states reachable from it using ε-transitions (i.e., transitions without consuming input)
