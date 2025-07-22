@@ -1,0 +1,215 @@
+state space graph:
+representation of all possible staes in a problem domain and the transionts between them
+due to actions
+nodes repsent possible stes of problem
+edges represnte actions that take agent from oen state to another
+start node respetns intial sate
+goal node sreprseents desired state
+each edge may have cost
+
+a* search:
+informed search algorithm that ues info about path cost and heuristics to find shortest
+path between nodes
+	f(n)=g(n)+h(n)
+where,
+	f(n): estimated cost of cheapest solution
+	g(n): cost to reach node n from start state
+	h(N): cost to reach from node n to goal node
+
+algorithm:
+step 1:
+	define list OPEN
+	initially, open constist of start node S
+
+step 2:
+	if list is empty, return failure and exit
+
+step 3:
+	remove node n with smallest value of fn) from OPEN and move it to list CLOSED
+	if node n is goal state, reutrn success and exit
+
+step 4:
+ 	expand node n
+
+step 5:
+	if any succsor to n is goal node, reutrn success and obtain soluition by tracing path
+	form goal node to S
+	else goto step ^
+
+step 6:
+	for each succesor node, aplly evaluation function f to node
+	if node hasnt been in either list, add it to OPEN
+
+step 7:
+	goto step 2
+
+properties of A*:
+optimality: guarantedd to find best possible solutiopn 
+a* is optimal if:
+	admissible: h(n) is admissible if it never overestimate sreal distance between n and goal
+		h(n)<=h*(n)
+	where
+		h*(n):real distance between n and goal node
+
+	consistency: h(n) is consistent i festimate is <= estimated distance between n and 
+neighbout + cost of reaching that neightbour
+		h(n)<=c(n,m)+h(m)
+	where,
+		c(n,m):distance between nodes n and m
+
+completeness: if solution to problem exists, it is guaranteed to find it
+a* is complete if:
+	branching factor is finitr
+	cost at every action is fixed
+
+time complexity: O(b^d) b:bracnhing facotr and d: depth of solution
+
+space complexity: O(b^d)
+
+greedy best first search:
+informed search that selects path  which appears beast at that moment
+combo of bfs and dfs
+we expand node that is closest to goal node and its cost is estimated by
+	f(n)=h(n)
+where,
+	h(n):estimated cost from node n to goal
+
+algorithm:
+Step 1: Place the starting node into the OPEN list. 
+Step 2: If the OPEN list is empty, Stop and return failure. 
+Step 3: Remove the node n, from the OPEN list which has the lowest value of h(n), and places 
+	it in the CLOSED list. 
+Step 4: Expand the node n, and generate the successors of node n. 
+Step 5: Check each successor of node n, and find whether any node is a goal node or not. 
+	If any successor node is goal node, then return success and terminate the search, else proceed
+	to Step 6. 
+Step 6: For each successor node, algorithm checks for evaluation function f(n), and then check 
+	if the node has been in either OPEN or CLOSED list. If the node has not been in both lists, 
+	then add it to the OPEN list. 
+Step 7: Return to Step 2.
+
+properties of greedy best first search:
+optimality: not optimal as it tries to get close to goal at each step and ignore cost so far g(n)
+completeness: incomplete may loop indefinitely or miss goal in cyclic graphs
+time complexity: O(b^m) m: max depth of search space
+space complexity: O(b^m) m: max depth of search space
+
+unification:
+making 2 different logical atomic expression idential by finding a substituation
+meaning of setntace shouldnt be chages but it should b eexpressed in multiple ways
+let p and q be 2 stomic sentences and θ be a unifier such athat pθ=qθ then it can be 
+expressed as UNIFY(p,q)
+	UNIFY(p,q)=θ where SUBST(θ,p)=SUBST(θ,q)
+
+lifting:
+process of extending a logical statement from a single element to larger set of elemnets
+replacing speciifc elemtns i nsatement with variabls that can range over larger set of elements
+eg: john is a man beomces x is a man
+
+resolution:
+inferenfe method in fopl to deriv econsluions from set of premiese
+p V A  ~p V B  A V B
+
+steps for resolution:
+1. express all statements in fopl
+2. convert fopl into cnf form (conjunction of disjunction)
+3. negate goal statement
+4. apply resolution rule by drawing resolution graph
+begin resolution process:
+	identify complementary literals
+	unifiy if necessary
+	resolve 2 calusese,eliminating complementary loiterals to produce new cluase
+	repeat until empty caluse is derived indicating contradiction, proving orignal conclusion
+	or until no new cluse can be derived then conclusion cant be derived from premisises
+5. interpret result
+
+AI:
+branch of science that deals with buidling helping machines that solve complex problems in
+human like fashioin
+
+on basis of behaviuor AI can be defined in 2 ways:
+1. acting humanly: The Turing Test approach (Chinese room argument)
+The Turing Test by Alan Turing says that a computer passes thte test if the human interrogator,
+who gives written questions cant tell if the respoosne was written by a computer or human.
+The tset is for a program to have a converstaion with the interrogator for 5 minutes and it passes
+if the interrogator is fooled 30% of the time. eg chatbots that mimc human converstation
+must have following capabilities:
+	knowledge represnetation: store what it knows/hears
+	natural language processing: comms in English
+	machine learning: adapt to new circumstances and extrapolate patterns
+	automate dreasoning: store info and draw  conclusions
+
+2. acting rationally: The rational agent approach
+a rational agent is one that acts to acheive the best possible result or best expected outcome
+in case of uncertainty. the goal of this approach is to build agents that maximize performanc
+using best possible decision in each situation.
+acting rationally means doing things that lead to best results. may mean doing something that
+works best enough. eg pulling our hand away after touching hot stove. action is smart although
+we didnt reason about it. better than others since it is flexible and scientific
+eg: autonomus vechiles that make decsion based on sensor data to avoid obstacles and reach dest
+
+agent:
+anthing that perceives its enivornent through esnsors and acts uppon it using actuators
+fig
+
+utility agent:
+uses utiliy function to measure preference amoing multipe goals since goals alone arent enough
+to generate high qulaity behaviour in most enviroments. utility describes how happy the agent is.
+it compares and prefers better outcome samong several to reach a goal.
+eg: delivery drone that selcets route with blacne of speed,safety and battery usage
+fig
+
+semantic network:
+graphjical knowledge representation technique compposed of nodes that repressent obejcts/
+concepts/events linked by arcs/edges taht represnet relation between nodes like is-a has-a
+
+components:
+1. lexical: nodes,links,labels(denotes particular object/relation)
+2. structural: links and nodes form directed graph where labels are placed on link and nodes
+3. semantic: meaning are related to links and laels of nodes
+4. procedural: cosntructors create new links,nodes and destructors romve them
+
+PEAS of medicine delivery drone:
+Performance	
+- Fast delivery time
+- No collisions
+- Accurate delivery location
+- Battery efficiency
+- Successful confirmation of delivery
+Environment	
+- Outdoor terrain
+- Weather conditions
+- Buildings & obstacles
+- GPS signals
+- Delivery points (homes, hospitals)
+Actuators	
+- Propellers (for flying)
+- GPS module
+- Camera
+- Delivery box release mechanism
+Sensors	
+- GPS
+- Accelerometer & Gyroscope
+- Camera (for obstacle detection)
+- Altimeter
+- Proximity sensors
+- Battery level monitor
+
+PEAS of covid medicine prescriber:
+Performance	
+- Accuracy of prescription
+- Safety of suggested medication
+- Timeliness
+- Adherence to health guidelines
+Environment	
+- Patient input (symptoms, test results, vitals)
+- National COVID protocols
+- Drug database
+- Hospital or remote settings
+Actuators	
+- Display screen or web interface (to show prescription)
+- Notification system
+Sensors	
+- User input interface (keyboard, touchscreen)
+- API access to medical databases/test results
+

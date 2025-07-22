@@ -1,0 +1,54 @@
+heuristic search:
+Heuristic search is an informed search technique that uses problem-specific knowledge
+ (called heuristics) to find the most promising path to a goal state.
+It helps reduce the number of nodes explored compared to uninformed methods (like BFS or DFS).
+
+acting humanly: the turing test approach
+the turing test by alan turing is a test in which a program has to conversate with a human
+interrogator for 5 minutes. the interrogator poses written questions to program and if
+he cant tell if the response is from a computer or a person for more than 30% of the time
+, program passes the test.
+the program msut contain following capabilites:
+	natural language processing: to communicate in english
+	knowledge representaion: to store what it knows/hears
+	automated reasoning: to store info and draw new conclusiopn
+	machien learning: to addapt to new circumstance and detect extrapolate patterns
+eg: chatbots that mimic human conversation
+
+simplex reflex agent:
+acts based only on curretn percept and ignores rest of percpt history
+uses condition action rules; if condition is true perfor maction else not
+suited for fully observalbe environemnt
+eg: vacuum cleaner that turns left when it hits a wall
+fig: sensors->what the world is like now->what action I should do now->actuators
+					condtiion action rules
+
+model based agent:
+uses model of the world to update knowledge nad make decisions
+maintains internal state(memory of past percepts) to keep track of environemtn
+updating state requires knowledge about how world evolves independently from agent and how
+agent's actions affect hw world
+this knowledge is called model of the world
+suitable for partially observable environemnt
+eg: thermostat that rememebrs past temperatures and acts accordginoy
+fig: sensors->what the world is like now->what action i should do now->actuators
+state	how the world evolves	what my actions do	condition action rules
+
+goal based agent:
+uses goal info to select one maong multiple possiblities to reach desired state
+goal info means states that are desirable
+requires seraching and planning to determine how to achieve goals
+decision making involes consideration of futrue not only current state iof environemnt
+eg: pathfinding robot aiming to reach destination
+fig:what the world is like now->what it will be like if i do action a->what action i should do now
+state	how the world evolves	what myt actions do			goals
+
+utlilty based agent:
+usue utilty function to measur epreference among multipel goals since goals alone arent enough
+to generate high quality behaviour in msot environemnts
+utility describes how happy the agent is
+it refers and compares better outcomes among serveral ways to reach a goal
+eg: delivary drone that selects route with best baklacne of speed,safety,battery usage
+fig: what the world is like now->what it willl be like if i do action a->how happy i will be 
+in such a state->what action i should do now
+state	how the world evolves	what my actions do	utility

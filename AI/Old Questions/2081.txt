@@ -1,0 +1,132 @@
+skolemizatio:
+step in converting fopl formula into cluase form by eliminating existentail quantifiers. it is
+done by:
+-Replacing ∃x with a Skolem constant if it's not inside any universal quantifier.
+-If ∃x is within the scope of ∀y, replace x with a Skolem function: f(y).
+
+skolen constant:
+special constant used in skolemization, a process in fopl that removes esitenctial quntifiier
+(∃) by introducing new constants/functions that represnet a particular but unspecified object
+
+steps of resolution using skolemization:
+-Convert all statements into First-Order Predicate Logic (FOPL).
+-Move all quantifiers to the front (Prenex Normal Form).
+-Skolemize to eliminate ∃ using Skolem constants/functions.
+-Drop universal quantifiers (assumed in clause form).
+-Convert to Conjunctive Normal Form (CNF).
+-Apply resolution rule to derive new facts or contradictions.
+
+uninformed vs informed search:
+no domain specific knowledge			uses problem specific heuristics
+bfs dfs uniform cost search			greedy best first a* hill climbing
+heuristics not used				heuristics used
+less efficient as exploring blindly		more efficient guided by heristic values
+complete					not always complete 
+
+intelligence:
+ability to percieve, le arn, reason,adapt and make decisions to solve problems or acheive
+goalss in a dynamic environment
+
+foundations of ai:
+foundations are disciplines that contribute ideas, viewpoints and techniques to ai
+
+1. Mathematics
+    Logic (Propositional & Predicate Logic)
+    Probability (Bayesian inference)
+    Linear algebra (for machine learning)
+    Optimization (search and learning algorithms)
+
+2. Computer Science
+    Algorithms and data structures
+    Programming languages
+    Software engineering
+    Computational complexity
+
+3. Philosophy
+    Concepts of mind, reasoning, consciousness
+    Debates on ethics, free will, and machine morality
+
+4. Psychology and Cognitive Science
+    Understanding how humans think and learn
+    Modeling human cognition in machines
+
+5. Neuroscience
+    Insights into the structure and function of the brain
+    Basis for artificial neural networks
+
+6. Linguistics
+    Natural Language Processing (NLP)
+    Language acquisition and understanding
+
+7. Statistics and Data Science
+    Data modeling and analysis
+    Essential for machine learning and pattern recognition
+
+script:
+structured knowledge representation that describes a stereotyped sequence of events in particular
+context. it uses fram like structure to repsent commonly occcuring expreiences
+
+components of script:
+1. entry condition: conditions that must be satisfied before execution of script can occur
+2. results: conditions that will be true after exit
+3. props: objects involed in script
+4. roles: people involed in script and expected actions of major participants
+5. track: specifies particular position of script
+6. scenes: sequence of events fowlloing a genral default path
+
+script of visiting doctor in hospital:
+
+Script: Visiting a Doctor
+
+  Track: Visinting ENT specialitst
+
+  Roles:
+    - Patient
+    - Receptionist
+    - Doctor
+
+  Props:
+    - Appointment card
+    - Waiting room
+    - Prescription
+    - Medical report
+
+  Entry Conditions:
+    - Patient is feeling unwell
+
+  Scenes:
+    1. Patient arrives at the clinic
+    2. Registers at the reception
+    3. Waits in the waiting room
+    4. Goes in when name is called
+    5. Describes symptoms to the doctor
+    6. Doctor examines the patient
+    7. Doctor writes a prescription or orders tests
+    8. Patient leaves the clinic
+
+  Result:
+    - Patient receives diagnosis and treatment plan
+
+fuzzy logic:
+form of many valued logic in which truth valkues of variables may be real number from 0 to 1
+handles concept of partial truth
+mathematical way of repsenting vagueness/imprecise information
+
+minmax algorithm in game search:
+used in 2 player adversarial games to simulate all possible move and slecet the move that
+maximezes player's minimum gain, assuming opponent playsa optimally
+
+step 1:
+algorith generates enitre game tree
+apply utility function to get utiliy value for terminal states
+A is intial state
+maximiser has worst case initila value - infinity
+minimiser has wort case intila value + infinty
+
+step 2:
+find utility value for minimizer
+copmare inital value and terminal state value and min will go to higher node
+
+step 3:
+find utility value for maximizer
+copmare inital value and terminal state value and max will go to higher node
