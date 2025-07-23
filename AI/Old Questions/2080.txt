@@ -1,0 +1,27 @@
+cnf conversion rules:
+Eliminate implications
+Example: A → B becomes ¬A ∨ B
+
+Move negations inward (using De Morgan's laws)
+Example: ¬(A ∧ B) becomes ¬A ∨ ¬B
+
+Standardize variables (rename to avoid confusion)
+
+Skolemize (eliminate existential quantifiers using Skolem constants/functions)
+
+Drop universal quantifiers (assumed by default in CNF)
+
+Distribute ∨ over ∧ to get conjunctive normal form
+Example: (A ∨ (B ∧ C)) becomes (A ∨ B) ∧ (A ∨ C)
+
+properties of ai agent:
+ineternal:
+	learning/reasoning: learns from apst expreiences and adapts
+	rectivity: responds approporitaly to environmental changes
+	autonomy: act sindependtly, controls its own states and decisions
+	goal oruiented: infuels environemnt to achieve well definded ohjectives
+external:
+	communication: interact with umans/ai agent in environemnt to complete task
+	cooperation: collab with other agenst for problems exceed cacpaiblity of single agent
+	mobility: can move across electronic comm network
+	character: imitate human like behaviour

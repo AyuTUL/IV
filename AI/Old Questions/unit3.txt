@@ -1,0 +1,180 @@
+problem soolving:
+process by which agent makes decisions to achieve goal by finding sequence of actoins that lead
+ to goal from intial state
+
+steps:
+1. goal formulation:
+	goal is the desired state of worldf agent aims to reach
+	1st step that rganzes stesp to formualte goals and actions to reach it
+	depends on current situation and performanmc emeausre
+	more well defined goal better solutyion quality
+	eg: navigation, go from B to A
+
+2. problem formulation:
+	most impoprtant step that decides what action to do to reach goal
+	5 components:
+		initial state:first step of agent to reach goal
+		actions: all possible actions available to agent
+		transition model: description of what actions do
+		goal test: check if given state is goal
+		path cost: assigns numeric cost to path,agents choose path which reflects 
+			performace masure
+	eg:chess, leagal moves are actions, board positions are states
+
+3. search method:
+	explores state space using search algorithm
+	determinces possible sequnce of action to reach goal from inital stae
+	chooses best squence
+	informed,uninformed
+
+4. execute:
+	after finding solution, agent execute in real/simuilate environemtn
+
+state space:
+	set of all possible states of problem
+	represents problem in a formal manner wit hpath from intial to goal state
+	directed grpah, nodes are states,links are actions
+	5 tuples
+	S:[S,A,ACtion(a),Result(s,a),Cost(s,a)
+
+uninformed/blind search:
+	no domain knowledge about location of goal
+	brute force method as it only knows how to traverse and differentiate leaf and goal
+	doesnt use heuristics
+
+bfs:
+	tree traversal algorithm that visits all nodes in same depth level before moving to next
+	uses fifo queue data structure
+	algorithm:
+		1. start from inital node
+		2. insert intial node into fifo queue
+		3. repeat until goal is fond or queue is empty
+			a. dequeue node at front
+			b. if goal, return else enqueue all unvisited neighbours
+		4. keep track of visited nodes to avoi loops
+
+	performance measure criteria:
+	optimality: no, it odnest consider path cost yes if uniform path cost
+	completeness: yes, finds solution if it exists
+	time complexity: b^d
+	space complexity: b^d
+
+dfs:
+	recursive tree traversal algorithm that explores as far down a path as possible 
+		before backtracking
+	uses lifo stack data structure
+	algorithm:
+		1.start from initial node
+		2. mark as visited
+		3. go to 1st unvisited neighbour and goto step 2
+		4. if no unvisited neighbour, backtrack to previous node
+		5. repeat untial goal found or all ndoes visited
+
+	performance measure criteria:
+	optimality: no, may not return shortest path to goal
+	completeness: no, infinite path
+	time complexity: b^d
+	space complexity: b*d
+
+depth limit search (dls):
+	variation of dfs where search is limited to maximum depth L
+	to avoid infinte path, once it reaches limit stops expanding
+	algorithm:
+		1. start from inital node depth=0
+		2. explore each child recursively
+		3. if depth=limit, dont expand
+		4. if goal found befor elimit, success
+		5. else backtrack
+
+	performance measure criteria:
+	optimality: no, special case of dfs
+	completeness: yes if solution is above depth limit
+	time complexity: b^L
+	space complexity: b*L
+
+iterative deeping dfs (ids):
+	performs dfs with increasing depth limit 
+	combines space efficeiny of dfs with completeness of bfs
+	algorithm:
+		1. set depth limit =0
+		2. perform dls with limit 1
+		3. if goal not found limit+1
+		4. repeat until goal is found or max depth reached
+	
+	performance measure criteria:
+	optimality: yes if uniform path cost
+	completeness: yes, if b is finite
+	time complexity: b^d
+	space complexity: b*d
+
+bidirectional search:
+	forward search from inital state to goal
+	backward search from goal to initial
+	stops when both searches meet at middle
+	algorithm:
+		1. start bfs from initial node
+		2. start dfs from goal node
+		3. if node appears in both (Searches meet)
+		4. solution path is found by joining paths
+
+	performance measure criteria:
+	optimality: yes if bfs used with uniform cost
+	completeness: yes if bfs in both search
+	time complexity: b^d/2
+	space complexity: b^d/2
+
+informed search:
+	use heuristc about problem domain to find solution
+	heuristic guarantees good solution in reasonable time
+
+greedy best first search:
+	selects path that appears best at that moment
+	eval function: f(n)=h(n)
+		h(n):estimated cost from n to goal
+	doesnt use cost so far g(n)
+	algorithm:
+		1. start from initial nide
+		2. use heuristic h(n) to evalaute how close node is to goal
+		3. choose nod ewith lowest h(n) value
+		4. expand that node
+		5. repeat untial goal is found
+
+	performance measure criteria:
+	optimality: no, doesnt consider g(n)
+	completeness: no, stuck in loops
+	time complexity: b^m
+	space complexity: b^m
+
+a* search:
+	usues heurist and path cost to find shortest path between nodes
+	eval function: f(n)=g(n)+h(n)
+	algorithm:
+		1.Put the start node in the open list.
+		2. While the open list is not empty:
+    			a.Choose the node with the lowest f(n).
+    			b.If it’s the goal, return the path.
+			c.Else, expand the node and add its neighbors.
+    			d. For each neighbor:
+        			i. Calculate g, h, and f
+        			ii.Add it to the open list or update if a better path is found
+		3.Repeat until goal is reached.
+
+	performance measure criteria:
+	optimality: yes if admissible : h(n)<=h*(n), consistent:h(n)<=c(n,m)+h(m)
+	completeness: yes if b is finite, cost at each action is fixed
+	time complexity: b^d
+	space complexity: b^d
+
+hill climbing:
+	heuristic search algorithm to find best solution by incrementally improving current stae
+	going uphill till you cant go hgiher
+	staring ste in base of hill and iterate(climb) until it reaches peak
+	types:
+		simple: checks first better neighbour
+		steepest ascent: evaluates all neighbours and moves to best one
+		stochastic hill climbing: chooses random better nieghbour rather than best one
+	problems:
+		local max: stops at peak that isnt highest overall
+		plateau: flat area where all neighbours are equal
+		ridges: needs multiple moves in different directions
+

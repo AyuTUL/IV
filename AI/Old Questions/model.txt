@@ -52,3 +52,62 @@ eg: delivary drone that selects route with best baklacne of speed,safety,battery
 fig: what the world is like now->what it willl be like if i do action a->how happy i will be 
 in such a state->what action i should do now
 state	how the world evolves	what my actions do	utility
+
+belief network:
+probablistix grpah model for represneting knowledge about uncertain domain where each node
+corresponds t oa random varaible and each edge represnts conditional probability for
+corresponding prorbaility for corresponding random vraibles.
+
+min max algorithm in game search:
+used in 2 plyer zero sum game like chess and tic tac toe where one player tries to maximaize
+the outcome and other tries to minimize it assuming opponent plays optimally.
+itts steps are:
+	generate full game tree uptyo terminal states
+	assign utility values to terminal states
+	propagae valeus bottom up where
+		min nodes take min value of children
+		max nodes take ma value of children
+
+peas ofr internet shopping asistant:
+Performance Measure	
+- User satisfaction
+- Speed of finding deals
+- Relevance of suggestions
+- Cost savings
+Environment	
+- Online stores
+- Product listings
+- User preferences
+- Current discounts/offers
+Actuators	
+- Displaying product suggestions
+- Sorting/filtering items
+- Recommending deals
+- Sending notifications
+Sensors	
+- User input/preferences
+- Product prices
+- Reviews/ratings
+- Availability/inventory data
+
+peas for english language tutor:
+Performance Measure	
+- Student improvement
+- Quiz/test scores
+- Engagement level
+- Accuracy of feedback
+Environment	
+- Students
+- Lessons, exercises, quizzes
+- Grammar rules, vocabulary database
+Actuators	
+- Delivering lessons/quizzes
+- Providing feedback
+- Highlighting errors
+- Suggesting corrections
+Sensors	
+- Student responses
+- Speech/text input
+- Performance data
+- Error patterns
+
