@@ -1,0 +1,119 @@
+function of network layer: fliprn
+routing:
+	when packet arrives at router, it checks where it needs to go and send it out through
+correct path. Example: if a packet is going from S1 to S2, router R1 forwards it to next stop
+on the way to S2
+
+logical addressing:
+	this layer givse each device a unique logical address(like IP addresS) to distinguish
+source and destiantion. it adds both sender and reciever logical address in packet header,
+
+internetworking:
+	it logically connects different types of netowrks aloowing the m to communicate 
+as if htey were part of one big netowkr
+
+fragmentatio and reassembly:
+	if a packet is too large to sand all at once, it breaks it into smaller pieces
+which are rejoined correctly at receiver;s end
+
+packetizing:
+	it encapsualktes data into packets for efficeint rtansmission
+
+netowrk address translation(NAT):
+	map private IP address used in home/comapny to public IP address used on internet.
+It conserves IP addresses and adds security.
+
+ip addressing:
+	ip address is a numerical label assigned to each deivce connected to a netork
+using IP for communcation. its function are:
+	identification: identifies the device on the network
+	location addressing: specifies where device is lcoated
+
+ipv4:
+	32 bit address
+	4 decimal numbers separated by .
+	total ipv4 = 2^32
+	range is 0.0.0.0 to 255.255.255.255
+	types: unicast, multicast, broadcast
+
+class A 0: 8 bits network 24 host, total networks=2^7 - 2(0invalid,127loopback), total host=2^24
+class B 10: 16 bits network 16 host,total networks=2^14, total host=2^16 
+class C 110: 24 bits network 8 hosttotal networks=2^21, total host=2^8 
+class D 110: multicast
+class E 1111: future use
+
+ipv6:
+	128 bit address
+	8 hexadecimal numbers seprated by :
+	total ipv6 = 2^128
+	types: unicast, multicast, anycast
+
+network address:
+	netowrk part of ip address that represts entire netowk
+	consists of network firled and all 0 in host part of address
+	not a usable host IP
+	only used by routers to decide hwo to get packets to their destination
+
+broadcast address:
+	address used to send message to all hosts in same network
+	consists of netowrk field and all 1 in host part of address
+	not usable host IP
+
+loopback address:
+	private address for diagnostic testing of devices
+	class A 127.0.0.0 network address reserved for loopback testing
+	127.0.0.1 is used to test if NIC card is sending and receiving signals
+
+subnet mask:
+	32 bit address that teslls devices which part of ip address is network and host
+	consists of 1 in network field 0 in host field
+	deafult subnet mask:
+	class A:255.0.0.0 or /8
+	class B:255.255.0.0 or /16
+	class C:255.255.255.0 or /24
+
+subnetting:
+	process of dividing large netowrk into smaller manageable sub-netowrks 
+	divide class a b c network address into smaller networks with own network address
+	each subnet acts as its own LAN and is connected to own router interface
+	use:
+		efficient IP address utlizlaition
+		improved secuirty and performance
+		reducing braodcast traffic
+
+flsm: all subnets have same no. of host
+vlsm: subnets have different size based on need for efficient ip usage
+
+classless inter domain routing(cidr):
+	no fixed classes
+	uses prefix length /24 /16 to define network and host part
+	feature:
+		efficinet ip usage
+		flexible, we can divide and assign blocks as neede
+		used for subnet and superet
+
+ipv4 datagram:
+	packet of data transmitted over ipv4 network
+	version 4: always 4 for ipv4
+	header length 4: determines where in ip datagram data actually begings
+	type of service 4: distinguish types of ip datagram 
+	datagram length(bytes) 16: total length of datagram (header+datagram)
+	16 bit identifier, flags, 13 bit fragmentation offset: identify fragments of same datgram
+	time to live 8: ensure datagram dont circulate forever in network, ttl=0 apcket discard
+	upper layer portocol 8: tells ip layer which upper layer protocol(tcp,udp,icmp) should
+		 handle payload
+	header checksum 16: detect error that may occur in header
+	32 bit source ip:
+	32 bit destination ip:
+	options(if any): identify several additional srevices, not used in every datagam
+	data: conatins user data
+
+ipv6 datagram:
+	version 4: always 6 for ipv6
+	traffic class 6: simlair to ipv4 tos
+	flow label 20: used to label packets in same flow
+	payload length 16: length of payload excluding header
+	next header 8: identify next header
+	hop limit 8: same as ttl in ipv4, decrements at each router
+	source 32:
+	destination 32:
