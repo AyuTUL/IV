@@ -1,0 +1,140 @@
+functions of dll: fpeaf
+framing:
+	takes packets from nl and encapsulates them into frames
+	sends each frame bit by bit on hardware
+	at receiver end, dll picks up signal from harware and assembles them into frames	
+	parts of frame:
+		header: contains souce and destination address of frame
+		payload: contains message to be delivered
+		trailer: contains error detection and correction bits
+		flag: marks beginning and end of frame
+	types of framing:
+		fixed size:
+			fixed size of frame acts as delimeter of frame
+			doesnt require additional boundary bits to identyi start end of frame
+		variable size:
+			size of aech frame is different
+			additional mechanism are used to mark end of one frame and start of anooreh
+
+physical addressing:
+	after frames, adds physical addres(MAC) of sender and receiver in header of frame
+
+error control:
+	detects and retransmits damaged/lost frames
+
+access control:
+	when 2/more devices are connected to common link, dll protocols determine which device
+has control over trhe link at any point of time
+
+flow cotrol:
+	if rate at which dat aare consumed by r eceiver is less than rate prodcued by sender,
+dll uses flow control mechanism to prevent overruninng the receiver
+
+
+llc:
+	interface between mac and l
+	provides logic for data link
+	controls synchronizaiton, flow control and error checking
+
+mac:
+	provides control for accessing transmission medium
+	moves packets from one network medium to another across shared transmision medium
+	handles physical addressing
+	when sending data ato another device, encapsulates higher level frames into frames
+appropirate for transmission medium
+	deals with actuial control of media
+
+framing approach:
+bit stuffing: ro differentiate payload and flag, when 0 is followed by consecutive 1's stuff 0
+	stuffed bit removed at receiver side
+
+byte stuffing: special byte ESC is stuffed before every byte in message with same pattern as 
+	flag byte
+	if ESC is found in message byte, another ESC is stuffed beefore it
+
+error detection and control:
+	detect and retransmit data frames that might be lost/corrupted during transmission
+
+error and flow control:
+simplest protocol:
+	no flow/error control
+	unidirectional, frames travel in one direction from sender to receiver
+	assumed that reciever can immedialite handle frame with negligible processing time
+	dll of receiver immediateyl removes header from frame and hands to nl accetsp immediatly
+
+stop and wait protocol:
+	data trnasfer in noiseless channel
+	senders sends single frame then waits for ack from receiver before sending next packet
+	overasll data transmission rate is slow since only one frame is transmitted at a time
+	overcame by sliding window protocl
+
+stop and wait ARQ protocol:
+	data transfer in noisy channel
+	sender sends one frame at atime then wiats for ack from reciver before seding antoher
+	when sender detects error, waits for next ack before resending frame
+	if erro is detected receiver sends nack to sender for retransmission
+
+go back and ARQ protocolP:
+	data transfer in noisy channel
+	sliding window protocol where sender sends window of packets to receiver
+	receivers sends back ack to indicate succesfful receive of packet
+	if sender doesnt receive ack witrhing timeout, it retransmits entire window of packets
+	if packet is recived with error, receiver disards and sends nack with squence no.
+	if sender doesnt receive ack retransmits entire window of packet
+	if sender receives nack retransmits only damaged packets
+
+selective repeat arq protocol:
+	sender transmits window of packets i to i+N-1 to receiver and sets time rfor each packet
+	waits for ack from receiver
+	receiver receives packet and checks for error
+	if correct sends ack i+1
+	if error,discard and sends nack i
+	if sender doesnt receive ack before timer expires, retransmits only that frame
+	reset timer for that frame
+	wait for ack
+	if nack received, sender retransmits only that frame
+	reset timer
+	wait for ack
+
+aloha:
+	random access multiple access protocol for wlan
+	multiple station can transmit data at same time can cause collision
+
+pure aloha: 
+	when station sends data, it waits for ack
+	if ack doesnt coem within alotted time, it waits for random time back off time and resend
+	since different station wait for differnt time, probabilty of collision decreases
+	max throughput =18.4%
+
+slotted aloha:
+	time is divied into equal slots and stations can only send data at beginning of slots
+	time is diviided into fixed size slots equal to transmission tiome of 1 frame
+	if no other station trnsmits in same slot, success
+	if 2/mroe transmit in same slot, colssion and retrnasmit after random delay
+	amx threoughput =36.8%
+
+hdlc:
+	group of communciation protocol fro trnasmiting data between nodes
+	bit oriented protocol
+
+types:
+nrm:
+	primary station sends commands
+	secondary station rsponds to  received commands
+	used for point to point and multipoint communication
+abm:
+	each station can send and respond to commands
+	used for poinbt to point only
+
+hdlc frame:
+	flag: 8 bit marks start and end of frame 01111110
+	address: min 8 bit address of receiver 
+	control: 8/16 bit containinf flow and error control information
+	payload: carries data from netowrk layer
+	FCS: 16 bit framce check sequence for error detection, usually crc
+	FLag:
+
+types:
+	sframe: 10 for flow and error control
+	uframe: 11 connection setup
+	iframe: 0 file transferring, messaging 

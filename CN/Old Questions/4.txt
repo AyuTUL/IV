@@ -117,3 +117,58 @@ ipv6 datagram:
 	hop limit 8: same as ttl in ipv4, decrements at each router
 	source 32:
 	destination 32:
+
+limitations of ipv4:
+limited address space:
+	2^32 unique address, as internet connected devicse increase, become insufficient
+
+unnecessary and variable header field:
+	unused, packet processing slower and complicated for routers
+
+fragmenetation in router
+	slows down performance nad increases router load, should be done by sender not routers
+
+addressing model:
+	ues class based or NAT based addressing
+	inefficient use of IP address and adds complexity to routing
+
+NAT:
+	limited ips->many devices share one public ip
+	breaks end to end connectivity principle of internet 
+	complicates application like voip,p2p
+
+broadcast vs multicast:
+	caueses unncesary traffic
+	multicast not well supported
+
+QOS:
+	no effective support for real time services lke voice/vidioe
+
+advantages of ipv6:
+increases addressing capabilites:
+	2^128 ubqieue address
+	supports unicast, multicast,anycast(send to nearest of multiple receivers)
+streamlines 40 bbit header:
+	fixed size, simplified header
+	improvse router performance and makes packet handling faster
+flow labeling and priority:
+	flow labeling used for video call
+	better qos support
+	each flwo can be given prioty enablin smoother delivery
+
+NAT:
+	modeifies ip address in ip pakcet headers while they are in transit across a router
+	allows multiple devicse on aa privat network to sare a single public ip when use internet
+	why?
+	ip address shortage: conserves ip adress by allowing many devices to share one publci ip
+	scurity: hides i paddress from external network
+	simplifies ip management: private ip can be reused inside different networks w/o conflict
+
+working:
+	 devices in private netowkr have private ip
+	when divice wants to comm with internet, nat enabled router translates private ip
+to router;s public ip
+	router keeps track of outgoing  onnections using port numbers so that responses
+can be routed back to correct internal device
+	when response arrives, nat device translate public ip back to private ip and forwards 
+packet inside
