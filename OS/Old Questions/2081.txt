@@ -1,0 +1,38 @@
+semaphore for critical section problem:
+	csp arises when multiple procss try to access and modify shared resources at same time
+leading to race condition
+	semaphore is a abstract adfta type to control access to shared resource
+	binary: 0 or 1 lock/unlock
+	counting: for coutning multiple resource
+	intilayl, s=1supports P(semaphore s){ //down		V(Semaphore s){
+			while(s==0)			s++;
+				s=s-1;
+			}//cs
+
+deadlock:
+	2 process are said to be deadlocked if one process is wiating for an event that
+can only be cuased by another
+
+conditons:
+mutula exclusion: resource are either assigned to exactly one process or avaialbe
+hold and wait: process holding one resource and request fro new
+no premption: resouce granted cant be forcibly taken away, msut be explicitly released
+circular wait: circular chain of processes waiting for resource held by next member
+
+avoidance:
+	allow everbody to use resoucr they require immediately
+spool(simultaneous peripheral operations on line)
+	request all resource at onnce or release and re reuest
+	allow premtion
+	oredred list on resource types
+
+ipc:
+mechanism that allow process to exchange data nad syunchorniz actions
+why?
+info sharing: process exchange data
+comp speedup: task dived into smaller tasks run in parallel
+modulairy: system functoin is sspit into smaller proess to hadnle specifc part
+convenience: multiple task simultaneously
+
+race condition:
+2 processes interact and outcome depends on order in which process execute
