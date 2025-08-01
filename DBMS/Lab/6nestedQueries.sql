@@ -14,6 +14,25 @@ CREATE TABLE CUSTOMER (
 	Buying_amount FLOAT(10,2)
 );
 
+USE Tottenham_Hotspurs;
+
+CREATE TABLE CUSTOMER (
+    Fname VARCHAR(30),
+    Address VARCHAR(15),
+    Phone NUMERIC(10),
+    Buying_amount FLOAT(10,2)
+);
+
+INSERT INTO CUSTOMER VALUES
+USE Tottenham_Hotspurs;
+
+CREATE TABLE CUSTOMER (
+    Fname VARCHAR(30),
+    Address VARCHAR(15),
+    Phone NUMERIC(10),
+    Buying_amount FLOAT(10,2)
+);
+
 INSERT INTO CUSTOMER VALUES
 ('Abhilekh Subedi', 'Raniban', 9801234567, 2500.50),
 ('Alisha Manandhar', 'Chhetrapati', 9812345678, 15000.75),
