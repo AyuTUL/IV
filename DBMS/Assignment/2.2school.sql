@@ -32,7 +32,8 @@ INSERT INTO student VALUES
 
 SELECT s.id, s.sname, s.course, sub.ssubject, s.mark
 FROM student AS s
-JOIN ssubject AS sub ON s.subject_id = sub.subject_id;
+JOIN ssubject AS sub 
+ON s.subject_id = sub.subject_id;
 
 SELECT course, COUNT(*) AS total_students
 FROM student

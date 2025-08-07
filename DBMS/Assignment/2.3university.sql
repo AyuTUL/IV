@@ -25,8 +25,5 @@ SELECT
     MIN(salary) AS min_salary
 FROM faculty;
 
-SELECT fname, salary
-FROM faculty
-WHERE salary > (
-    SELECT AVG(salary) FROM faculty
-);
+SELECT fname, salary FROM faculty WHERE salary > 
+	(SELECT AVG(salary) FROM faculty);

@@ -25,6 +25,7 @@ INSERT INTO teacher VALUES
 (5, 'Erika', 'Chitwan', 28000);
 
 ALTER TABLE teacher ADD subject_id INT;
+ALTER TABLE teacher ADD FOREIGN KEY (subject_id) REFERENCES ssubject(subject_id);
 
 UPDATE teacher SET subject_id = 1 WHERE id = 1;
 UPDATE teacher SET subject_id = 2 WHERE id = 2;
@@ -36,3 +37,5 @@ CREATE VIEW teacher_subject_view AS
 SELECT t.tname, s.subject_name
 FROM teacher AS t
 JOIN ssubject AS  s ON t.subject_id = s.subject_id;
+
+SELECT * FROM teacher_subject_view;

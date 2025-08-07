@@ -18,19 +18,9 @@ INSERT INTO employee VALUES
 (4, 'Sita', 'Pokhara', 32000, 'XYZ Ltd', 'Manager'),
 (5, 'Gita', 'Biratnagar', 22000, 'ABC Corp', 'Mason');
 
-SELECT ename, salary
-FROM employee AS e
-WHERE salary > (
-    SELECT MIN(salary)
-    FROM employee
-    WHERE company_name = e.company_name
-)
+SELECT ename, salary FROM employee AS e WHERE salary > 
+	(SELECT MIN(salary) FROM employee WHERE company_name = e.company_name)
 AND job_title LIKE 'M%';
 
-SELECT *
-FROM employee
-WHERE job_title = (
-    SELECT job_title
-    FROM employee
-    WHERE NAME = 'Ram'
-);
+SELECT * FROM employee WHERE job_title = 
+	(SELECT job_title FROM employee WHERE ename = 'Ram');
