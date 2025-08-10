@@ -38,14 +38,14 @@ INSERT INTO Dortmund VALUES
 	(19,'Julian Brandt','Germany','RW',4000.14),
 	(11,'Marco Reus','Germany','LW',5632.11);
 
-SELECT * FROM Arsenal AS a 
-JOIN Dortmund AS d ON a.jersey=d.jersey;
-
-SELECT a.Jersey, a.Pname AS Arsenal, d.Pname AS Dortmund,d.Pposition FROM Arsenal AS a 
-INNER JOIN Dortmund AS d ON a.jersey=d.jersey AND a.Pposition=d.Pposition;
+SELECT a.Jersey, d.pPosition AS POSITION, a.Pname AS Arsenal, d.Pname AS Dortmund FROM Arsenal AS a 
+INNER JOIN Dortmund AS d ON 
+a.jersey<10 AND a.Pposition=d.Pposition;
 
 SELECT * FROM Arsenal AS a 
-LEFT OUTER JOIN Dortmund AS d ON a.jersey=d.jersey;
+LEFT OUTER JOIN Dortmund AS d 
+ON a.jersey=d.jersey;
 
 SELECT * FROM Arsenal AS a 
-RIGHT OUTER JOIN Dortmund AS d ON a.Pposition=d.Pposition;
+RIGHT OUTER JOIN Dortmund AS d 
+ON a.Pposition=d.Pposition;

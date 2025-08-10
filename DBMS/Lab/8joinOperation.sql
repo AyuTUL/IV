@@ -4,11 +4,15 @@
 
 USE Clubs;
 
-SELECT * FROM Arsenal AS a 
-CROSS JOIN Dortmund AS d ON a.jersey=d.jersey;
+SELECT * FROM Arsenal
+CROSS JOIN Dortmund;
 
-SELECT a.Jersey, a.Pname AS Arsenal, d.Pname AS Dortmund,d.Pposition FROM Arsenal AS a 
-JOIN Dortmund AS d ON a.jersey=d.jersey AND a.Pposition=d.Pposition;
+SELECT a.Pposition AS POSITION, a.Jersey, a.Pname AS Arsenal, d.Jersey, d.Pname AS Dortmund FROM Arsenal AS a 
+JOIN Dortmund AS d 
+ON a.Pposition=d.Pposition;
 
-SELECT a.* AS ARSFC,d.* AS BVB FROM Arsenal AS a ,Dortmund AS d WHERE a.jersey=d.jersey;
+SELECT a.Jersey, a.pPosition AS POSITION, b.Pname AS Player, b.MarketValue FROM Arsenal AS a
+JOIN Arsenal AS b
+ON a.Jersey=b.Jersey;
+
 

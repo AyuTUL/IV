@@ -8,25 +8,6 @@
 USE Tottenham_Hotspurs;
 
 CREATE TABLE CUSTOMER (
-	Fname VARCHAR(30),
-	Address VARCHAR(15),
-	Phone NUMERIC(10),
-	Buying_amount FLOAT(10,2)
-);
-
-USE Tottenham_Hotspurs;
-
-CREATE TABLE CUSTOMER (
-    Fname VARCHAR(30),
-    Address VARCHAR(15),
-    Phone NUMERIC(10),
-    Buying_amount FLOAT(10,2)
-);
-
-INSERT INTO CUSTOMER VALUES
-USE Tottenham_Hotspurs;
-
-CREATE TABLE CUSTOMER (
     Fname VARCHAR(30),
     Address VARCHAR(15),
     Phone NUMERIC(10),
@@ -59,9 +40,3 @@ SELECT * FROM CUSTOMER WHERE Address IN  (SELECT Address FROM CUSTOMER WHERE Fna
 SELECT * FROM CUSTOMER WHERE Buying_amount=(SELECT Buying_amount FROM CUSTOMER WHERE Fname='Gaurav Thapa');
 
 SELECT DISTINCT Phone FROM CUSTOMER;
-
-DELETE FROM CUSTOMER;
-
-SELECT * FROM CUSTOMER;
-
-DROP DATABASE Tottenham_Hotspurs;
