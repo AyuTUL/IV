@@ -4,7 +4,6 @@
 using namespace std;
 int main()
 {
-	system("color f0");
 	string input;
 	char state='A';
 	cout<<"Enter input : ";
@@ -20,16 +19,23 @@ int main()
 		switch(state)
 		{
 			case 'A':
-				if(input[i]=='1') state='B';
-				break;
-			case 'B':
-				state=(input[i]=='1')?'C':'B';
-				break;
-			case 'C':
-				break;
+                state=(input[i]=='1')?'B':'A';
+                break;
+            case 'B':
+                state=(input[i]=='0')?'C':'B';
+                break;
+            case 'C':
+                state=(input[i]=='0')?'D':'B';
+                break;
+            case 'D':
+                state=(input[i]=='1')?'E':'A';
+                break;
+            case 'E':
+                state='E';
+                break;
 			}
 	}
-	if(state=='C')
+	if(state=='E')
 		cout<<"NFA accepts the string : "<<input;
 	else
 		cout<<"NFA rejects the string : "<<input;
