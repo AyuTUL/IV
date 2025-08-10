@@ -1,36 +1,41 @@
-import queue
-adj_list={
-    "a":["b","c","d"],
-    "b":["e","f"],
-    "c":["g"],
-    "d":["h"],
-    "e":[],
-    "f":["i"],
-    "g":["j"],
-    "h":["k"],
-    "i":[],
-    "j":[],
-    "k":[]
-    }
+adj_list = {
+    "a": ["b", "c", "d"],
+    "b": ["e", "f"],
+    "c": ["g"],
+    "d": ["h"],
+    "e": [],
+    "f": ["i"],
+    "g": ["j"],
+    "h": ["k"],
+    "i": [],
+    "j": [],
+    "k": [],
+}
 
-output=[]
-visited=[]
-queue=[]
 
-def bfsdemo(visited,graph,node):
-    visited.append(node)
-    queue.append(node)
+def bfs(graph, start_node):
+    visited = []
+    queue = []
+    output = []
+
+    visited.append(start_node)
+    queue.append(start_node)
 
     while queue:
-        m=queue.pop(0)
-        output.append(m)
+        node = queue.pop(0)
+        output.append(node)
 
-        for neighbour in graph[m]:
+        for neighbour in graph[node]:
             if neighbour not in visited:
                 visited.append(neighbour)
                 queue.append(neighbour)
 
-    print("Traversed path : ",output)
+    print("BFS traversal path : ", output)
+
+
 print("------Breadth First Search------")
-startnode=input("Enter the starting node : ")
-bfsdemo(visited,adj_list,startnode)
+startnode = input("Enter the starting node : ")
+if startnode in adj_list:
+    bfs(adj_list, startnode)
+else:
+    print("Node not found in graph.")
