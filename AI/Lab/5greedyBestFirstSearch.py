@@ -43,14 +43,15 @@ def gbfs(graph, heuristic, start, goal):
     return None
 
 
+print("------Greedy Best-First Search------")
 start_node = input("Enter the starting node : ")
 goal_node = input("Enter the goal node : ")
 
-traversed_path, path_cost = gbfs(graph, heuristic, start_node, goal_node)
-
-if traversed_path:
-    print(
-        f"Greedy Best-First Search traversal path: {traversed_path} with cost {path_cost}"
-    )
+if start_node in graph and goal_node in graph:
+    path, total_cost = gbfs(graph, heuristic, start_node, goal_node)
+    if path:
+        print(f"Traversal path : {path} with cost {total_cost}")
+    else:
+        print("Path not found.")
 else:
-    print("Path not found.")
+    print("Invalid start or goal node.")

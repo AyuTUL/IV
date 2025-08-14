@@ -1,3 +1,4 @@
+# Graph definition
 graph = {
     "a": ["b", "c"],
     "b": ["d", "e"],
@@ -9,36 +10,43 @@ graph = {
 }
 
 
-def dfs(start, goal, depth_limit, visited, path):
-    visited.add(start)
-    path.append(start)
-    if start == goal:
-        return "FOUND", path
-    if depth_limit <= 0:
-        return "NOT_FOUND", path
-    for child in graph[start]:
-        if child not in visited:
-            result, traversed_path = dfs(child, goal, depth_limit - 1, visited, path)
-            if result == "FOUND":
-                return "FOUND", traversed_path
-    return "NOT_FOUND", path
+def dfs(node, goal, depth_limit, visited, path):
+
+    visited.add(node)
+    path.append(node)
+
+    if node == goal:
+        return True
+    if depth_limit == 0:
+        return False
+
+    for neighbor in graph.get(node, []):
+        if neighbor not in visited:
+            if dfs(neighbor, goal, depth_limit - 1, visited, path):
+                return True
+
+    return False
 
 
 def iddfs(start, goal):
-    depth_limit = 0
-    while True:
+
+    for depth in range(len(graph) + 1):
         visited = set()
         path = []
-        result, traversed_path = dfs(start, goal, depth_limit, visited, path)
-        print(f"Depth {depth_limit}: Traversed path: {traversed_path}")
-        if result == "FOUND":
-            return f"Goal node '{goal}' found! Path: {traversed_path}"
-        depth_limit += 1
-        if depth_limit > len(graph):
-            return "Goal node not found!"
+        found = dfs(start, goal, depth, visited, path)
+        print(f"Depth {depth} : Traversal path: {path}")
+
+        if found:
+            return f"Goal node '{goal}' found! Traversal path : {path}"
+
+    return "Goal node not found."
 
 
-start = input("Enter the start node: ")
-goal = input("Enter the goal node: ")
-result = iddfs(start, goal)
-print(result)
+print("------ Iterative Deepening Depth First Search ------")
+start = input("Enter the start node : ").strip().lower()
+goal = input("Enter the goal node : ").strip().lower()
+
+if start not in graph or goal not in graph:
+    print("Invalid start or goal node.")
+else:
+    print(iddfs(start, goal))
