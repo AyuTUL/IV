@@ -97,7 +97,7 @@ public class WorkoutViewDialog extends JDialog {
         itemsModel.setRowCount(0);
         for (WorkoutItem it : dao.getItemsByWorkout(workoutId)) {
             itemsModel.addRow(new Object[]{
-                String.valueOf(it.getExerciseId()),
+                it.getExerciseName(),
                 it.getSets(),
                 it.getReps(),
                 it.getWeightUsed(),

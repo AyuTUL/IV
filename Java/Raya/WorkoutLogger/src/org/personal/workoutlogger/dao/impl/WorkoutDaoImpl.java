@@ -14,8 +14,7 @@ public class WorkoutDaoImpl implements WorkoutDao {
     @Override
     public int createWorkout(Workout w) {
         String sql = "INSERT INTO workouts(user_id,name,date,notes) VALUES(?,?,?,?)";
-        try (Connection c = ConnectionFactory.getConnection();
-             PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection c = ConnectionFactory.getConnection(); PreparedStatement p = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             p.setInt(1, w.getUserId());
             p.setString(2, w.getName());
             p.setDate(3, Date.valueOf(w.getDate()));
@@ -114,13 +113,17 @@ public class WorkoutDaoImpl implements WorkoutDao {
 
     @Override
     public List<WorkoutItem> getItemsByWorkout(int wid) {
-        String sql = "SELECT * FROM workout_items WHERE workout_id=?";
+        String sql = "SELECT wi.id, wi.workout_id, wi.exercise_id, wi.sets, wi.reps, "
+                + "wi.weight_used, wi.rest_time, e.name AS exercise_name "
+                + "FROM workout_items wi "
+                + "JOIN exercises e ON wi.exercise_id = e.id "
+                + "WHERE wi.workout_id=?";
         List<WorkoutItem> list = new ArrayList<>();
         try (Connection c = ConnectionFactory.getConnection(); PreparedStatement p = c.prepareStatement(sql)) {
             p.setInt(1, wid);
             try (ResultSet r = p.executeQuery()) {
                 while (r.next()) {
-                    list.add(new WorkoutItem(
+                    WorkoutItem item = new WorkoutItem(
                             r.getInt("id"),
                             r.getInt("workout_id"),
                             r.getInt("exercise_id"),
@@ -128,7 +131,9 @@ public class WorkoutDaoImpl implements WorkoutDao {
                             r.getInt("reps"),
                             r.getDouble("weight_used"),
                             r.getInt("rest_time")
-                    ));
+                    );
+                    item.setExerciseName(r.getString("exercise_name"));
+                    list.add(item);
                 }
             }
         } catch (Exception e) {
@@ -172,8 +177,7 @@ public class WorkoutDaoImpl implements WorkoutDao {
                 return;
             }
 
-            try (PreparedStatement p1 = c.prepareStatement("DELETE FROM workout_items WHERE workout_id=?");
-                 PreparedStatement p2 = c.prepareStatement("DELETE FROM workouts WHERE id=?")) {
+            try (PreparedStatement p1 = c.prepareStatement("DELETE FROM workout_items WHERE workout_id=?"); PreparedStatement p2 = c.prepareStatement("DELETE FROM workouts WHERE id=?")) {
                 p1.setInt(1, wid);
                 p1.executeUpdate();
                 p2.setInt(1, wid);
@@ -184,7 +188,7 @@ public class WorkoutDaoImpl implements WorkoutDao {
         }
     }
 
-    public void replaceItemsForWorkout(int workoutId, List<WorkoutItem> items){
+    public void replaceItemsForWorkout(int workoutId, List<WorkoutItem> items) {
         String del = "DELETE FROM workout_items WHERE workout_id=?";
         String ins = "INSERT INTO workout_items(workout_id,exercise_id,sets,reps,weight_used,rest_time) VALUES(?,?,?,?,?,?)";
         try (Connection c = ConnectionFactory.getConnection()) {
