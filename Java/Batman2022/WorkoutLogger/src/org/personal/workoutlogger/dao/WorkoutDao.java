@@ -7,5 +7,6 @@ public interface WorkoutDao {
   void addWorkoutItem(WorkoutItem item);
   java.util.List<Workout> getWorkoutsByUser(int userId);
   java.util.List<WorkoutItem> getItemsByWorkout(int workoutId);
+  void updateWorkout(Workout w);
   void deleteWorkout(int workoutId,int requesterUserId,boolean isTrainer);
 }
