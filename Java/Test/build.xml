@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project name="WorkoutLogger" default="default" basedir=".">
-    <description>WorkoutLogger NetBeans Ant project</description>
-    <import file="nbproject/build-impl.xml"/>
-</project>
