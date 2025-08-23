@@ -7,6 +7,7 @@ import java.util.List;
 import org.personal.workoutlogger.model.User;
 import org.personal.workoutlogger.dao.UserDao;
 import org.personal.workoutlogger.dao.impl.UserDaoImpl;
+import org.personal.workoutlogger.ui.GlobalUISettings;
 
 public class UserInfoWindow extends JFrame {
 
@@ -16,30 +17,27 @@ public class UserInfoWindow extends JFrame {
     // Shared fields
     private final JTextField tfUsername = new JTextField(18);
     private final JPasswordField pfPassword = new JPasswordField(18);
-    private final JComboBox<String> cbRole = new JComboBox<>(new String[]{"TRAINEE","TRAINER"});
+    private final JComboBox<String> cbRole = new JComboBox<>(new String[] { "TRAINEE", "TRAINER" });
 
     // Trainer controls
     private final JComboBox<User> cbUsers = new JComboBox<>();
-    private final JButton btnAdd = new JButton("Add");
-    private final JButton btnUpdate = new JButton("Update");
-    private final JButton btnDelete = new JButton("Delete");
+    private final JButton btnAdd = GlobalUISettings.createStyledButton("Add");
+    private final JButton btnUpdate = GlobalUISettings.createStyledButton("Update");
+    private final JButton btnDelete = GlobalUISettings.createStyledButton("Delete");
 
-    
     // Common control
-    private final JButton btnExit = new JButton("Exit");
-// Trainee controls
-    private final JButton btnSaveMyAccount = new JButton("Save");
+    private final JButton btnExit = GlobalUISettings.createStyledButton("Exit");
+    // Trainee controls
+    private final JButton btnSaveMyAccount = GlobalUISettings.createStyledButton("Save");
 
     public UserInfoWindow(User user) {
-        super("User Info");
+        super();
         this.currentUser = user;
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        GlobalUISettings.setupFrame(this, "User Info");
         setSize(520, 280);
-        setLocationRelativeTo(null);
-        setResizable(true);
 
-        JPanel root = new JPanel(new BorderLayout(10,10));
-        root.setBorder(BorderFactory.createEmptyBorder(12,12,12,12));
+        JPanel root = new JPanel(new BorderLayout(10, 10));
+        root.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
 
         // Top section for trainer: user selection
         JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -56,19 +54,40 @@ public class UserInfoWindow extends JFrame {
         // Center form
         JPanel form = new JPanel(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
-        gc.insets = new Insets(8,8,8,8);
+        gc.insets = new Insets(8, 8, 8, 8);
         gc.fill = GridBagConstraints.HORIZONTAL;
         gc.weightx = 0;
         gc.anchor = GridBagConstraints.EAST;
 
-        gc.gridx = 0; gc.gridy = 0; gc.weightx = 0; gc.anchor = GridBagConstraints.EAST; form.add(new JLabel("Username"), gc);
-        gc.gridx = 1; gc.weightx = 1.0; gc.anchor = GridBagConstraints.WEST; form.add(tfUsername, gc);
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.weightx = 0;
+        gc.anchor = GridBagConstraints.EAST;
+        form.add(new JLabel("Username"), gc);
+        gc.gridx = 1;
+        gc.weightx = 1.0;
+        gc.anchor = GridBagConstraints.WEST;
+        form.add(tfUsername, gc);
 
-        gc.gridx = 0; gc.gridy = 1; gc.weightx = 0; gc.anchor = GridBagConstraints.EAST; form.add(new JLabel("Password"), gc);
-        gc.gridx = 1; gc.weightx = 1.0; gc.anchor = GridBagConstraints.WEST; form.add(pfPassword, gc);
+        gc.gridx = 0;
+        gc.gridy = 1;
+        gc.weightx = 0;
+        gc.anchor = GridBagConstraints.EAST;
+        form.add(new JLabel("Password"), gc);
+        gc.gridx = 1;
+        gc.weightx = 1.0;
+        gc.anchor = GridBagConstraints.WEST;
+        form.add(pfPassword, gc);
 
-        gc.gridx = 0; gc.gridy = 2; gc.weightx = 0; gc.anchor = GridBagConstraints.EAST; form.add(new JLabel("Role"), gc);
-        gc.gridx = 1; gc.weightx = 1.0; gc.anchor = GridBagConstraints.WEST; form.add(cbRole, gc);
+        gc.gridx = 0;
+        gc.gridy = 2;
+        gc.weightx = 0;
+        gc.anchor = GridBagConstraints.EAST;
+        form.add(new JLabel("Role"), gc);
+        gc.gridx = 1;
+        gc.weightx = 1.0;
+        gc.anchor = GridBagConstraints.WEST;
+        form.add(cbRole, gc);
 
         root.add(form, BorderLayout.CENTER);
 
@@ -85,13 +104,11 @@ public class UserInfoWindow extends JFrame {
         }
         root.add(south, BorderLayout.SOUTH);
 
-        
         // Wiring
         btnUpdate.addActionListener(e -> updateUser());
         btnDelete.addActionListener(e -> deleteUser());
         btnSaveMyAccount.addActionListener(e -> saveMyAccount());
         btnExit.addActionListener(e -> dispose());
-
 
         // Initialize fields
         if ("TRAINER".equalsIgnoreCase(currentUser.getRole())) {
@@ -108,14 +125,17 @@ public class UserInfoWindow extends JFrame {
     private void loadUsers() {
         List<User> users = userDao.getAllUsers();
         DefaultComboBoxModel<User> model = new DefaultComboBoxModel<>();
-        for (User u : users) model.addElement(u);
+        for (User u : users)
+            model.addElement(u);
         cbUsers.setModel(model);
-        if (model.getSize() > 0) cbUsers.setSelectedIndex(0);
+        if (model.getSize() > 0)
+            cbUsers.setSelectedIndex(0);
     }
 
     private void populateFromSelected() {
         User sel = (User) cbUsers.getSelectedItem();
-        if (sel == null) return;
+        if (sel == null)
+            return;
         tfUsername.setText(sel.getUsername());
         pfPassword.setText("");
         cbRole.setSelectedItem(sel.getRole());
@@ -144,11 +164,17 @@ public class UserInfoWindow extends JFrame {
 
     private void updateUser() {
         User sel = (User) cbUsers.getSelectedItem();
-        if (sel == null) { JOptionPane.showMessageDialog(this, "Select a user."); return; }
+        if (sel == null) {
+            JOptionPane.showMessageDialog(this, "Select a user.");
+            return;
+        }
         String username = tfUsername.getText().trim();
         String password = new String(pfPassword.getPassword());
         String role = (String) cbRole.getSelectedItem();
-        if (username.isEmpty()) { JOptionPane.showMessageDialog(this, "Username required."); return; }
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username required.");
+            return;
+        }
         try {
             boolean ok = userDao.updateUser(sel.getId(), username, password.isEmpty() ? null : password, role);
             JOptionPane.showMessageDialog(this, ok ? "Updated." : "No change.");
@@ -160,9 +186,14 @@ public class UserInfoWindow extends JFrame {
 
     private void deleteUser() {
         User sel = (User) cbUsers.getSelectedItem();
-        if (sel == null) { JOptionPane.showMessageDialog(this, "Select a user."); return; }
-        int confirm = JOptionPane.showConfirmDialog(this, "Delete " + sel.getUsername() + "? This cannot be undone.", "Confirm", JOptionPane.YES_NO_OPTION);
-        if (confirm != JOptionPane.YES_OPTION) return;
+        if (sel == null) {
+            JOptionPane.showMessageDialog(this, "Select a user.");
+            return;
+        }
+        int confirm = JOptionPane.showConfirmDialog(this, "Delete " + sel.getUsername() + "? This cannot be undone.",
+                "Confirm", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION)
+            return;
         try {
             boolean ok = userDao.deleteUser(sel.getId());
             JOptionPane.showMessageDialog(this, ok ? "Deleted." : "Delete failed.");
@@ -175,9 +206,13 @@ public class UserInfoWindow extends JFrame {
     private void saveMyAccount() {
         String username = tfUsername.getText().trim();
         String password = new String(pfPassword.getPassword());
-        if (username.isEmpty()) { JOptionPane.showMessageDialog(this, "Username required."); return; }
+        if (username.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username required.");
+            return;
+        }
         try {
-            boolean ok = userDao.updateUser(currentUser.getId(), username, password.isEmpty() ? null : password, currentUser.getRole());
+            boolean ok = userDao.updateUser(currentUser.getId(), username, password.isEmpty() ? null : password,
+                    currentUser.getRole());
             JOptionPane.showMessageDialog(this, ok ? "Saved." : "No change.");
             currentUser.setUsername(username);
         } catch (Exception ex) {

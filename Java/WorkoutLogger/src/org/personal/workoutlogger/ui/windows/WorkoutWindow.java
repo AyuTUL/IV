@@ -8,25 +8,25 @@ import org.personal.workoutlogger.model.User;
 import org.personal.workoutlogger.model.Workout;
 import org.personal.workoutlogger.dao.WorkoutDao;
 import org.personal.workoutlogger.dao.impl.WorkoutDaoImpl;
+
 import org.personal.workoutlogger.ui.forms.WorkoutForm;
 import org.personal.workoutlogger.ui.forms.WorkoutViewDialog;
 import org.personal.workoutlogger.ui.forms.EditWorkoutDialog;
+import org.personal.workoutlogger.ui.GlobalUISettings;
 
 public class WorkoutWindow extends JFrame {
 
     private final User user;
     private final WorkoutDao dao = new WorkoutDaoImpl();
-    private final JTable table = new JTable(new DefaultTableModel(new Object[]{"ID", "Name", "Date", "Notes"}, 0));
+    private final JTable table = new JTable(new DefaultTableModel(new Object[] { "ID", "Name", "Date", "Notes" }, 0));
     private javax.swing.JComboBox<org.personal.workoutlogger.model.User> cmbUsers = null;
 
     public WorkoutWindow(User u) {
-        super("Workouts");
+        super();
+        GlobalUISettings.setupFrame(this, "Workouts");
         this.user = u;
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setResizable(true);
         setUndecorated(false);
         setSize(820, 480);
-        setLocationRelativeTo(null);
         initUI();
         loadData();
     }
@@ -36,12 +36,13 @@ public class WorkoutWindow extends JFrame {
 
         if ("TRAINER".equalsIgnoreCase(user.getRole())) {
             cmbUsers = new javax.swing.JComboBox<>();
-            for (org.personal.workoutlogger.model.User uu : new org.personal.workoutlogger.dao.impl.UserDaoImpl().getAllUsers()) {
+            for (org.personal.workoutlogger.model.User uu : new org.personal.workoutlogger.dao.impl.UserDaoImpl()
+                    .getAllUsers()) {
                 cmbUsers.addItem(uu);
             }
             cmbUsers.addActionListener(e -> loadData());
             JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            north.setBorder(BorderFactory.createEmptyBorder(8,8,8,8));
+            north.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
             north.add(new JLabel("Select user:"));
             north.add(cmbUsers);
             add(north, BorderLayout.NORTH);
@@ -52,12 +53,12 @@ public class WorkoutWindow extends JFrame {
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttons.setBorder(BorderFactory.createEmptyBorder(8,8,8,8));
-        JButton addBtn = new JButton("Add");
-        JButton viewBtn = new JButton("View");
-        JButton editBtn = new JButton("Edit");
-        JButton delBtn = new JButton("Delete");
-        JButton exitBtn = new JButton("Close");
+        buttons.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        JButton addBtn = GlobalUISettings.createStyledButton("Add");
+        JButton viewBtn = GlobalUISettings.createStyledButton("View");
+        JButton editBtn = GlobalUISettings.createStyledButton("Edit");
+        JButton delBtn = GlobalUISettings.createStyledButton("Delete");
+        JButton exitBtn = GlobalUISettings.createStyledButton("Close");
 
         addBtn.addActionListener(e -> onAdd());
         viewBtn.addActionListener(e -> onView());
@@ -75,7 +76,7 @@ public class WorkoutWindow extends JFrame {
 
     private int getSelectedUserId() {
         if ("TRAINER".equalsIgnoreCase(user.getRole()) && cmbUsers != null && cmbUsers.getSelectedItem() != null) {
-            return ((org.personal.workoutlogger.model.User)cmbUsers.getSelectedItem()).getId();
+            return ((org.personal.workoutlogger.model.User) cmbUsers.getSelectedItem()).getId();
         }
         return user.getId();
     }
@@ -85,7 +86,7 @@ public class WorkoutWindow extends JFrame {
         m.setRowCount(0);
         int uid = getSelectedUserId();
         for (Workout w : dao.getWorkoutsByUser(uid)) {
-            m.addRow(new Object[]{w.getId(), w.getName(), w.getDate(), w.getNotes()});
+            m.addRow(new Object[] { w.getId(), w.getName(), w.getDate(), w.getNotes() });
         }
     }
 
@@ -134,7 +135,8 @@ public class WorkoutWindow extends JFrame {
             return;
         }
         int id = (int) table.getValueAt(row, 0);
-        if (JOptionPane.showConfirmDialog(this, "Delete selected workout?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Delete selected workout?", "Confirm",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             dao.deleteWorkout(id, user.getId(), "TRAINER".equalsIgnoreCase(user.getRole()));
             loadData();
         }

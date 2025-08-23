@@ -8,26 +8,32 @@ import org.personal.workoutlogger.model.BodyMetric;
 import org.personal.workoutlogger.model.User;
 import org.personal.workoutlogger.dao.BodyMetricDao;
 import org.personal.workoutlogger.dao.impl.BodyMetricDaoImpl;
+import org.personal.workoutlogger.ui.GlobalUISettings;
+import org.personal.workoutlogger.ui.Icons;
 
 public class BodyMetricWindow extends JFrame {
-    { /* auto-added */ }
-
-    private final User user; private javax.swing.JComboBox<User> cmbUser = null;
+    private final User user;
+    private javax.swing.JComboBox<User> cmbUser = null;
     private final BodyMetricDao dao = new BodyMetricDaoImpl();
-    private final JTable table = new JTable(new DefaultTableModel(new Object[]{"ID","Date","Weight","BodyFat","Height","Age"}, 0));
+    private final JTable table = new JTable(
+            new DefaultTableModel(new Object[] { "ID", "Date", "Weight", "BodyFat", "Height", "Age" }, 0));
 
     public BodyMetricWindow(User u) {
-        super("Body Metrics");
+        super();
+        GlobalUISettings.setupFrame(this, "Body Metrics");
         this.user = u;
-    if ("TRAINER".equalsIgnoreCase(user.getRole())) {
-        cmbUser = new javax.swing.JComboBox<>();
-        for (org.personal.workoutlogger.model.User uu : new org.personal.workoutlogger.dao.impl.UserDaoImpl().getAllUsers()) cmbUser.addItem(uu);
-        JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT)); north.add(new JLabel("Select User:")); north.add(cmbUser); add(north, BorderLayout.NORTH);
-    }
-
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        if ("TRAINER".equalsIgnoreCase(user.getRole())) {
+            cmbUser = new javax.swing.JComboBox<>();
+            for (org.personal.workoutlogger.model.User uu : new org.personal.workoutlogger.dao.impl.UserDaoImpl()
+                    .getAllUsers())
+                cmbUser.addItem(uu);
+            JPanel north = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            north.setBackground(GlobalUISettings.WINDOW_BG);
+            north.add(new JLabel("Select User:"));
+            north.add(cmbUser);
+            add(north, BorderLayout.NORTH);
+        }
         setSize(700, 400);
-        setLocationRelativeTo(null);
         initUI();
         loadData();
     }
@@ -37,10 +43,11 @@ public class BodyMetricWindow extends JFrame {
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
-        JButton addBtn = new JButton("Add");
-        JButton editBtn = new JButton("Edit");
-        JButton delBtn = new JButton("Delete");
-        JButton exitBtn = new JButton("Exit");
+        buttons.setBackground(GlobalUISettings.WINDOW_BG);
+        JButton addBtn = GlobalUISettings.createStyledButton("Add", Icons.ADD);
+        JButton editBtn = GlobalUISettings.createStyledButton("Edit", Icons.EDIT);
+        JButton delBtn = GlobalUISettings.createStyledButton("Delete", Icons.DELETE);
+        JButton exitBtn = GlobalUISettings.createStyledButton("Exit", Icons.CLOSE);
 
         addBtn.addActionListener(e -> onAdd());
         editBtn.addActionListener(e -> onEdit());
@@ -58,7 +65,8 @@ public class BodyMetricWindow extends JFrame {
         DefaultTableModel m = (DefaultTableModel) table.getModel();
         m.setRowCount(0);
         for (BodyMetric bm : dao.findByUser(user.getId())) {
-            m.addRow(new Object[]{bm.getId(), bm.getDate(), bm.getWeight(), bm.getBodyFat(), bm.getHeight(), bm.getAge()});
+            m.addRow(new Object[] { bm.getId(), bm.getDate(), bm.getWeight(), bm.getBodyFat(), bm.getHeight(),
+                    bm.getAge() });
         }
     }
 
@@ -68,7 +76,7 @@ public class BodyMetricWindow extends JFrame {
         JTextField height = new JTextField();
         JTextField age = new JTextField();
         JTextField date = new JTextField(LocalDate.now().toString());
-        int ok = JOptionPane.showConfirmDialog(this, new Object[]{
+        int ok = JOptionPane.showConfirmDialog(this, new Object[] {
                 "Weight (kg):", weight,
                 "Body Fat (% or blank):", bodyFat,
                 "Height (cm):", height,
@@ -91,7 +99,10 @@ public class BodyMetricWindow extends JFrame {
 
     private void onEdit() {
         int row = table.getSelectedRow();
-        if (row < 0) { JOptionPane.showMessageDialog(this, "Select a row"); return; }
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Select a row");
+            return;
+        }
         int id = (int) table.getValueAt(row, 0);
         Double weightV = toDouble(table.getValueAt(row, 2));
         Double bodyFatV = toDouble(table.getValueAt(row, 3));
@@ -99,13 +110,13 @@ public class BodyMetricWindow extends JFrame {
         Integer ageV = toInt(table.getValueAt(row, 5));
         String dateV = String.valueOf(table.getValueAt(row, 1));
 
-        JTextField weight = new JTextField(weightV==null? "" : String.valueOf(weightV));
-        JTextField bodyFat = new JTextField(bodyFatV==null? "" : String.valueOf(bodyFatV));
-        JTextField height = new JTextField(heightV==null? "" : String.valueOf(heightV));
-        JTextField age = new JTextField(ageV==null? "" : String.valueOf(ageV));
+        JTextField weight = new JTextField(weightV == null ? "" : String.valueOf(weightV));
+        JTextField bodyFat = new JTextField(bodyFatV == null ? "" : String.valueOf(bodyFatV));
+        JTextField height = new JTextField(heightV == null ? "" : String.valueOf(heightV));
+        JTextField age = new JTextField(ageV == null ? "" : String.valueOf(ageV));
         JTextField date = new JTextField(dateV);
 
-        int ok = JOptionPane.showConfirmDialog(this, new Object[]{
+        int ok = JOptionPane.showConfirmDialog(this, new Object[] {
                 "Weight (kg):", weight,
                 "Body Fat (% or blank):", bodyFat,
                 "Height (cm):", height,
@@ -130,14 +141,31 @@ public class BodyMetricWindow extends JFrame {
 
     private void onDelete() {
         int row = table.getSelectedRow();
-        if (row < 0) { JOptionPane.showMessageDialog(this, "Select a row"); return; }
+        if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Select a row");
+            return;
+        }
         int id = (int) table.getValueAt(row, 0);
-        if (JOptionPane.showConfirmDialog(this, "Delete selected record?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Delete selected record?", "Confirm",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             dao.delete(id);
             loadData();
         }
     }
 
-    private Double toDouble(Object v) { try { return v == null ? null : Double.valueOf(String.valueOf(v)); } catch(Exception e){ return null; } }
-    private Integer toInt(Object v) { try { return v == null ? null : Integer.valueOf(String.valueOf(v)); } catch(Exception e){ return null; } }
+    private Double toDouble(Object v) {
+        try {
+            return v == null ? null : Double.valueOf(String.valueOf(v));
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private Integer toInt(Object v) {
+        try {
+            return v == null ? null : Integer.valueOf(String.valueOf(v));
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

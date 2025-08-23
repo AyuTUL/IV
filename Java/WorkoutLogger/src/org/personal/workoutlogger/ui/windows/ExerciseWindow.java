@@ -7,18 +7,17 @@ import org.personal.workoutlogger.model.Exercise;
 import org.personal.workoutlogger.dao.ExerciseDao;
 import org.personal.workoutlogger.dao.impl.ExerciseDaoImpl;
 
+import org.personal.workoutlogger.ui.GlobalUISettings;
+
 public class ExerciseWindow extends JFrame {
 
     private final ExerciseDao dao = new ExerciseDaoImpl();
-    private final JTable table = new JTable(new DefaultTableModel(new Object[]{"ID", "Name", "Muscle Group"}, 0));
+    private final JTable table = new JTable(new DefaultTableModel(new Object[] { "ID", "Name", "Muscle Group" }, 0));
 
     public ExerciseWindow() {
-        super("Exercises");
-        setResizable(true);
-
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        super();
+        GlobalUISettings.setupFrame(this, "Exercises");
         setSize(600, 400);
-        setLocationRelativeTo(null);
         initUI();
         loadData();
     }
@@ -28,10 +27,10 @@ public class ExerciseWindow extends JFrame {
         add(new JScrollPane(table), BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
-        JButton addBtn = new JButton("Add");
-        JButton editBtn = new JButton("Edit");
-        JButton delBtn = new JButton("Delete");
-        JButton exitBtn = new JButton("Exit");
+        JButton addBtn = GlobalUISettings.createStyledButton("Add");
+        JButton editBtn = GlobalUISettings.createStyledButton("Edit");
+        JButton delBtn = GlobalUISettings.createStyledButton("Delete");
+        JButton exitBtn = GlobalUISettings.createStyledButton("Exit");
 
         addBtn.addActionListener(e -> onAdd());
         editBtn.addActionListener(e -> onEdit());
@@ -49,14 +48,15 @@ public class ExerciseWindow extends JFrame {
         DefaultTableModel m = (DefaultTableModel) table.getModel();
         m.setRowCount(0);
         for (Exercise ex : dao.getAll()) {
-            m.addRow(new Object[]{ex.getId(), ex.getName(), ex.getMuscleGroup()});
+            m.addRow(new Object[] { ex.getId(), ex.getName(), ex.getMuscleGroup() });
         }
     }
 
     private void onAdd() {
         JTextField name = new JTextField();
         JTextField group = new JTextField();
-        int ok = JOptionPane.showConfirmDialog(this, new Object[]{"Name:", name, "Muscle Group:", group}, "Add Exercise", JOptionPane.OK_CANCEL_OPTION);
+        int ok = JOptionPane.showConfirmDialog(this, new Object[] { "Name:", name, "Muscle Group:", group },
+                "Add Exercise", JOptionPane.OK_CANCEL_OPTION);
         if (ok == JOptionPane.OK_OPTION) {
             Exercise ex = new Exercise(0, name.getText().trim(), group.getText().trim());
             dao.add(ex);
@@ -73,7 +73,8 @@ public class ExerciseWindow extends JFrame {
         int id = (int) table.getValueAt(row, 0);
         JTextField name = new JTextField(String.valueOf(table.getValueAt(row, 1)));
         JTextField group = new JTextField(String.valueOf(table.getValueAt(row, 2)));
-        int ok = JOptionPane.showConfirmDialog(this, new Object[]{"Name:", name, "Muscle Group:", group}, "Edit Exercise", JOptionPane.OK_CANCEL_OPTION);
+        int ok = JOptionPane.showConfirmDialog(this, new Object[] { "Name:", name, "Muscle Group:", group },
+                "Edit Exercise", JOptionPane.OK_CANCEL_OPTION);
         if (ok == JOptionPane.OK_OPTION) {
             Exercise ex = new Exercise(id, name.getText().trim(), group.getText().trim());
             dao.update(ex);
@@ -88,7 +89,8 @@ public class ExerciseWindow extends JFrame {
             return;
         }
         int id = (int) table.getValueAt(row, 0);
-        if (JOptionPane.showConfirmDialog(this, "Delete selected exercise?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+        if (JOptionPane.showConfirmDialog(this, "Delete selected exercise?", "Confirm",
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             dao.delete(id);
             loadData();
         }
