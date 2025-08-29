@@ -3,16 +3,14 @@ def is_safe(board, row, col, n):
         if board[row][c] == 1:
             return False
 
-    i = row
-    j = col
+    i, j = row, col
     while i >= 0 and j >= 0:
         if board[i][j] == 1:
             return False
         i -= 1
         j -= 1
 
-    i = row
-    j = col
+    i, j = row, col
     while i < n and j >= 0:
         if board[i][j] == 1:
             return False
@@ -33,12 +31,12 @@ def nqueen(board, col, n):
     return False
 
 
-n = int(input("enter the queen number ="))
-board = [[0 for j in range(n)] for i in range(n)]
-if nqueen(board, 0, n) == True:
-    for i in range(n):
-        for j in range(n):
-            print(board[i][j], end=" ")
-        print()
+print("------ n Queen Problem ------")
+n = int(input("Enter number of queens : "))
+board = [[0 for _ in range(n)] for _ in range(n)]
+
+if nqueen(board, 0, n):
+    for row in board:
+        print(" ".join("Q" if x == 1 else "." for x in row))
 else:
-    print("not impossible")
+    print("Not possible")
