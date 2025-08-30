@@ -1,5 +1,5 @@
 /*Lab 11: Alias
-i) Write SQL code to create alias name of existing attribute
+i) Create alias name of existing attribute
 ii) Create table Teacher with suitable fields:
 	a) Insert 7 records
 	b) Give increment of 30% of salary of Computer Dept
