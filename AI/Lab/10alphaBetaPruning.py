@@ -3,7 +3,6 @@ pruned = 0
 
 
 def display_tree(node, depth=0):
-    """Display the tree structure in a readable format"""
     if not isinstance(node, list):
         print("    " * depth + str(node))
     else:

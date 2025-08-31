@@ -1,46 +1,42 @@
-# Define Unit Step Function
-def unitStep(v):
-    if v >= 0:
-        return 1
-    else:
-        return 0
+# Perceptron-based Logic Gates
 
-# Design Perceptron Model
-def perceptronModel(x, w, b):
-    # Calculate the dot product manually
+def unit_step(v):
+    return 1 if v >= 0 else 0
+
+def perceptron(x, w, b):
     v = sum(wi * xi for wi, xi in zip(w, x)) + b
-    y = unitStep(v)
-    return y
-  
-# NOT Logic Function
-# wNOT = -1, bNOT = 0.5
-def NOT_logicFunction(x):
-    wNOT = -1
-    bNOT = 0.5
-    return perceptronModel([x], [wNOT], bNOT)  # Single input as a list
+    return unit_step(v)
 
-# AND Logic Function
-# w1 = 1, w2 = 1, bAND = -1.5
-def AND_logicFunction(x):
-    w = [1, 1]
-    bAND = -1.5
-    return perceptronModel(x, w, bAND)
+# Logic gates implemented as perceptrons
+def NOT(x):
+    return perceptron([x], [-1], 0.5)
 
-# NAND Logic Function
-# with AND and NOT  
-# Function calls in sequence
-def NAND_logicFunction(x):
-    output_AND = AND_logicFunction(x)
-    output_NOT = NOT_logicFunction(output_AND)
-    return output_NOT
-  
-# Testing the Perceptron Model
-test1 = [0, 1]
-test2 = [1, 1]
-test3 = [0, 0]
-test4 = [1, 0]
-  
-print("NAND({}, {}) = {}".format(0, 1, NAND_logicFunction(test1)))
-print("NAND({}, {}) = {}".format(1, 1, NAND_logicFunction(test2)))
-print("NAND({}, {}) = {}".format(0, 0, NAND_logicFunction(test3)))
-print("NAND({}, {}) = {}".format(1, 0, NAND_logicFunction(test4)))
+def AND(x):
+    return perceptron(x, [1, 1], -1.5)
+
+def NAND(x):
+    return NOT(AND(x))
+
+def OR(x):
+    return perceptron(x, [1, 1], -0.5)
+
+def NOR(x):
+    return NOT(OR(x))
+
+# Test harness
+def test_gate(name, func, inputs):
+    print(f"\n{name} Gate:")
+    for a, b in inputs:
+        print(f"{name}({a}, {b}) = {func([a, b])}")
+
+if __name__ == "__main__":
+    test_inputs = [(0,0), (0,1), (1,0), (1,1)]
+    print("------ Perceptron Algorithm ------")
+    test_gate("AND", AND, test_inputs)
+    test_gate("NAND", NAND, test_inputs)
+    test_gate("OR", OR, test_inputs)
+    test_gate("NOR", NOR, test_inputs)
+
+    print("\nNOT Gate:")
+    for a in [0, 1]:
+        print(f"NOT({a}) = {NOT(a)}")

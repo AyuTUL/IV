@@ -1,60 +1,58 @@
-# Define the regions and their domains
 regions = ['WA', 'NT', 'SA', 'Q', 'NSW', 'V']
 colors = ['Red', 'Green', 'Blue']
 
-# Define the constraint function
-def const_different(color1, color2):
-    return color1 != color2
+neighbors = {
+    'WA':  ['NT', 'SA'],
+    'NT':  ['WA', 'SA', 'Q'],
+    'SA':  ['WA', 'NT', 'Q', 'NSW', 'V'],
+    'Q':   ['NT', 'SA', 'NSW'],
+    'NSW': ['Q', 'SA', 'V'],
+    'V':   ['SA', 'NSW']
+}
 
-# Define the constraints as pairs of (region1, region2)
-constraints = [
-    (('WA', 'NT'), const_different), 
-    (('WA', 'SA'), const_different), 
-    (('SA', 'NT'), const_different), 
-    (('SA', 'Q'), const_different), 
-    (('NT', 'Q'), const_different), 
-    (('SA', 'NSW'), const_different), 
-    (('Q', 'NSW'), const_different), 
-    (('SA', 'V'), const_different), 
-    (('NSW', 'V'), const_different), 
-]
+print("------ Map Coloring Problem ------\n")
+print("Regions:", ", ".join(regions))
+print("Colors:", ", ".join(colors))
+print("\nConstraints (adjacent regions must have different colors):")
+for r in neighbors:
+    for neigh in neighbors[r]:
+        if regions.index(r) < regions.index(neigh):
+            print(f"  {r} - {neigh}")
+print()
 
-# Function to check if the current assignment is valid
 def is_valid(assignment, region, color):
-    for (region1, region2), constraint in constraints:
-        if region == region1 and region2 in assignment:
-            if not constraint(color, assignment[region2]):
-                return False
-        elif region == region2 and region1 in assignment:
-            if not constraint(color, assignment[region1]):
-                return False
-    return True
+    return all(
+        assignment.get(neigh) != color
+        for neigh in neighbors[region]
+    )
 
-# Backtracking function to solve the CSP
+def select_unassigned_region(assignment):
+    unassigned = [r for r in regions if r not in assignment]
+    return min(unassigned, key=lambda r: sum(
+        is_valid(assignment, r, c) for c in colors
+    ))
+
 def backtrack(assignment):
     if len(assignment) == len(regions):
-        return assignment  # All regions are assigned
+        return assignment
 
-    # Select the next unassigned region
-    unassigned_region = [r for r in regions if r not in assignment][0]
+    region = select_unassigned_region(assignment)
 
     for color in colors:
-        if is_valid(assignment, unassigned_region, color):
-            assignment[unassigned_region] = color  # Assign color
-            result = backtrack(assignment)  # Recur
+        if is_valid(assignment, region, color):
+            assignment[region] = color
+            result = backtrack(assignment)
             if result:
                 return result
-            del assignment[unassigned_region]  # Remove assignment (backtrack)
+            del assignment[region]
 
-    return None  # No valid assignment found
+    return None
 
-# Solve the map coloring problem
 solution = backtrack({})
 
-# Print the result
 if solution:
-    print("Coloring solution found:")
-    for region, color in solution.items():
-        print(f"{region}: {color}")
+    print("Coloring solution found:\n")
+    for r in regions:
+        print(f"{r}: {solution[r]}")
 else:
     print("No solution found.")
