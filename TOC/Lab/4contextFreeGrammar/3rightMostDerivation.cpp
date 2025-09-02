@@ -4,7 +4,7 @@
 */	
 #include <iostream>
 #include <string>
-#include <vector>
+#include <cstring> 
 
 using namespace std;
 
@@ -15,33 +15,41 @@ void replaceRightmostS(string &expr, const string &replacement) {
     }
 }
 
-void rightmostDerivation() {
-    vector<string> steps;
-    string expr = "S";
-    steps.push_back(expr);
-    replaceRightmostS(expr, "S+S");
-    steps.push_back(expr);
-    replaceRightmostS(expr, "ID");
-    steps.push_back(expr);
+void rightmostDerivation(const string productions[], int count, const string &start) {
+    const int MAX_STEPS = 50;
+    string steps[MAX_STEPS];
 
-    replaceRightmostS(expr, "-S");
-    steps.push_back(expr);
-    replaceRightmostS(expr, "(S)");
-    steps.push_back(expr);
-    replaceRightmostS(expr, "S*S");
-    steps.push_back(expr);
-    replaceRightmostS(expr, "ID");
-    steps.push_back(expr);
-    replaceRightmostS(expr, "ID");
-    steps.push_back(expr);
-    cout << "Rightmost derivation steps for the string '-(ID*ID)+ID':\n";
-    for (int i = 0; i < steps.size(); i++) {
-        cout << i + 1 << ": " << steps[i] << "\n";
+    string expr = start;
+    steps[0] = expr;
+
+    for (int i = 0; i < count; i++) {
+        replaceRightmostS(expr, productions[i]);
+        steps[i + 1] = expr;
+    }
+
+    cout << endl<<"Rightmost derivation :";
+    for (int i = 0; i <= count; i++) {
+        cout << endl<<i + 1 << ": " << steps[i] ;
     }
 }
 
 int main() {
-    rightmostDerivation();
+
+    string productions[] = {
+        "S+S",    
+        "id",     
+        "-S",    
+        "(S)",  
+        "S*S",   
+        "id",    
+        "id"      
+    };
+
+    int stepCount = sizeof(productions) / sizeof(productions[0]);
+    string startSymbol = "S";
+	cout<<"Production :"<<endl;
+	cout<<"S -> S*S | S+S | -S | (S) | id"<<endl;
+    rightmostDerivation(productions, stepCount, startSymbol);
+
     return 0;
 }
-

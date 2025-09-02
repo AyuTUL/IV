@@ -1,55 +1,58 @@
-/*Lab 4.2: WAP to remove the left factoring of given grammar
-	E->iRtsAs|iEts
-	A->a
-*/
 #include <iostream>
-#include <string>
+#include <cstring>
+
 using namespace std;
 
-void leftFactoring(char nonTerminal, const string& prod1, const string& prod2) {
-    string prefix, alpha, beta;
-    int i = 0;
+void leftFactoring(char nonTerminal, char productions[][50], int count) {
 
-    // Find common prefix
-    while (i < prod1.length() && i < prod2.length() && prod1[i] == prod2[i]) {
-        prefix += prod1[i];
-        i++;
+    string prefix = productions[0];
+
+    for (int i = 1; i < count; i++) {
+        int j = 0;
+        while (j < prefix.size() && j < strlen(productions[i]) && prefix[j] == productions[i][j]) {
+            j++;
+        }
+        prefix = prefix.substr(0, j);
+        if (prefix.empty()) {
+            break; 
+        }
     }
 
-    // Extract remaining parts
-    alpha = prod1.substr(i);
-    beta = prod2.substr(i);
+    if (prefix.empty()) {
 
-    // Output transformed grammar
+        cout << nonTerminal << " -> ";
+        for (int i = 0; i < count; i++) {
+            cout << productions[i];
+            if (i != count - 1) cout << " | ";
+        }
+        cout << "\n";
+        return;
+    }
+
     cout << nonTerminal << " -> " << prefix << nonTerminal << "'" << endl;
     cout << nonTerminal << "' -> ";
 
-    if (!alpha.empty())
-        cout << alpha;
-    else
-        cout << "e";
-
-    cout << " | ";
-
-    if (!beta.empty())
-        cout << beta;
-    else
-        cout << "e";
-
+    for (int i = 0; i < count; i++) {
+        const char* prod = productions[i];
+        int prodLen = strlen(prod);
+        if (prodLen > prefix.size()) {
+            cout << (prod + prefix.size());  
+        } else {
+            cout << "EPS"; 
+        }
+        if (i != count - 1) cout << " | ";
+    }
     cout << endl;
 }
 
 int main() {
-    cout << "Original Grammar:" << endl;
+    cout << "Original Grammar :" << endl;
     cout << "E -> iEtsAs | iEts" << endl;
     cout << "A -> a" << endl << endl;
-
-    cout << "Grammar after Left Factoring:" << endl;
-    leftFactoring('E', "iEtsAs", "iEts");
-
-    // A stays same
-    cout << "A -> a" << endl;
+	 cout << "Grammar after removing left factoring :"<<endl;
+    char eProductions[2][50] = {"iEtsAs", "iEts"};
+    leftFactoring('E', eProductions, 2);
+    cout << "A -> a" ;
 
     return 0;
 }
-

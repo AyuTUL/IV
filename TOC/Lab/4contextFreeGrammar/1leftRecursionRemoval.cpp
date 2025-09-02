@@ -3,55 +3,64 @@
 	T->T*F|F
 	F->(E)|id
 */
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
+#include <cstring>
+using namespace std;
 
 void removeLeftRecursion(char nonTerminal, char production[]) {
-    char alpha[50], beta[50];
-    int i, j = 0, k = 0;
+    char alpha[10][50];
+    char beta[10][50];
+    int alphaCount = 0, betaCount = 0;
 
-    // If first production has left recursion
-    if (production[0] == nonTerminal) {
-        // Extract alpha (after left recursion)
-        for (i = 1; production[i] != '|' && production[i] != '\0'; i++) {
-            alpha[j++] = production[i];
+    char* token = strtok(production, "|");
+    while (token != NULL) {
+        if (token[0] == nonTerminal) {
+            strcpy(alpha[alphaCount], token + 1); 
+            alphaCount++;
+        } else {
+            strcpy(beta[betaCount], token);
+            betaCount++;
         }
-        alpha[j] = '\0';
 
-        // Extract beta (after '|')
-        if (production[i] == '|') i++;
-        for (; production[i] != '\0'; i++) {
-            beta[k++] = production[i];
+        token = strtok(NULL, "|");
+    }
+
+    if (alphaCount > 0) {
+
+        for (int i = 0; i < betaCount; i++) {
+            cout << nonTerminal << " -> " << beta[i] << nonTerminal <<endl;
         }
-        beta[k] = '\0';
 
-        // Print transformed productions
-        printf("%c -> %s%c'\n", nonTerminal, beta, nonTerminal);
-        printf("%c' -> %s%c' | e\n", nonTerminal, alpha, nonTerminal);
-    } 
-    else {
-        // No left recursion
-        printf("%c -> %s\n", nonTerminal, production);
+
+        cout << nonTerminal << "' -> ";
+        for (int i = 0; i < alphaCount; i++) {
+            cout << alpha[i] << nonTerminal << "'";
+            if (i < alphaCount - 1)
+                cout << " | ";
+        }
+        cout << " | EPS"<<endl;
+    } else {
+        cout << nonTerminal << " -> ";
+        char* again = strtok(production, "|");
+        while (again != NULL) {
+            cout << again;
+            again = strtok(NULL, "|");
+            if (again) cout << " | ";
+        }
+        cout << endl;
     }
 }
 
 int main() {
-    printf("Original Grammar:\n");
-    printf("E -> E+T | T\n");
-    printf("T -> T*F | F\n");
-    printf("F -> (E) | id\n\n");
-
-    printf("Grammar after Removing Left Recursion:\n");
-
-    // For E
-    removeLeftRecursion('E', "E+T|T");
-
-    // For T
-    removeLeftRecursion('T', "T*F|F");
-
-    // For F (no left recursion)
-    printf("F -> (E) | id\n");
-
+    cout << "Original production :"<<endl;
+    cout << "E -> E+T | T"<<endl;
+    cout << "T -> T*F | F"<<endl;
+    cout << "F -> (E) | id"<<endl;
+    cout << endl<<"Production after removing left recursion :"<<endl;
+    char eProd[] = "E+T|T";
+    char tProd[] = "T*F|F";
+    removeLeftRecursion('E', eProd);
+    removeLeftRecursion('T', tProd);
+    cout << "F -> (E) | id";
     return 0;
 }
-
