@@ -1,4 +1,5 @@
-// Lab 5.1: WAP to design PDA that accepts L={a^n b^n | n>=1}. Also check for aaaabbbb.
+// Lab 6.2: WAP to design TM that accepts even palindrome.
+//wip
 #include <iostream>
 #include <stack>
 #include <string>

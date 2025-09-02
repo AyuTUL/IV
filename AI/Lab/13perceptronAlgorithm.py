@@ -17,12 +17,6 @@ def AND(x):
 def NAND(x):
     return NOT(AND(x))
 
-def OR(x):
-    return perceptron(x, [1, 1], -0.5)
-
-def NOR(x):
-    return NOT(OR(x))
-
 # Test harness
 def test_gate(name, func, inputs):
     print(f"\n{name} Gate:")
@@ -33,10 +27,10 @@ if __name__ == "__main__":
     test_inputs = [(0,0), (0,1), (1,0), (1,1)]
     print("------ Perceptron Algorithm ------")
     test_gate("AND", AND, test_inputs)
-    test_gate("NAND", NAND, test_inputs)
-    test_gate("OR", OR, test_inputs)
-    test_gate("NOR", NOR, test_inputs)
-
     print("\nNOT Gate:")
     for a in [0, 1]:
         print(f"NOT({a}) = {NOT(a)}")
+    test_gate("NAND", NAND, test_inputs)
+
+
+   

@@ -1,60 +1,61 @@
-/*Lab 4.4: WAP to find left most derivation of given grammar
-	S->S*S|S+S|-S|(S)|id
-	string: -(id*id)+id
-*/	
-#include <bits/stdc++.h>
+/*
+Lab 4.3: WAP to find leftmost derivation of given grammar
+Grammar:
+    S -> S*S | S+S | -S | (S) | id
+String:
+    -(id*id)+id
+*/
+
+#include <iostream>
+#include <string>
 using namespace std;
 
-struct Match {
-    int pos = -1;
-    int len = 0;
-    string pat;
-    bool found() const { return pos >= 0; }
-};
-
-Match find_leftmost_handle(const string& s, const vector<string>& patterns) {
-    Match best;
-    for (const string& pat : patterns) {
-        size_t p = s.find(pat);
-        if (p != string::npos) {
-            if (best.pos == -1 || (int)p < best.pos || ((int)p == best.pos && (int)pat.size() > best.len)) {
-                best.pos = (int)p;
-                best.len = (int)pat.size();
-                best.pat = pat;
-            }
-        }
-    }
-    return best;
+void replaceLeftmostS(string &expr, const string &replacement)
+{
+    int pos = expr.find('S'); // leftmost occurrence
+    if (pos != string::npos)
+        expr.replace(pos, 1, replacement);
 }
 
-int main() {
-    string target = "-(id*id)+id";
-    vector<string> reduce_patterns = { "id", "(S)", "-S", "S*S", "S+S" };
-    vector<string> reductions;
-    reductions.push_back(target);
-    string cur = target;
-    const int MAX_STEPS = 1000;
+void leftmostDerivation(const string productions[], int count, const string &start)
+{
+    const int MAX_STEPS = 50;
+    string steps[MAX_STEPS];
 
-    for (int step = 0; step < MAX_STEPS && cur != "S"; ++step) {
-        Match m = find_leftmost_handle(cur, reduce_patterns);
-        if (!m.found()) {
-            cerr << "Reduction failed: no handle found in \"" << cur << "\"\n";
-            return 1;
-        }
-        cur = cur.substr(0, m.pos) + "S" + cur.substr(m.pos + m.len);
-        reductions.push_back(cur);
+    string expr = start;
+    steps[0] = expr;
+
+    for (int i = 0; i < count; i++)
+    {
+        replaceLeftmostS(expr, productions[i]);
+        steps[i + 1] = expr;
     }
 
-    if (cur != "S") {
-        cerr << "Reduction failed: step limit reached.\n";
-        return 1;
-    }
+    cout << endl
+         << "Leftmost derivation:";
+    for (int i = 0; i <= count; i++)
+        cout << endl
+             << i + 1 << ": " << steps[i];
+}
 
-    reverse(reductions.begin(), reductions.end());
-    cout << "Leftmost Derivation:\n";
-    for (size_t i = 0; i < reductions.size(); ++i) {
-        cout << (i + 1) << ": " << reductions[i] << "\n";
-    }
+int main()
+{
+    string productions[] = {
+        "-S",
+        "S+S",
+        "(S)",
+        "S*S",
+        "id",
+        "id",
+        "id"};
+
+    int stepCount = sizeof(productions) / sizeof(productions[0]);
+    string startSymbol = "S";
+
+    cout << "Production :" << endl;
+    cout << "S -> S*S | S+S | -S | (S) | id" << endl;
+
+    leftmostDerivation(productions, stepCount, startSymbol);
+
     return 0;
 }
-

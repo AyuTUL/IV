@@ -1,43 +1,43 @@
-//Lab 2.1: WAP to contruct NFA that accepts 1001
-#include<iostream>
-#include<cstring>
+// Lab 2.1: WAP to contruct NFA that accepts 1001
+#include <iostream>
+#include <string>
 using namespace std;
 int main()
 {
 	string input;
-	char state='A';
-	cout<<"Enter input : ";
-	cin>>input;
-	for(int i=0;i<input.length();i++)
-		if(input[i]!='0' && input[i]!='1')
+	char state = 'A';
+	cout << "Enter input : ";
+	cin >> input;
+	for (int i = 0; i < input.length(); i++)
+		if (input[i] != '0' && input[i] != '1')
 		{
-			cout<<"Invalid input. The alphabet is {0,1}.";
+			cout << "Invalid input. The alphabet is {0,1}.";
 			return 0;
 		}
-	for(int i=0;i<input.length();i++)
+	for (int i = 0; i < input.length(); i++)
 	{
-		switch(state)
+		switch (state)
 		{
-			case 'A':
-                state=(input[i]=='1')?'B':'A';
-                break;
-            case 'B':
-                state=(input[i]=='0')?'C':'B';
-                break;
-            case 'C':
-                state=(input[i]=='0')?'D':'B';
-                break;
-            case 'D':
-                state=(input[i]=='1')?'E':'A';
-                break;
-            case 'E':
-                state='E';
-                break;
-			}
+		case 'A':
+			state = (input[i] == '1') ? 'B' : 'A';
+			break;
+		case 'B':
+			state = (input[i] == '0') ? 'C' : 'B';
+			break;
+		case 'C':
+			state = (input[i] == '0') ? 'D' : 'B';
+			break;
+		case 'D':
+			state = (input[i] == '1') ? 'E' : 'A';
+			break;
+		case 'E':
+			state = 'E';
+			break;
+		}
 	}
-	if(state=='E')
-		cout<<"NFA accepts the string : "<<input;
+	if (state == 'E')
+		cout << "NFA accepts the string : " << input;
 	else
-		cout<<"NFA rejects the string : "<<input;
+		cout << "NFA rejects the string : " << input;
 	return 0;
 }

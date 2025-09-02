@@ -1,4 +1,4 @@
-// Lab 5.1: WAP to design PDA that accepts L={a^n b^n | n>=1}. Also check for aaaabbbb.
+// Lab 6.4: WAP to design TM that accepts 2's complement of binary input.
 #include <iostream>
 #include <stack>
 #include <string>
