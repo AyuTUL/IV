@@ -2,14 +2,6 @@ tree = [[[5, 1, 2], [8, -8, -9]], [[9, 4, 5], [-3, 4, 3]]]
 pruned = 0
 
 
-def display_tree(node, depth=0):
-    if not isinstance(node, list):
-        print("    " * depth + str(node))
-    else:
-        for child in node:
-            display_tree(child, depth + 1)
-
-
 def alphabeta(node, depth=0, alpha=float("-inf"), beta=float("inf"), maximizing=True):
     global pruned
     if not isinstance(node, list):

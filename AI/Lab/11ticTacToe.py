@@ -7,15 +7,17 @@ board = [EMPTY] * 9
 
 def draw_banner():
     print("------ Tic-Tac-Toe ------")
-    print("Player 1 [X] --- Player 2 [O]\n")
+    print("Player 1 [X] --- Player 2 [O]")
 
 
 def draw_board():
+    print()
     print(f" {board[0]} | {board[1]} | {board[2]} ")
     print("---|---|---")
     print(f" {board[3]} | {board[4]} | {board[5]} ")
     print("---|---|---")
     print(f" {board[6]} | {board[7]} | {board[8]} ")
+    print()
 
 
 def is_valid_move(pos):
@@ -46,8 +48,6 @@ def game_loop():
     error_message = ""
 
     while True:
-        os.system("cls" if os.name == "nt" else "clear")
-        draw_banner()
         draw_board()
         if error_message:
             print(f"Error: {error_message}\n")
@@ -79,8 +79,6 @@ def game_loop():
         result = check_winner()
 
         if result:
-            os.system("cls" if os.name == "nt" else "clear")
-            draw_banner()
             draw_board()
             if result == "Draw":
                 print("It's a draw!")
@@ -92,4 +90,5 @@ def game_loop():
 
 
 if __name__ == "__main__":
+    draw_banner()
     game_loop()
