@@ -38,7 +38,7 @@ WHERE NOT EXISTS (
     SELECT 1 FROM teacher AS t WHERE t.department = s.major
 );
 
-SELECT DISTINCT marks AS 3rd_Highest_Marks FROM student s1
+SELECT DISTINCT roll, sname, marks AS 3rd_Highest_Marks, major FROM student s1
 WHERE 3 = (
     SELECT COUNT(DISTINCT marks) FROM student s2
     WHERE s2.marks >= s1.marks

@@ -57,6 +57,7 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "map": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "xstring": "cpp"
     }
 }

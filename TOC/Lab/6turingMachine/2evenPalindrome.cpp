@@ -1,61 +1,120 @@
 // Lab 6.2: WAP to design TM that accepts even palindrome.
-//wip
 #include <iostream>
-#include <stack>
 #include <string>
 using namespace std;
-bool pda(string &input)
+
+bool tm(string input)
 {
 	char state = 'A';
-	stack<char> s;
-	s.push('z');
-	for (int i = 0; i < input.length(); i++)
+	int head = 0;
+	input.push_back('B');
+
+	while (true)
 	{
 		switch (state)
 		{
 		case 'A':
-			if (input[i] == 'a' && (s.top() == 'z' || s.top() == 'a'))
+			if (input[head] == 'a')
 			{
-				s.push('a');
-				state = 'A';
-			}
-			else if (input[i] == 'b' && s.top() == 'a')
-			{
-				s.pop();
+				input[head] = 'B';
 				state = 'B';
+				head++;
+			}
+			else if (input[head] == 'b')
+			{
+				input[head] = 'B';
+				state = 'E';
+				head++;
+			}
+			else if (input[head] == 'B')
+			{
+				state = 'G';
+				head++;
 			}
 			else
 				return false;
 			break;
+
 		case 'B':
-			if (input[i] == 'b' && s.top() == 'a')
+			if (input[head] == 'a' || input[head] == 'b')
+				head++;
+			else if (input[head] == 'B')
 			{
-				s.pop();
-				state = 'B';
+				state = 'C';
+				head--;
 			}
 			else
 				return false;
 			break;
+
+		case 'C':
+			if (input[head] == 'a')
+			{
+				input[head] = 'B';
+				state = 'D';
+				head--;
+			}
+			else
+				return false;
+			break;
+
+		case 'D':
+			if (input[head] == 'a' || input[head] == 'b')
+				head--;
+			else if (input[head] == 'B')
+			{
+				state = 'A';
+				head++;
+			}
+
+			else
+				return false;
+			break;
+		case 'E':
+			if (input[head] == 'a' || input[head] == 'b')
+				head++;
+			else if (input[head] == 'B')
+			{
+				state = 'F';
+				head--;
+			}
+
+			else
+				return false;
+			break;
+		case 'F':
+			if (input[head] == 'b')
+			{
+				input[head] = 'B';
+				state = 'D';
+				head--;
+			}
+
+			else
+				return false;
+			break;
+		case 'G':
+			return true;
 		}
 	}
-	if (state == 'B' && s.top() == 'z')
-		state = 'C';
-	return (state == 'C' && s.top() == 'z');
 }
+
 int main()
 {
 	string input;
-	cout << "Enter input : ";
+	cout << "Enter input: ";
 	cin >> input;
+
 	for (int i = 0; i < input.length(); i++)
 		if (input[i] != 'a' && input[i] != 'b')
 		{
 			cout << "Invalid input. The alphabet is {a,b}.";
 			return 0;
 		}
-	if (pda(input))
-		cout << "PDA accepts the string : " << input;
+
+	if (tm(input))
+		cout << "TM accepts the string: " << input;
 	else
-		cout << "PDA rejects the string : " << input;
+		cout << "TM rejects the string: " << input;
 	return 0;
 }
