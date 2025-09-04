@@ -1,0 +1,1 @@
+// Lab 10: WAP to simulate first fit contiguous memory allocation technique

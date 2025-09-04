@@ -19,7 +19,7 @@ bool pda(string &input)
 			if (input[i] == 'a')
 			{
 				aCount++;
-				if ((s.top() == 'z' || s.top() == 'a') && aCount % 2 != 0)
+				if (s.top() == 'z'  && aCount % 2 != 0)
 				{
 					s.push('a');
 					state = 'A';

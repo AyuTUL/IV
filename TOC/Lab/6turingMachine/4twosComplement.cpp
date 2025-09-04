@@ -82,6 +82,6 @@ int main()
 		}
 
 	string result = tm(input);
-	cout << "2's complement of " << input << " : " << result << endl;
+	cout << "2's complement of " << input << " : " << result;
 	return 0;
 }

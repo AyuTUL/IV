@@ -1,0 +1,1 @@
+// Lab 5.2: WAP to simulate non pre-emptive SJF scheduling algorithm to find turn around & waiting time
