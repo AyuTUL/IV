@@ -81,9 +81,9 @@ int main()
     cin >> input;
 
     for (int i = 0; i < input.length(); i++)
-        if (input[i] != 'a' && input[i] != 'b' && input[i] != 'c')
+        if (input[i] != 'a' && input[i] != 'b')
         {
-            cout << "Invalid input. The alphabet is {a,b,c}.";
+            cout << "Invalid input. The alphabet is {a,b}.";
             return 0;
         }
 

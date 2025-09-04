@@ -67,13 +67,11 @@ int main()
 	cin >> input;
 
 	for (int i = 0; i < input.length(); i++)
-	{
 		if (input[i] != 'a' && input[i] != 'b')
 		{
 			cout << "Invalid input. The alphabet is {a,b}.";
 			return 0;
 		}
-	}
 
 	if (pda(input))
 		cout << "PDA accepts the string : " << input;
