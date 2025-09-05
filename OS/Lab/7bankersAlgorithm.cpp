@@ -1,1 +1,1 @@
-// Lab 7: WAP to simulate bankers algorithm for deadlock algorithm
+// Lab 7: WAP to simulate bankers algorithm for deadlock prevention
