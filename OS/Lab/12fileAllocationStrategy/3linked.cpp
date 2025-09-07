@@ -1,0 +1,1 @@
+// Lab 12.3: WAP to simulate linked file allocation strategy

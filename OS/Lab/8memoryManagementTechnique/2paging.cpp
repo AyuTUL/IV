@@ -1,0 +1,1 @@
+// Lab 8.2: WAP to simulate paging technique of memory management
