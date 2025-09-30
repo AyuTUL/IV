@@ -1,1 +1,0 @@
-// Lab 18.2: WAP to simulate indexed file allocation strategy

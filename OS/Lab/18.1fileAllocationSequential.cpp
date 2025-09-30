@@ -1,1 +1,0 @@
-// Lab 18.1: WAP to simulate sequential file allocation strategy

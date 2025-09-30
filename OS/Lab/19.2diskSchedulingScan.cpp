@@ -1,1 +1,0 @@
-// Lab 19.2: WAP to simulate scan disk scheduling algorithm

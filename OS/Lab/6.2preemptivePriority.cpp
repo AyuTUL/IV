@@ -4,24 +4,28 @@
 #include <queue>
 #include <algorithm>
 #include <climits>
+#include <cfloat>
 using namespace std;
 
 // Helper to print float without .00 if whole number
-void printSmartFloat(float value) {
+void printSmartFloat(float value)
+{
     if (value == (int)value)
         cout << (int)value;
     else
         cout << fixed << setprecision(2) << value;
 }
 
-class Process {
+class Process
+{
 public:
     char process;
     float arrival, burst, remaining;
     int priority;
     float completion, turnaround, waiting, startTime;
 
-    Process(char p = ' ', float at = 0, float bt = 0, int pr = 0) {
+    Process(char p = ' ', float at = 0, float bt = 0, int pr = 0)
+    {
         process = p;
         arrival = at;
         burst = bt;
@@ -31,144 +35,187 @@ public:
     }
 };
 
-class PriorityScheduling {
-    Process* p;
+class PriorityScheduling
+{
+    Process *p;
     int n;
     vector<pair<float, char>> gantt; // Store the Gantt chart as pairs of (time, process)
 
 public:
-    PriorityScheduling(int num) {
+    PriorityScheduling(int num)
+    {
         n = num;
         p = new Process[n];
     }
 
-    ~PriorityScheduling() {
+    ~PriorityScheduling()
+    {
         delete[] p;
     }
 
-    void inputProcesses() {
+    void inputProcesses()
+    {
         char process;
         float arrival, burst;
         int priority;
         cout << "Enter name, arrival time, burst time & priority for each process:\n";
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             cout << "Process " << i + 1 << " : ";
             cin >> process >> arrival >> burst >> priority;
             p[i] = Process(process, arrival, burst, priority);
         }
     }
 
-    void scheduleProcesses() {
+    void scheduleProcesses()
+    {
+        // Clear the Gantt chart
+        gantt.clear();
+
         float currentTime = 0;
         int completedCount = 0;
         vector<bool> completed(n, false);
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> readyQueue;
 
-        while (completedCount < n) {
-            // Add processes that have arrived up to the current time
-            for (int i = 0; i < n; i++) {
-                if (!completed[i] && p[i].arrival <= currentTime) {
-                    readyQueue.push({p[i].priority, i});
+        // Reset completion data
+        for (int i = 0; i < n; i++)
+        {
+            p[i].completion = 0;
+            p[i].turnaround = 0;
+            p[i].waiting = 0;
+            p[i].startTime = 0;
+            p[i].remaining = p[i].burst;
+        }
+
+        char lastProcessId = ' ';
+        float lastChangeTime = 0;
+
+        while (completedCount < n)
+        {
+            int selectedIdx = -1;
+            int highestPriority = INT_MAX;
+
+            // Find the process with highest priority among the arrived ones
+            for (int i = 0; i < n; i++)
+            {
+                if (!completed[i] && p[i].arrival <= currentTime && p[i].remaining > 0)
+                {
+                    if (p[i].priority < highestPriority)
+                    {
+                        highestPriority = p[i].priority;
+                        selectedIdx = i;
+                    }
                 }
             }
 
-            // If no process is available to run, we simulate idle time
-            if (readyQueue.empty()) {
-                currentTime++;
-                continue;
+            // If no process is available, find the next arriving process
+            if (selectedIdx == -1)
+            {
+                float nextArrival = FLT_MAX;
+                int nextProcess = -1;
+                for (int i = 0; i < n; i++)
+                {
+                    if (!completed[i] && p[i].arrival < nextArrival && p[i].arrival > currentTime)
+                    {
+                        nextArrival = p[i].arrival;
+                        nextProcess = i;
+                    }
+                }
+
+                if (nextProcess != -1)
+                {
+                    // Add idle time in Gantt chart
+                    if (lastProcessId != '-')
+                    {
+                        if (lastProcessId != ' ')
+                            gantt.push_back({currentTime, lastProcessId});
+                        lastProcessId = '-';
+                        lastChangeTime = currentTime;
+                    }
+                    currentTime = nextArrival;
+                    continue;
+                }
+                else
+                {
+                    break; // No more processes to schedule
+                }
             }
 
-            // Select the highest priority process (lowest priority number)
-            int idx = readyQueue.top().second;
-            readyQueue.pop();
+            // If process has changed, update Gantt chart
+            if (lastProcessId != p[selectedIdx].process)
+            {
+                if (lastProcessId != ' ')
+                    gantt.push_back({currentTime, lastProcessId});
+                lastProcessId = p[selectedIdx].process;
+                lastChangeTime = currentTime;
 
-            // Start the process if not started already
-            if (p[idx].startTime == 0) {
-                p[idx].startTime = currentTime;
+                // Record start time if first time running
+                if (p[selectedIdx].startTime == 0)
+                    p[selectedIdx].startTime = currentTime;
             }
 
-            // Execute for 1 unit of time (preemptively, so smaller time slice)
-            float execTime = 1;
-            if (p[idx].remaining <= execTime) {
-                execTime = p[idx].remaining;
-            }
+            // Determine how long this process will run
+            float runUntil = currentTime + 1; // Default: run for 1 time unit
 
-            currentTime += execTime;
-            p[idx].remaining -= execTime;
-
-            // Log process execution in the Gantt chart
-            gantt.push_back({currentTime, p[idx].process});
-
-            // If the process finishes, calculate turnaround and waiting times
-            if (p[idx].remaining == 0) {
-                p[idx].completion = currentTime;
-                p[idx].turnaround = p[idx].completion - p[idx].arrival;
-                p[idx].waiting = p[idx].turnaround - p[idx].burst;
-                completed[idx] = true;
+            // Check if process will complete
+            if (p[selectedIdx].remaining <= 1)
+            {
+                runUntil = currentTime + p[selectedIdx].remaining;
+                p[selectedIdx].remaining = 0;
+                p[selectedIdx].completion = runUntil;
+                p[selectedIdx].turnaround = p[selectedIdx].completion - p[selectedIdx].arrival;
+                p[selectedIdx].waiting = p[selectedIdx].turnaround - p[selectedIdx].burst;
+                completed[selectedIdx] = true;
                 completedCount++;
-            } else {
-                readyQueue.push({p[idx].priority, idx}); // Push process back into queue if it's not finished
             }
+            else
+            {
+                // Check if any higher priority process will arrive before next time unit
+                float nextPreemption = currentTime + 1;
+                bool willBePreempted = false;
+
+                for (int i = 0; i < n; i++)
+                {
+                    if (!completed[i] && p[i].arrival > currentTime && p[i].arrival < nextPreemption && p[i].priority < p[selectedIdx].priority)
+                    {
+                        nextPreemption = p[i].arrival;
+                        willBePreempted = true;
+                    }
+                }
+
+                if (willBePreempted)
+                {
+                    runUntil = nextPreemption;
+                }
+
+                // Update remaining time
+                p[selectedIdx].remaining -= (runUntil - currentTime);
+            }
+
+            // Move time forward
+            currentTime = runUntil;
         }
+
+        // Add the last process to Gantt chart
+        if (lastProcessId != ' ')
+            gantt.push_back({currentTime, lastProcessId});
     }
 
-    void printGanttChart() {
-        float currentTime = 0;
-        int completedCount = 0;
-        vector<bool> completed(n, false);
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> readyQueue;
-
+    void printGanttChart()
+    {
         cout << "\nGantt Chart:\n|";
-        vector<pair<float, char>> ganttChart; // Store (time, process) pairs for Gantt chart visualization
 
-        while (completedCount < n) {
-            // Add processes that have arrived up to the current time
-            for (int i = 0; i < n; i++) {
-                if (!completed[i] && p[i].arrival <= currentTime) {
-                    readyQueue.push({p[i].priority, i});
-                }
-            }
-
-            // If no process is available to run, we simulate idle time
-            if (readyQueue.empty()) {
-                cout << setw(4) << "-" << setw(4) << "|";
-                currentTime++;
-                continue;
-            }
-
-            // Select the highest priority process (lowest priority number)
-            int idx = readyQueue.top().second;
-            readyQueue.pop();
-
-            // Execute for 1 unit of time (preemptively)
-            float execTime = 1;
-            if (p[idx].remaining <= execTime) {
-                execTime = p[idx].remaining;
-            }
-
-            currentTime += execTime;
-            p[idx].remaining -= execTime;
-
-            // Log process execution in the Gantt chart
-            ganttChart.push_back({currentTime, p[idx].process});
-
-            if (p[idx].remaining == 0) {
-                completed[idx] = true;
-                completedCount++;
-            } else {
-                readyQueue.push({p[idx].priority, idx}); // Process is not finished, re-add to ready queue
-            }
-        }
-
-        // Print the Gantt Chart
-        for (auto& entry : ganttChart) {
+        // Print the process IDs
+        for (auto &entry : gantt)
+        {
             cout << setw(4) << entry.second << setw(4) << "|";
         }
 
+        // Print the timeline
         cout << "\n0";
-        currentTime = 0;
+        float currentTime = 0;
 
-        for (auto& entry : ganttChart) {
+        for (auto &entry : gantt)
+        {
             currentTime = entry.first;
             cout << setw(8);
             printSmartFloat(currentTime);
@@ -176,32 +223,49 @@ public:
         cout << endl;
     }
 
-    void calculateAverages(float& avgTurnaround, float& avgWaiting) {
+    void calculateAverages(float &avgTurnaround, float &avgWaiting)
+    {
         avgTurnaround = avgWaiting = 0;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             avgTurnaround += p[i].turnaround;
             avgWaiting += p[i].waiting;
         }
+        avgTurnaround /= n;
+        avgWaiting /= n;
     }
 
-    void printProcessTable() {
+    void printProcessTable()
+    {
         cout << "\n+-----+--------+--------+-----+--------+--------+--------+\n";
         cout << "| PID |   AT   |   BT   | PR  |   CT   |  TAT   |   WT   |\n";
         cout << "+-----+--------+--------+-----+--------+--------+--------+\n";
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             cout << "|  " << setw(2) << p[i].process << " | ";
-            cout << setw(6); printSmartFloat(p[i].arrival); cout << " | ";
-            cout << setw(6); printSmartFloat(p[i].burst); cout << " | ";
+            cout << setw(6);
+            printSmartFloat(p[i].arrival);
+            cout << " | ";
+            cout << setw(6);
+            printSmartFloat(p[i].burst);
+            cout << " | ";
             cout << setw(3) << p[i].priority << " | ";
-            cout << setw(6); printSmartFloat(p[i].completion); cout << " | ";
-            cout << setw(6); printSmartFloat(p[i].turnaround); cout << " | ";
-            cout << setw(6); printSmartFloat(p[i].waiting); cout << " |\n";
+            cout << setw(6);
+            printSmartFloat(p[i].completion);
+            cout << " | ";
+            cout << setw(6);
+            printSmartFloat(p[i].turnaround);
+            cout << " | ";
+            cout << setw(6);
+            printSmartFloat(p[i].waiting);
+            cout << " |\n";
         }
         cout << "+-----+--------+--------+-----+--------+--------+--------+\n";
     }
 };
 
-int main() {
+int main()
+{
     int n;
     float avgTurnaround, avgWaiting;
 
@@ -216,8 +280,8 @@ int main() {
     ps.printProcessTable();
 
     cout << fixed << setprecision(2);
-    cout << "\nAverage Turnaround Time = " << (avgTurnaround / n);
-    cout << "\nAverage Waiting Time = " << (avgWaiting / n) << endl;
+    cout << "\nAverage Turnaround Time = " << avgTurnaround;
+    cout << "\nAverage Waiting Time = " << avgWaiting << endl;
 
     return 0;
 }
