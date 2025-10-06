@@ -8,7 +8,6 @@
 #include <cfloat>
 using namespace std;
 
-// Helper to print float without .00 if whole number
 void printSmartFloat(float value)
 {
     if (value == (int)value)

@@ -5,22 +5,24 @@
 #include <climits>
 using namespace std;
 
-// Helper to print float without .00 if whole number
-void printSmartFloat(float value) {
+void printSmartFloat(float value)
+{
     if (value == (int)value)
         cout << (int)value;
     else
         cout << fixed << setprecision(2) << value;
 }
 
-class Process {
+class Process
+{
 public:
     char process;
     float arrival, burst;
     int priority;
     float completion, turnaround, waiting;
 
-    Process(char p = ' ', float at = 0, float bt = 0, int pr = 0) {
+    Process(char p = ' ', float at = 0, float bt = 0, int pr = 0)
+    {
         process = p;
         arrival = at;
         burst = bt;
@@ -29,56 +31,69 @@ public:
     }
 };
 
-class PriorityScheduling {
-    Process* p;
+class PriorityScheduling
+{
+    Process *p;
     int n;
 
 public:
-    PriorityScheduling(int num) {
+    PriorityScheduling(int num)
+    {
         n = num;
         p = new Process[n];
     }
 
-    ~PriorityScheduling() {
+    ~PriorityScheduling()
+    {
         delete[] p;
     }
 
-    void inputProcesses() {
+    void inputProcesses()
+    {
         char process;
         float arrival, burst;
         int priority;
         cout << "Enter name, arrival time, burst time & priority for each process:\n";
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             cout << "Process " << i + 1 << " : ";
             cin >> process >> arrival >> burst >> priority;
             p[i] = Process(process, arrival, burst, priority);
         }
     }
 
-    void scheduleProcesses() {
+    void scheduleProcesses()
+    {
         float currentTime = 0;
-        bool* completed = new bool[n]{false};
+        bool *completed = new bool[n]{false};
         int completedCount = 0;
 
-        while (completedCount < n) {
+        while (completedCount < n)
+        {
             int idx = -1;
             int highestPriority = INT_MAX;
 
-            for (int i = 0; i < n; i++) {
-                if (!completed[i] && p[i].arrival <= currentTime) {
-                    if (p[i].priority < highestPriority) {
+            for (int i = 0; i < n; i++)
+            {
+                if (!completed[i] && p[i].arrival <= currentTime)
+                {
+                    if (p[i].priority < highestPriority)
+                    {
                         highestPriority = p[i].priority;
                         idx = i;
                     }
-                    else if (p[i].priority == highestPriority) {
-                        if (p[i].arrival < p[idx].arrival) {
+                    else if (p[i].priority == highestPriority)
+                    {
+                        if (p[i].arrival < p[idx].arrival)
+                        {
                             idx = i;
                         }
                     }
                 }
             }
 
-            if (idx == -1) {
+            if (idx == -1)
+            {
                 currentTime += 1; // Idle time
                 continue;
             }
@@ -95,31 +110,39 @@ public:
         delete[] completed;
     }
 
-    void printGanttChart() {
+    void printGanttChart()
+    {
         float currentTime = 0;
-        bool* completed = new bool[n]{false};
+        bool *completed = new bool[n]{false};
         int completedCount = 0;
 
         cout << "\nGantt Chart:\n|";
-        while (completedCount < n) {
+        while (completedCount < n)
+        {
             int idx = -1;
             int highestPriority = INT_MAX;
 
-            for (int i = 0; i < n; i++) {
-                if (!completed[i] && p[i].arrival <= currentTime) {
-                    if (p[i].priority < highestPriority) {
+            for (int i = 0; i < n; i++)
+            {
+                if (!completed[i] && p[i].arrival <= currentTime)
+                {
+                    if (p[i].priority < highestPriority)
+                    {
                         highestPriority = p[i].priority;
                         idx = i;
                     }
-                    else if (p[i].priority == highestPriority) {
-                        if (p[i].arrival < p[idx].arrival) {
+                    else if (p[i].priority == highestPriority)
+                    {
+                        if (p[i].arrival < p[idx].arrival)
+                        {
                             idx = i;
                         }
                     }
                 }
             }
 
-            if (idx == -1) {
+            if (idx == -1)
+            {
                 cout << setw(4) << "-" << setw(4) << "|";
                 currentTime += 1;
                 continue;
@@ -137,25 +160,32 @@ public:
         completedCount = 0;
         fill(completed, completed + n, false);
 
-        while (completedCount < n) {
+        while (completedCount < n)
+        {
             int idx = -1;
             int highestPriority = INT_MAX;
 
-            for (int i = 0; i < n; i++) {
-                if (!completed[i] && p[i].arrival <= currentTime) {
-                    if (p[i].priority < highestPriority) {
+            for (int i = 0; i < n; i++)
+            {
+                if (!completed[i] && p[i].arrival <= currentTime)
+                {
+                    if (p[i].priority < highestPriority)
+                    {
                         highestPriority = p[i].priority;
                         idx = i;
                     }
-                    else if (p[i].priority == highestPriority) {
-                        if (p[i].arrival < p[idx].arrival) {
+                    else if (p[i].priority == highestPriority)
+                    {
+                        if (p[i].arrival < p[idx].arrival)
+                        {
                             idx = i;
                         }
                     }
                 }
             }
 
-            if (idx == -1) {
+            if (idx == -1)
+            {
                 cout << setw(8);
                 printSmartFloat(currentTime + 1);
                 currentTime += 1;
@@ -174,32 +204,47 @@ public:
         cout << endl;
     }
 
-    void calculateAverages(float& avgTurnaround, float& avgWaiting) {
+    void calculateAverages(float &avgTurnaround, float &avgWaiting)
+    {
         avgTurnaround = avgWaiting = 0;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             avgTurnaround += p[i].turnaround;
             avgWaiting += p[i].waiting;
         }
     }
 
-    void printProcessTable() {
+    void printProcessTable()
+    {
         cout << "\n+-----+--------+--------+-----+--------+--------+--------+\n";
         cout << "| PID |   AT   |   BT   | PR  |   CT   |  TAT   |   WT   |\n";
         cout << "+-----+--------+--------+-----+--------+--------+--------+\n";
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             cout << "|  " << setw(2) << p[i].process << " | ";
-            cout << setw(6); printSmartFloat(p[i].arrival); cout << " | ";
-            cout << setw(6); printSmartFloat(p[i].burst); cout << " | ";
+            cout << setw(6);
+            printSmartFloat(p[i].arrival);
+            cout << " | ";
+            cout << setw(6);
+            printSmartFloat(p[i].burst);
+            cout << " | ";
             cout << setw(3) << p[i].priority << " | ";
-            cout << setw(6); printSmartFloat(p[i].completion); cout << " | ";
-            cout << setw(6); printSmartFloat(p[i].turnaround); cout << " | ";
-            cout << setw(6); printSmartFloat(p[i].waiting); cout << " |\n";
+            cout << setw(6);
+            printSmartFloat(p[i].completion);
+            cout << " | ";
+            cout << setw(6);
+            printSmartFloat(p[i].turnaround);
+            cout << " | ";
+            cout << setw(6);
+            printSmartFloat(p[i].waiting);
+            cout << " |\n";
         }
         cout << "+-----+--------+--------+-----+--------+--------+--------+\n";
     }
 };
 
-int main() {
+int main()
+{
     int n;
     float avgTurnaround, avgWaiting;
 

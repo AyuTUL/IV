@@ -1,1 +1,89 @@
 // Lab 9.3: WAP to simulate worst fit contiguous memory allocation technique
+#include <iostream>
+#include <vector>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+void printFinalMemoryState(const vector<int> &blocks, const vector<string> &allocated, const vector<int> &originalBlocks)
+{
+    cout << "\nFINAL MEMORY ALLOCATION STATE:" << endl;
+
+    for (int i = 0; i < blocks.size(); i++)
+    {
+        cout << "+------+" << endl;
+        string displayName = (allocated[i] == "Free") ? "--" : allocated[i];
+        if (allocated[i] == "Free")
+            cout << "|  " << setw(2) << displayName << "  | " << blocks[i] << " KB" << endl;
+        else
+        {
+            int occupied = originalBlocks[i] - blocks[i];
+            cout << "|  " << setw(2) << displayName << "  | " << occupied << "/" << originalBlocks[i] << " KB" << endl;
+        }
+    }
+    cout << "+------+" << endl;
+}
+
+int main()
+{
+    int n, m;
+    cout << "Enter number of memory blocks : ";
+    cin >> n;
+
+    vector<int> block(n);
+    vector<int> originalBlocks(n);
+    vector<string> allocated(n, "Free");
+
+    cout << "Enter sizes of blocks : ";
+    for (int i = 0; i < n; i++)
+    {
+        cin >> block[i];
+        originalBlocks[i] = block[i]; // Store original sizes
+    }
+
+    cout << "Enter number of processes : ";
+    cin >> m;
+
+    vector<int> process(m);
+    cout << "Enter sizes of processes : ";
+    for (int i = 0; i < m; i++)
+        cin >> process[i];
+
+    cout << endl
+         << "WORST FIT ALLOCATION PROCESS :" << endl
+         << string(40, '-') << endl;
+
+    for (int i = 0; i < m; i++)
+    {
+        bool isAllocated = false;
+        int worstIndex = -1;
+        int maxWaste = -1;
+
+        // Find the worst fit block (largest block that can accommodate the process)
+        for (int j = 0; j < n; j++)
+            if (allocated[j] == "Free" && block[j] >= process[i])
+            {
+                int waste = block[j] - process[i];
+                if (waste > maxWaste)
+                {
+                    maxWaste = waste;
+                    worstIndex = j;
+                }
+            }
+
+        if (worstIndex != -1)
+        {
+            cout << "Process P" << (i + 1) << " (" << process[i] << " KB) allocated to Block " << (worstIndex + 1) << endl;
+            block[worstIndex] -= process[i];
+            allocated[worstIndex] = "P" + to_string(i + 1);
+            isAllocated = true;
+        }
+
+        if (!isAllocated)
+            cout << "Process P" << (i + 1) << " (" << process[i] << " KB) could not be allocated" << endl;
+    }
+
+    printFinalMemoryState(block, allocated, originalBlocks);
+
+    return 0;
+}
