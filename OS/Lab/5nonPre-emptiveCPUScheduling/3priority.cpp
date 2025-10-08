@@ -5,14 +5,6 @@
 #include <climits>
 using namespace std;
 
-void printSmartFloat(float value)
-{
-    if (value == (int)value)
-        cout << (int)value;
-    else
-        cout << fixed << setprecision(2) << value;
-}
-
 class Process
 {
 public:
@@ -53,7 +45,7 @@ public:
         char process;
         float arrival, burst;
         int priority;
-        cout << "Enter name, arrival time, burst time & priority for each process:\n";
+        cout << "Enter name, arrival time, burst time & priority for each process :" << endl;
         for (int i = 0; i < n; i++)
         {
             cout << "Process " << i + 1 << " : ";
@@ -116,7 +108,9 @@ public:
         bool *completed = new bool[n]{false};
         int completedCount = 0;
 
-        cout << "\nGantt Chart:\n|";
+        cout << endl
+             << "Gantt Chart :" << endl
+             << "|";
         while (completedCount < n)
         {
             int idx = -1;
@@ -155,7 +149,8 @@ public:
             completedCount++;
         }
 
-        cout << "\n0";
+        cout << endl
+             << "0";
         currentTime = 0;
         completedCount = 0;
         fill(completed, completed + n, false);
@@ -186,8 +181,12 @@ public:
 
             if (idx == -1)
             {
+                float idleTime = currentTime + 1.0;
                 cout << setw(8);
-                printSmartFloat(currentTime + 1);
+                if (idleTime == (int)idleTime)
+                    cout << (int)idleTime;
+                else
+                    cout << fixed << setprecision(2) << idleTime;
                 currentTime += 1;
                 continue;
             }
@@ -195,7 +194,10 @@ public:
             currentTime = max(currentTime, p[idx].arrival);
             currentTime += p[idx].burst;
             cout << setw(8);
-            printSmartFloat(currentTime);
+            if (currentTime == (int)currentTime)
+                cout << (int)currentTime;
+            else
+                cout << fixed << setprecision(2) << currentTime;
             completed[idx] = true;
             completedCount++;
         }
@@ -216,30 +218,21 @@ public:
 
     void printProcessTable()
     {
-        cout << "\n+-----+--------+--------+-----+--------+--------+--------+\n";
-        cout << "| PID |   AT   |   BT   | PR  |   CT   |  TAT   |   WT   |\n";
-        cout << "+-----+--------+--------+-----+--------+--------+--------+\n";
+        cout << endl
+             << "+-----+--------+--------+-----+--------+---------+--------+" << endl
+             << "| PID |   AT   |   BT   | PR  |   CT   |   TAT   |   WT   |" << endl
+             << "+-----+--------+--------+-----+--------+---------+--------+" << endl;
         for (int i = 0; i < n; i++)
         {
-            cout << "|  " << setw(2) << p[i].process << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].arrival);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].burst);
-            cout << " | ";
+            cout << "|  " << p[i].process << "  | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].arrival << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].burst << " | ";
             cout << setw(3) << p[i].priority << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].completion);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].turnaround);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].waiting);
-            cout << " |\n";
+            cout << setw(6) << fixed << setprecision(2) << p[i].completion << " | ";
+            cout << setw(7) << fixed << setprecision(2) << p[i].turnaround << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].waiting << " |" << endl;
         }
-        cout << "+-----+--------+--------+-----+--------+--------+--------+\n";
+        cout << "+-----+--------+--------+-----+--------+---------+--------+" << endl;
     }
 };
 
@@ -248,19 +241,22 @@ int main()
     int n;
     float avgTurnaround, avgWaiting;
 
-    cout << "Enter number of processes: ";
+    cout << "Enter number of processes : ";
     cin >> n;
 
     PriorityScheduling ps(n);
     ps.inputProcesses();
     ps.scheduleProcesses();
+    cout << endl
+         << "---Non Pre-emptive Priority CPU Scheduling Algorithm---" << endl;
     ps.printGanttChart();
     ps.calculateAverages(avgTurnaround, avgWaiting);
     ps.printProcessTable();
 
     cout << fixed << setprecision(2);
-    cout << "\nAverage Turnaround Time = " << (avgTurnaround / n);
-    cout << "\nAverage Waiting Time = " << (avgWaiting / n) << endl;
+    cout << endl
+         << "Average Turnaround Time = " << (avgTurnaround / n) << endl
+         << "Average Waiting Time = " << (avgWaiting / n) << endl;
 
     return 0;
 }

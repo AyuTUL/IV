@@ -8,14 +8,6 @@
 #include <cfloat>
 using namespace std;
 
-void printSmartFloat(float value)
-{
-    if (value == (int)value)
-        cout << (int)value;
-    else
-        cout << fixed << setprecision(2) << value;
-}
-
 class Process
 {
 public:
@@ -58,7 +50,7 @@ public:
         char process;
         float arrival, burst;
         int priority;
-        cout << "Enter name, arrival time, burst time & priority for each process:\n";
+        cout << "Enter name, arrival time, burst time & priority for each process :" << endl;
         for (int i = 0; i < n; i++)
         {
             cout << "Process " << i + 1 << " : ";
@@ -96,16 +88,12 @@ public:
 
             // Find the process with highest priority among the arrived ones
             for (int i = 0; i < n; i++)
-            {
                 if (!completed[i] && p[i].arrival <= currentTime && p[i].remaining > 0)
-                {
                     if (p[i].priority < highestPriority)
                     {
                         highestPriority = p[i].priority;
                         selectedIdx = i;
                     }
-                }
-            }
 
             // If no process is available, find the next arriving process
             if (selectedIdx == -1)
@@ -113,13 +101,11 @@ public:
                 float nextArrival = FLT_MAX;
                 int nextProcess = -1;
                 for (int i = 0; i < n; i++)
-                {
                     if (!completed[i] && p[i].arrival < nextArrival && p[i].arrival > currentTime)
                     {
                         nextArrival = p[i].arrival;
                         nextProcess = i;
                     }
-                }
 
                 if (nextProcess != -1)
                 {
@@ -135,9 +121,7 @@ public:
                     continue;
                 }
                 else
-                {
                     break; // No more processes to schedule
-                }
             }
 
             // If process has changed, update Gantt chart
@@ -174,18 +158,14 @@ public:
                 bool willBePreempted = false;
 
                 for (int i = 0; i < n; i++)
-                {
                     if (!completed[i] && p[i].arrival > currentTime && p[i].arrival < nextPreemption && p[i].priority < p[selectedIdx].priority)
                     {
                         nextPreemption = p[i].arrival;
                         willBePreempted = true;
                     }
-                }
 
                 if (willBePreempted)
-                {
                     runUntil = nextPreemption;
-                }
 
                 // Update remaining time
                 p[selectedIdx].remaining -= (runUntil - currentTime);
@@ -202,7 +182,9 @@ public:
 
     void printGanttChart()
     {
-        cout << "\nGantt Chart:\n|";
+        cout << endl
+             << "Gantt Chart :" << endl
+             << "|";
 
         // Print the process IDs
         for (auto &entry : gantt)
@@ -211,14 +193,18 @@ public:
         }
 
         // Print the timeline
-        cout << "\n0";
+        cout << endl
+             << "0";
         float currentTime = 0;
 
         for (auto &entry : gantt)
         {
             currentTime = entry.first;
             cout << setw(8);
-            printSmartFloat(currentTime);
+            if (currentTime == (int)currentTime)
+                cout << (int)currentTime;
+            else
+                cout << fixed << setprecision(2) << currentTime;
         }
         cout << endl;
     }
@@ -237,30 +223,21 @@ public:
 
     void printProcessTable()
     {
-        cout << "\n+-----+--------+--------+-----+--------+--------+--------+\n";
-        cout << "| PID |   AT   |   BT   | PR  |   CT   |  TAT   |   WT   |\n";
-        cout << "+-----+--------+--------+-----+--------+--------+--------+\n";
+        cout << endl
+             << "+-----+--------+--------+-----+--------+---------+--------+" << endl
+             << "| PID |   AT   |   BT   | PR  |   CT   |   TAT   |   WT   |" << endl
+             << "+-----+--------+--------+-----+--------+---------+--------+" << endl;
         for (int i = 0; i < n; i++)
         {
-            cout << "|  " << setw(2) << p[i].process << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].arrival);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].burst);
-            cout << " | ";
+            cout << "|  " << p[i].process << "  | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].arrival << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].burst << " | ";
             cout << setw(3) << p[i].priority << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].completion);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].turnaround);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].waiting);
-            cout << " |\n";
+            cout << setw(6) << fixed << setprecision(2) << p[i].completion << " | ";
+            cout << setw(7) << fixed << setprecision(2) << p[i].turnaround << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].waiting << " |" << endl;
         }
-        cout << "+-----+--------+--------+-----+--------+--------+--------+\n";
+        cout << "+-----+--------+--------+-----+--------+---------+--------+" << endl;
     }
 };
 
@@ -269,19 +246,22 @@ int main()
     int n;
     float avgTurnaround, avgWaiting;
 
-    cout << "Enter number of processes: ";
+    cout << "Enter number of processes : ";
     cin >> n;
 
     PriorityScheduling ps(n);
     ps.inputProcesses();
     ps.scheduleProcesses();
+    cout << endl
+         << "---Pre-emptive Priority CPU Scheduling Algorithm---" << endl;
     ps.printGanttChart();
     ps.calculateAverages(avgTurnaround, avgWaiting);
     ps.printProcessTable();
 
     cout << fixed << setprecision(2);
-    cout << "\nAverage Turnaround Time = " << avgTurnaround;
-    cout << "\nAverage Waiting Time = " << avgWaiting << endl;
+    cout << endl
+         << "Average Turnaround Time = " << avgTurnaround << endl
+         << "Average Waiting Time = " << avgWaiting << endl;
 
     return 0;
 }

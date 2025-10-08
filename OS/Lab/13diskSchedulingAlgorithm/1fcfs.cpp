@@ -11,9 +11,7 @@ int main()
     vector<int> requests(n);
     cout << "Enter the track sequence : ";
     for (int i = 0; i < n; ++i)
-    {
         cin >> requests[i];
-    }
     cout << "Enter initial head position : ";
     cin >> head;
 

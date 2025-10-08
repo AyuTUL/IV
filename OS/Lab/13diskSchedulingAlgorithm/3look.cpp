@@ -72,7 +72,7 @@ int main()
     }
 
     cout << endl
-         << "---LOOK Disk Scheduling Algorithm---" << endl
+         << "---Look Disk Scheduling Algorithm---" << endl
          << "Order of servicing requests : " << endl
          << "\t";
     for (size_t i = 0; i < service_order.size(); ++i)
@@ -83,7 +83,7 @@ int main()
     }
     cout << endl
          << endl
-         << "Total head movement = " << total_movement << endl;
-    cout << "Average head movement = " << (double)total_movement / n << endl;
+         << "Total head movement = " << total_movement << endl
+         << "Average head movement = " << (double)total_movement / n << endl;
     return 0;
 }

@@ -19,7 +19,7 @@ void listFiles(const vector<string> &files)
     for (const auto &f : files)
         cout << f << endl;
     cout << endl
-         << "Total files: " << files.size() << endl;
+         << "Total files : " << files.size() << endl;
 }
 
 void searchFile(const vector<string> &files)
@@ -30,13 +30,10 @@ void searchFile(const vector<string> &files)
 
     auto it = find(files.begin(), files.end(), searchName);
     if (it != files.end())
-    {
         cout << "File '" << searchName << "' found in directory." << endl;
-    }
     else
-    {
-        cout << "File '" << searchName << "' not found." << endl;
-    }
+        cout
+            << "File '" << searchName << "' not found." << endl;
 }
 
 void deleteFile(vector<string> &files)
@@ -52,9 +49,7 @@ void deleteFile(vector<string> &files)
         cout << "File '" << deleteName << "' deleted successfully." << endl;
     }
     else
-    {
         cout << "File '" << deleteName << "' not found." << endl;
-    }
 }
 
 void addFile(vector<string> &files)
@@ -65,9 +60,7 @@ void addFile(vector<string> &files)
 
     auto it = find(files.begin(), files.end(), fname);
     if (it != files.end())
-    {
         cout << "File '" << fname << "' already exists." << endl;
-    }
     else
     {
         files.push_back(fname);

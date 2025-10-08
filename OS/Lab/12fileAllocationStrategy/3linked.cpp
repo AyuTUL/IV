@@ -18,15 +18,15 @@ struct File
 class LinkedFileAllocation
 {
 private:
-    vector<int> disk;     // 0 = free, 1 = allocated
-    vector<int> nextPtr;  // Stores pointer to next block (-1 means end of file)
+    vector<int> disk;    // 0 = free, 1 = allocated
+    vector<int> nextPtr; // Stores pointer to next block (-1 means end of file)
     vector<File> files;
     int diskSize;
 
 public:
     LinkedFileAllocation(int size) : diskSize(size)
     {
-        disk.resize(size, 0);    // Initialize all blocks as free (0)
+        disk.resize(size, 0);     // Initialize all blocks as free (0)
         nextPtr.resize(size, -1); // Initialize all pointers as -1 (end)
     }
 
@@ -36,18 +36,14 @@ public:
         cout << endl
              << "Disk Status : ";
         for (int i = 0; i < diskSize; i++)
-        {
             cout << disk[i] << " ";
-        }
         cout << endl;
-        cout << "Block Pointers: ";
+        cout << "Block Pointers : ";
         for (int i = 0; i < diskSize; i++)
-        {
             if (disk[i] == 1)
                 cout << nextPtr[i] << " ";
             else
                 cout << "- ";
-        }
         cout << endl;
     }
 
@@ -56,12 +52,8 @@ public:
     {
         vector<int> freeBlocks;
         for (int i = 0; i < diskSize && freeBlocks.size() < numBlocks; i++)
-        {
             if (disk[i] == 0)
-            {
                 freeBlocks.push_back(i);
-            }
-        }
         return freeBlocks;
     }
 
@@ -70,13 +62,11 @@ public:
     {
         // Check if file already exists
         for (const auto &file : files)
-        {
             if (file.name == fileName)
             {
-                cout << "Error: File '" << fileName << "' already exists" << endl;
+                cout << "Error : File '" << fileName << "' already exists" << endl;
                 return false;
             }
-        }
 
         // Find free blocks
         vector<int> freeBlocks = findFreeBlocks(fileSize);
@@ -98,16 +88,17 @@ public:
 
         // Add file to list
         files.push_back(File(fileName, freeBlocks[0], fileSize));
-        
-        cout << "File '" << fileName << "' allocated successfully starting at block " << freeBlocks[0] << endl;
-        cout << "Block chain: ";
+
+        cout << "File '" << fileName << "' allocated successfully starting at block " << freeBlocks[0] << endl
+             << "Block chain : ";
         for (int i = 0; i < fileSize; i++)
         {
             cout << freeBlocks[i];
-            if (i < fileSize - 1) cout << " -> ";
+            if (i < fileSize - 1)
+                cout << " -> ";
         }
         cout << " -> END" << endl;
-        
+
         return true;
     }
 
@@ -120,7 +111,7 @@ public:
 
         if (it == files.end())
         {
-            cout << "Error: File '" << fileName << "' not found!" << endl;
+            cout << "Error : File '" << fileName << "' not found!" << endl;
             return false;
         }
 
@@ -144,13 +135,13 @@ public:
     {
         cout << endl
              << "Allocated Files :" << endl
-             << "File Name\tStart Block\tLength\tBlock Chain" << endl;
-        cout << string(50, '-') << endl;
-        
+             << "File Name\tStart Block\tLength\tBlock Chain" << endl
+             << string(50, '-') << endl;
+
         for (const auto &file : files)
         {
             cout << file.name << "\t\t" << file.startBlock << "\t\t" << file.length << "\t";
-            
+
             // Display the chain
             int currentBlock = file.startBlock;
             int count = 0;
@@ -158,23 +149,22 @@ public:
             {
                 cout << currentBlock;
                 currentBlock = nextPtr[currentBlock];
-                if (currentBlock != -1) cout << "->";
+                if (currentBlock != -1)
+                    cout << "->";
                 count++;
             }
             cout << "->END" << endl;
         }
-        
+
         if (files.empty())
-        {
             cout << "No files allocated." << endl;
-        }
     }
 };
 
 int main()
 {
     int diskSize;
-    cout << "---Linked File Allocation Strategy Simulation---" << endl
+    cout << "---Linked File Allocation---" << endl
          << "Enter disk size : ";
     cin >> diskSize;
 
@@ -220,7 +210,7 @@ int main()
             break;
 
         case 5:
-            cout << "Exiting program" << endl;
+            cout << "Exiting program." << endl;
             break;
 
         default:

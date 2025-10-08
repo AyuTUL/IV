@@ -5,8 +5,8 @@ using namespace std;
 
 void printMatrix(const string &name, vector<vector<int>> &matrix, int n, int m)
 {
-    cout << name << " Matrix:" << endl;
-    cout << "     ";
+    cout << name << " Matrix :" << endl
+         << "     ";
     for (int j = 0; j < m; j++)
         cout << char('A' + j) << " ";
     cout << endl;
@@ -32,7 +32,7 @@ bool isSafe(vector<vector<int>> &allocation, vector<vector<int>> &max, vector<in
         for (int j = 0; j < m; j++)
             need[i][j] = max[i][j] - allocation[i][j];
 
-    cout << "Available: [ ";
+    cout << "Available : [ ";
     for (int i = 0; i < m; i++)
         cout << available[i] << " ";
     cout << "]" << endl
@@ -45,25 +45,21 @@ bool isSafe(vector<vector<int>> &allocation, vector<vector<int>> &max, vector<in
     {
         int found = -1;
         for (int i = 0; i < n; i++)
-        {
             if (!finished[i])
             {
                 bool canAllocate = true;
                 for (int j = 0; j < m; j++)
-                {
                     if (need[i][j] > available[j])
                     {
                         canAllocate = false;
                         break;
                     }
-                }
                 if (canAllocate)
                 {
                     found = i;
                     break;
                 }
             }
-        }
 
         if (found == -1)
             return false; // Unsafe state
@@ -74,7 +70,7 @@ bool isSafe(vector<vector<int>> &allocation, vector<vector<int>> &max, vector<in
             available[j] += allocation[found][j];
     }
 
-    cout << "Safe sequence: ";
+    cout << "Safe sequence : ";
     for (int i = 0; i < n; i++)
     {
         cout << "P" << (safeSeq[i] + 1);
@@ -88,14 +84,15 @@ bool isSafe(vector<vector<int>> &allocation, vector<vector<int>> &max, vector<in
 int main()
 {
     int n, m;
-    cout << "Enter number of processes and resources: ";
+    cout << "Enter number of processes and resources : ";
     cin >> n >> m;
 
     vector<vector<int>> allocation(n, vector<int>(m));
     vector<vector<int>> max(n, vector<int>(m));
     vector<int> available(m);
 
-    cout << "\nEnter Allocation Matrix (row by row):" << endl;
+    cout << endl
+         << "Enter Allocation Matrix (row by row) :" << endl;
     for (int i = 0; i < n; i++)
     {
         cout << "P" << (i + 1) << ": ";
@@ -103,7 +100,8 @@ int main()
             cin >> allocation[i][j];
     }
 
-    cout << "\nEnter Max Matrix (row by row):" << endl;
+    cout << endl
+         << "Enter Max Matrix (row by row) :" << endl;
     for (int i = 0; i < n; i++)
     {
         cout << "P" << (i + 1) << ": ";
@@ -111,23 +109,21 @@ int main()
             cin >> max[i][j];
     }
 
-    cout << "\nEnter Available resources: ";
+    cout << endl
+         << "Enter Available resources : ";
     for (int i = 0; i < m; i++)
         cin >> available[i];
-
-    cout << "\n"
-         << string(40, '=') << endl;
+    cout << endl
+         << "---Banker's Algorithm---" << endl;
     printMatrix("Allocation", allocation, n, m);
     printMatrix("Max", max, n, m);
 
     if (isSafe(allocation, max, available))
-    {
-        cout << "\nResult: System is in SAFE state";
-    }
+        cout << endl
+             << "Result : System is in SAFE state.";
     else
-    {
-        cout << "\nResult: System is in UNSAFE state";
-    }
+        cout << endl
+             << "Result : System is in UNSAFE state.";
 
     return 0;
 }

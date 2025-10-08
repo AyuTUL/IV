@@ -74,7 +74,6 @@ int main()
 
         // Check if page is already in frames (HIT)
         for (int j = 0; j < frames.size(); j++)
-        {
             if (frames[j] == pages[i])
             {
                 found = true;
@@ -82,13 +81,10 @@ int main()
                 pageHits++;
                 break;
             }
-        }
 
         if (found)
-        {
             // Update last used time for this frame
             lastUsed[frameIndex] = i;
-        }
         else // MISS
         {
             if ((int)frames.size() < nFrames)
@@ -102,12 +98,10 @@ int main()
                 // Find LRU frame (frame with minimum lastUsed value)
                 int lruIndex = 0;
                 for (int j = 1; j < nFrames; j++)
-                {
                     if (lastUsed[j] < lastUsed[lruIndex])
                     {
                         lruIndex = j;
                     }
-                }
                 // Replace LRU frame
                 frames[lruIndex] = pages[i];
                 lastUsed[lruIndex] = i;
@@ -120,7 +114,8 @@ int main()
 
     printTableFooter(nFrames);
 
-    cout << "\nRESULTS:" << endl
+    cout << endl
+         << "Results :" << endl
          << string(30, '-') << endl
          << "Total Page References : " << nPages << endl
          << "Total Page Faults     : " << pageFaults << endl

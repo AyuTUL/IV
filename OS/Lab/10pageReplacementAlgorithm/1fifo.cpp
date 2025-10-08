@@ -95,13 +95,11 @@ int main()
                 int remove = q.front();
                 q.pop();
                 for (int k = 0; k < (int)frames.size(); k++)
-                {
                     if (frames[k] == remove)
                     {
                         frames[k] = pages[i];
                         break;
                     }
-                }
                 q.push(pages[i]);
             }
             pageFaults++;
@@ -112,7 +110,8 @@ int main()
 
     printTableFooter(nFrames);
 
-    cout << "\nRESULTS:" << endl
+    cout << endl
+         << "Results :" << endl
          << string(30, '-') << endl
          << "Total Page References : " << nPages << endl
          << "Total Page Faults     : " << pageFaults << endl

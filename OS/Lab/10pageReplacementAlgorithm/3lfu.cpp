@@ -75,7 +75,6 @@ int main()
 
         // Check if page is already in frames (HIT)
         for (int j = 0; j < frames.size(); j++)
-        {
             if (frames[j] == pages[i])
             {
                 found = true;
@@ -83,13 +82,10 @@ int main()
                 pageHits++;
                 break;
             }
-        }
 
         if (found)
-        {
             // Increment frequency (arrival time stays the same for FIFO tie-breaking)
             frequency[frameIndex]++;
-        }
         else // MISS
         {
             if ((int)frames.size() < nFrames)
@@ -108,9 +104,7 @@ int main()
                 {
                     if (frequency[j] < frequency[lfuIndex] ||
                         (frequency[j] == frequency[lfuIndex] && arrivalTime[j] < arrivalTime[lfuIndex]))
-                    {
                         lfuIndex = j;
-                    }
                 }
                 // Replace LFU frame
                 frames[lfuIndex] = pages[i];
@@ -126,7 +120,7 @@ int main()
     printTableFooter(nFrames);
 
     cout << endl
-         << "RESULTS :" << endl
+         << "Results :" << endl
          << string(30, '-') << endl
          << "Total Page References : " << nPages << endl
          << "Total Page Faults     : " << pageFaults << endl

@@ -7,7 +7,7 @@ using namespace std;
 void printTableHeader(int nFrames)
 {
     cout << endl
-         << "OPTIMAL Page Replacement Algorithm :" << endl;
+         << "Optimal Page Replacement Algorithm :" << endl;
 
     // Top border
     cout << "+-------+";
@@ -73,14 +73,12 @@ int main()
 
         // Check if page is already in frames (HIT)
         for (int j = 0; j < frames.size(); j++)
-        {
             if (frames[j] == pages[i])
             {
                 found = true;
                 pageHits++;
                 break;
             }
-        }
 
         if (!found) // MISS
         {
@@ -95,30 +93,28 @@ int main()
                 // Find optimal frame to replace with proper FIFO tie-breaking
                 int replaceIdx = 0;
                 int farthest = i + 1;
-                
+
                 for (int j = 0; j < nFrames; j++)
                 {
                     int nextUse = nPages + 1; // Sentinel: assume never used again
-                    
+
                     // Find next occurrence of this frame's page
                     for (int k = i + 1; k < nPages; k++)
-                    {
                         if (pages[k] == frames[j])
                         {
                             nextUse = k;
                             break;
                         }
-                    }
-                    
+
                     // Choose page based on optimal strategy with FIFO tie-breaking
-                    if (nextUse > farthest || 
+                    if (nextUse > farthest ||
                         (nextUse == farthest && nextUse == nPages + 1 && arrivalTime[j] < arrivalTime[replaceIdx]))
                     {
                         farthest = nextUse;
                         replaceIdx = j;
                     }
                 }
-                
+
                 // Replace optimal frame and update its arrival time
                 frames[replaceIdx] = pages[i];
                 arrivalTime[replaceIdx] = i;
@@ -131,7 +127,8 @@ int main()
 
     printTableFooter(nFrames);
 
-    cout << "\nRESULTS:" << endl
+    cout << endl
+         << "Results :" << endl
          << string(30, '-') << endl
          << "Total Page References : " << nPages << endl
          << "Total Page Faults     : " << pageFaults << endl

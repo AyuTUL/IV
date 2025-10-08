@@ -7,7 +7,8 @@ using namespace std;
 
 void printFinalMemoryState(const vector<int> &blocks, const vector<string> &allocated, const vector<int> &originalBlocks)
 {
-    cout << "\nFINAL MEMORY ALLOCATION STATE:" << endl;
+    cout << endl
+         << "Final Memory Allocation State :" << endl;
 
     for (int i = 0; i < blocks.size(); i++)
     {
@@ -50,7 +51,7 @@ int main()
         cin >> process[i];
 
     cout << endl
-         << "WORST FIT ALLOCATION PROCESS :" << endl
+         << "---Worst Fit Memory Allocation---" << endl
          << string(40, '-') << endl;
 
     for (int i = 0; i < m; i++)

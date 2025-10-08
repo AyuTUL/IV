@@ -53,10 +53,11 @@ int main()
 {
     int numPhilosophers, mealsPerPhilosopher;
 
-    cout << "Enter philosophers and meals per philosopher: ";
+    cout << "Enter philosophers and meals per philosopher : ";
     cin >> numPhilosophers >> mealsPerPhilosopher;
 
-    cout << "\nPhilosophers: " << numPhilosophers << " | Meals: " << mealsPerPhilosopher << endl;
+    cout << endl
+         << "Philosophers : " << numPhilosophers << " | Meals : " << mealsPerPhilosopher << endl;
     cout << string(40, '-') << endl;
 
     // Create forks (mutexes) and philosopher threads
@@ -65,18 +66,14 @@ int main()
 
     // Start all philosopher threads
     for (int i = 0; i < numPhilosophers; ++i)
-    {
         philosophers.emplace_back(philosopher, i, ref(forks), mealsPerPhilosopher);
-    }
 
     // Wait for all philosophers to finish
     for (auto &p : philosophers)
-    {
         p.join();
-    }
 
     cout << string(40, '-') << endl;
-    cout << "All philosophers finished successfully!" << endl;
+    cout << "All philosophers finished successfully." << endl;
 
     return 0;
 }

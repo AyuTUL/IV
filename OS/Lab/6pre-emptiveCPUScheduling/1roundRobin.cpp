@@ -6,14 +6,6 @@
 #include <algorithm>
 using namespace std;
 
-void printSmartFloat(float value)
-{
-    if (value == (int)value)
-        cout << (int)value;
-    else
-        cout << fixed << setprecision(2) << value;
-}
-
 class Process
 {
 public:
@@ -56,7 +48,7 @@ public:
     {
         char process;
         float arrival, burst;
-        cout << "Enter name, arrival time & burst time for each process:\n";
+        cout << "Enter name, arrival time & burst time for each process :" << endl;
         for (int i = 0; i < n; i++)
         {
             cout << "Process " << i + 1 << " : ";
@@ -105,9 +97,7 @@ public:
             }
 
             if (p[idx].remaining > 0)
-            {
                 q.push(idx);
-            }
             else
             {
                 p[idx].completion = currentTime;
@@ -115,9 +105,7 @@ public:
             }
 
             if (q.empty() && completed < n)
-            {
                 for (int i = 0; i < n; i++)
-                {
                     if (!visited[i])
                     {
                         q.push(i);
@@ -125,8 +113,6 @@ public:
                         currentTime = max(currentTime, p[i].arrival);
                         break;
                     }
-                }
-            }
         }
 
         delete[] visited;
@@ -140,17 +126,21 @@ public:
 
     void printGanttChart()
     {
-        cout << "\nGantt Chart:\n|";
+        cout << endl
+             << "Gantt Chart :" << endl
+             << "|";
         for (auto &entry : gantt)
-        {
             cout << setw(4) << entry.second << setw(4) << "|";
-        }
 
-        cout << "\n";
+        cout << endl;
         if (gantt.empty())
             return;
 
-        printSmartFloat(gantt[0].first);
+        float startTime = gantt[0].first;
+        if (startTime == (int)startTime)
+            cout << (int)startTime;
+        else
+            cout << fixed << setprecision(2) << startTime;
         for (auto &entry : gantt)
         {
             float endTime = entry.first + timeQuantum;
@@ -158,7 +148,10 @@ public:
             if (endTime > compTime)
                 endTime = compTime;
             cout << setw(8);
-            printSmartFloat(endTime);
+            if (endTime == (int)endTime)
+                cout << (int)endTime;
+            else
+                cout << fixed << setprecision(2) << endTime;
         }
         cout << endl;
     }
@@ -166,10 +159,8 @@ public:
     float getCompletionTime(char proc)
     {
         for (int i = 0; i < n; i++)
-        {
             if (p[i].process == proc)
                 return p[i].completion;
-        }
         return 0;
     }
 
@@ -185,29 +176,20 @@ public:
 
     void printProcessTable()
     {
-        cout << "\n+-----+--------+--------+--------+--------+--------+\n";
-        cout << "| PID |   AT   |   BT   |   CT   |  TAT   |   WT   |\n";
-        cout << "+-----+--------+--------+--------+--------+--------+\n";
+        cout << endl
+             << "+-----+--------+--------+--------+---------+--------+" << endl
+             << "| PID |   AT   |   BT   |   CT   |   TAT   |   WT   |" << endl
+             << "+-----+--------+--------+--------+---------+--------+" << endl;
         for (int i = 0; i < n; i++)
         {
-            cout << "|  " << setw(2) << p[i].process << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].arrival);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].burst);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].completion);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].turnaround);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].waiting);
-            cout << " |\n";
+            cout << "|  " << p[i].process << "  | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].arrival << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].burst << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].completion << " | ";
+            cout << setw(7) << fixed << setprecision(2) << p[i].turnaround << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].waiting << " |" << endl;
         }
-        cout << "+-----+--------+--------+--------+--------+--------+\n";
+        cout << "+-----+--------+--------+--------+---------+--------+" << endl;
     }
 };
 
@@ -217,22 +199,25 @@ int main()
     float tq;
     float avgTAT, avgWT;
 
-    cout << "Enter number of processes: ";
+    cout << "Enter number of processes : ";
     cin >> n;
 
-    cout << "Enter Time Quantum: ";
+    cout << "Enter Time Quantum : ";
     cin >> tq;
 
     RoundRobin rr(n, tq);
     rr.inputProcesses();
     rr.scheduleProcesses();
+    cout << endl
+         << "---Round Robin CPU Scheduling Algorithm---" << endl;
     rr.printGanttChart();
     rr.calculateAverages(avgTAT, avgWT);
     rr.printProcessTable();
 
     cout << fixed << setprecision(2);
-    cout << "\nAverage Turnaround Time = " << (avgTAT / n);
-    cout << "\nAverage Waiting Time = " << (avgWT / n) << endl;
+    cout << endl
+         << "Average Turnaround Time = " << (avgTAT / n) << endl
+         << "Average Waiting Time = " << (avgWT / n) << endl;
 
     return 0;
 }

@@ -12,24 +12,20 @@ int main()
     vector<int> requests(n);
     cout << "Enter the track sequence : ";
     for (int i = 0; i < n; ++i)
-    {
         cin >> requests[i];
-    }
     cout << "Enter initial head position : ";
     cin >> head;
-    cout << "Enter disk size (number of tracks, e.g. 200) : ";
+    cout << "Enter disk size : ";
     cin >> disk_size;
     cout << "Enter direction (0 = towards smaller, 1 = towards larger) : ";
     cin >> dir;
 
     vector<int> left, right;
     for (int r : requests)
-    {
         if (r <= head)
             left.push_back(r);
         else
             right.push_back(r);
-    }
 
     sort(left.begin(), left.end());   // ascending
     sort(right.begin(), right.end()); // ascending
@@ -88,7 +84,7 @@ int main()
     }
 
     cout << endl
-         << "---SCAN Disk Scheduling Algorithm---" << endl
+         << "---Scan Disk Scheduling Algorithm---" << endl
          << "Order of servicing requests : " << endl
          << "\t";
     for (size_t i = 0; i < service_order.size(); ++i)
@@ -97,9 +93,10 @@ int main()
             cout << " -> ";
         cout << service_order[i];
     }
+
     cout << endl
          << endl
-         << "Total head movement = " << total_movement << endl;
-    cout << "Average head movement = " << (double)total_movement / n << endl;
+         << "Total head movement = " << total_movement << endl
+         << "Average head movement = " << (double)total_movement / n << endl;
     return 0;
 }

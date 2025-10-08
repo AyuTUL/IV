@@ -4,14 +4,6 @@
 #include <climits>
 using namespace std;
 
-void printSmartFloat(float value)
-{
-    if (value == (int)value)
-        cout << (int)value;
-    else
-        cout << fixed << setprecision(2) << value;
-}
-
 class Process
 {
 public:
@@ -50,7 +42,7 @@ public:
     {
         char process;
         float arrival, burst;
-        cout << "Enter name, arrival & burst time for following processes : " << endl;
+        cout << "Enter name, arrival & burst time for following processes :" << endl;
         for (int i = 0; i < n; i++)
         {
             cout << "Process " << i + 1 << " : ";
@@ -103,7 +95,9 @@ public:
                 if (pCopy[i].completion > pCopy[j].completion)
                     swap(pCopy[i], pCopy[j]);
 
-        cout << "\nGantt Chart :\n|";
+        cout << endl
+             << "Gantt Chart :" << endl
+             << "|";
         float currentTime = 0;
         for (int i = 0; i < n; i++)
         {
@@ -115,7 +109,8 @@ public:
             cout << setw(4) << pCopy[i].process << setw(4) << "|";
             currentTime += pCopy[i].burst;
         }
-        cout << "\n0";
+        cout << endl
+             << "0";
         currentTime = 0;
         for (int i = 0; i < n; i++)
         {
@@ -123,7 +118,10 @@ public:
                 currentTime = pCopy[i].arrival;
             currentTime += pCopy[i].burst;
             cout << setw(8);
-            printSmartFloat(currentTime);
+            if (currentTime == (int)currentTime)
+                cout << (int)currentTime;
+            else
+                cout << fixed << setprecision(2) << currentTime;
         }
         cout << endl;
 
@@ -144,29 +142,20 @@ public:
 
     void printProcessTable()
     {
-        cout << "\n+-----+--------+--------+--------+--------+--------+\n";
-        cout << "| PID |   AT   |   BT   |   CT   |  TAT   |   WT   |\n";
-        cout << "+-----+--------+--------+--------+--------+--------+\n";
+        cout << endl
+             << "+-----+--------+--------+--------+---------+--------+" << endl
+             << "| PID |   AT   |   BT   |   CT   |   TAT   |   WT   |" << endl
+             << "+-----+--------+--------+--------+---------+--------+" << endl;
         for (int i = 0; i < n; i++)
         {
-            cout << "|  " << setw(2) << p[i].process << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].arrival);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].burst);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].completion);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].turnaround);
-            cout << " | ";
-            cout << setw(6);
-            printSmartFloat(p[i].waiting);
-            cout << " |\n";
+            cout << "|  " << p[i].process << "  | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].arrival << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].burst << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].completion << " | ";
+            cout << setw(7) << fixed << setprecision(2) << p[i].turnaround << " | ";
+            cout << setw(6) << fixed << setprecision(2) << p[i].waiting << " |" << endl;
         }
-        cout << "+-----+--------+--------+--------+--------+--------+\n";
+        cout << "+-----+--------+--------+--------+---------+--------+" << endl;
     }
 };
 
@@ -181,13 +170,16 @@ int main()
     SJF sjf(n);
     sjf.inputProcesses();
     sjf.schedule();
+    cout << endl
+         << "---SJF CPU Scheduling Algorithm---" << endl;
     sjf.printGanttChart();
     sjf.calculateTimes(avgTurnaround, avgWaiting);
     sjf.printProcessTable();
 
     cout << fixed << setprecision(2);
-    cout << "\nAverage Turnaround Time = " << (avgTurnaround / n);
-    cout << "\nAverage Waiting Time = " << (avgWaiting / n) << endl;
+    cout << endl
+         << "Average Turnaround Time = " << (avgTurnaround / n) << endl
+         << "Average Waiting Time = " << (avgWaiting / n) << endl;
 
     return 0;
 }

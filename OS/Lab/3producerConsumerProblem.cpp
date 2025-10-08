@@ -30,7 +30,7 @@ void producer(int id, int items)
 
             lock_guard<mutex> plock(printMutex);
             cout << "[P" << id << "] produced " << item
-                 << " | Buffer: " << buffer.size() << "/" << bufferSize << endl;
+                 << " | Buffer : " << buffer.size() << "/" << bufferSize << endl;
         }
 
         sem_post(&fullSem);
@@ -53,7 +53,7 @@ void consumer(int id, int items)
 
             lock_guard<mutex> plock(printMutex);
             cout << "  [C" << id << "] consumed " << item
-                 << " | Buffer: " << buffer.size() << "/" << bufferSize << endl;
+                 << " | Buffer : " << buffer.size() << "/" << bufferSize << endl;
         }
 
         sem_post(&emptySem);
@@ -63,21 +63,20 @@ void consumer(int id, int items)
 
 int main()
 {
-    cout << "Enter buffer size, total items, producers, consumers: ";
+    cout << "Enter buffer size, total items, producers, consumers : ";
     cin >> bufferSize >> totalItems >> numProducers >> numConsumers;
 
     if (bufferSize <= 0 || totalItems <= 0 || numProducers <= 0 || numConsumers <= 0)
     {
-        cout << "Error: All values must be positive!" << endl;
+        cout << "Error : All values must be positive." << endl;
         return 1;
     }
 
     sem_init(&emptySem, 0, bufferSize);
     sem_init(&fullSem, 0, 0);
 
-    cout << "\nBuffer: " << bufferSize << " | Items: " << totalItems
-         << " | Producers: " << numProducers << " | Consumers: " << numConsumers << endl;
-    cout << string(50, '-') << endl;
+    cout << endl<<"Buffer : " << bufferSize << " | Items : " << totalItems
+         << " | Producers : " << numProducers << " | Consumers : " << numConsumers << endl<< string(50, '-') << endl;
 
     vector<thread> producers, consumers;
     vector<int> prodItems(numProducers, totalItems / numProducers);
@@ -105,7 +104,7 @@ int main()
     sem_destroy(&fullSem);
 
     cout << string(50, '-') << endl;
-    cout << "Result: Produced=" << totalProduced << " Consumed=" << totalConsumed;
+    cout << "Result : Produced = " << totalProduced << " Consumed = " << totalConsumed;
     if (totalProduced == totalConsumed && totalProduced == totalItems)
         cout << " [SUCCESS]" << endl;
     else

@@ -34,10 +34,8 @@ public:
         cout << endl
              << "Disk Status : ";
         for (int i = 0; i < diskSize; i++)
-        {
             cout << disk[i] << " "; // Direct output since disk[i] is already 0 or 1
-        }
-        cout << "\n";
+        cout << endl;
     }
 
     // Find first fit for sequential allocation
@@ -47,17 +45,13 @@ public:
         {
             bool canAllocate = true;
             for (int j = i; j < i + fileSize; j++)
-            {
                 if (disk[j])
                 {
                     canAllocate = false;
                     break;
                 }
-            }
             if (canAllocate)
-            {
                 return i;
-            }
         }
         return -1; // No space found
     }
@@ -67,26 +61,22 @@ public:
     {
         // Check if file already exists
         for (const auto &file : files)
-        {
             if (file.name == fileName)
             {
                 cout << "Error: File '" << fileName << "' already exists" << endl;
                 return false;
             }
-        }
 
         int startBlock = findFirstFit(fileSize);
         if (startBlock == -1)
         {
-            cout << "Allocation not possible - insufficient contiguous space" << endl;
+            cout << "Allocation not possible - insufficient contiguous space." << endl;
             return false;
         }
 
         // Allocate blocks (similar to user's approach)
         for (int i = startBlock; i < startBlock + fileSize; i++)
-        {
             disk[i] = 1;
-        }
 
         // Add file to list
         files.push_back(File(fileName, startBlock, fileSize));
@@ -104,15 +94,13 @@ public:
 
         if (it == files.end())
         {
-            cout << "Error: File '" << fileName << "' not found!" << endl;
+            cout << "Error : File '" << fileName << "' not found!" << endl;
             return false;
         }
 
         // Free blocks
         for (int i = it->startBlock; i < it->startBlock + it->length; i++)
-        {
             disk[i] = 0;
-        }
 
         cout << "File '" << fileName << "' deallocated successfully." << endl;
         files.erase(it);
@@ -124,24 +112,20 @@ public:
     {
         cout << endl
              << "Allocated Files :" << endl
-             << "File Name\tStart Block\tLength\tEnd Block" << endl;
-        cout << string('-', 30) << endl;
+             << "File Name\tStart Block\tLength\tEnd Block" << endl
+             << string('-', 30) << endl;
         for (const auto &file : files)
-        {
             cout << file.name << "\t\t" << file.startBlock << "\t\t"
                  << file.length << "\t" << (file.startBlock + file.length - 1) << endl;
-        }
         if (files.empty())
-        {
             cout << "No files allocated." << endl;
-        }
     }
 };
 
 int main()
 {
     int diskSize;
-    cout << "---Sequential File Allocation Strategy Simulation---" << endl
+    cout << "---Sequential File Allocation---" << endl
          << "Enter disk size : ";
     cin >> diskSize;
 
@@ -187,7 +171,7 @@ int main()
             break;
 
         case 5:
-            cout << "Exiting program" << endl;
+            cout << "Exiting program." << endl;
             break;
 
         default:
