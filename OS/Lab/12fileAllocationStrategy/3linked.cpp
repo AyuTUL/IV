@@ -9,8 +9,7 @@ using namespace std;
 struct File
 {
     string name;
-    int startBlock;
-    int length;
+    int startBlock, length;
 
     File(string n, int start, int len) : name(n), startBlock(start), length(len) {}
 };
@@ -37,8 +36,8 @@ public:
              << "Disk Status : ";
         for (int i = 0; i < diskSize; i++)
             cout << disk[i] << " ";
-        cout << endl;
-        cout << "Block Pointers : ";
+        cout << endl
+             << "Block Pointers : ";
         for (int i = 0; i < diskSize; i++)
             if (disk[i] == 1)
                 cout << nextPtr[i] << " ";
@@ -135,29 +134,55 @@ public:
     {
         cout << endl
              << "Allocated Files :" << endl
-             << "File Name\tStart Block\tLength\tBlock Chain" << endl
-             << string(50, '-') << endl;
+             << "+---------------+-------------+--------+-------------------------+" << endl
+             << "| File Name     | Start Block | Length | Block Chain             |" << endl
+             << "+---------------+-------------+--------+-------------------------+" << endl;
 
         for (const auto &file : files)
         {
-            cout << file.name << "\t\t" << file.startBlock << "\t\t" << file.length << "\t";
+            cout << "| " << file.name;
+            // Pad file name to 13 characters
+            for (int i = file.name.length(); i < 13; i++)
+                cout << " ";
 
-            // Display the chain
-            int currentBlock = file.startBlock;
-            int count = 0;
+            cout << " | " << file.startBlock;
+            // Pad start block to 11 characters
+            int startLen = to_string(file.startBlock).length();
+            for (int i = startLen; i < 11; i++)
+                cout << " ";
+
+            cout << " | " << file.length;
+            // Pad length to 6 characters
+            int lenLen = to_string(file.length).length();
+            for (int i = lenLen; i < 6; i++)
+                cout << " ";
+
+            cout << " | ";
+            // Build block chain string
+            string chainStr = "";
+            int currentBlock = file.startBlock, count = 0;
             while (currentBlock != -1 && count < file.length)
             {
-                cout << currentBlock;
+                chainStr += to_string(currentBlock);
                 currentBlock = nextPtr[currentBlock];
                 if (currentBlock != -1)
-                    cout << "->";
+                    chainStr += "->";
                 count++;
             }
-            cout << "->END" << endl;
+            chainStr += "->END";
+            cout << chainStr;
+            // Pad chain to 23 characters
+            for (int i = chainStr.length(); i < 23; i++)
+                cout << " ";
+
+            cout << " |" << endl;
         }
 
+        cout << "+---------------+-------------+--------+-------------------------+" << endl;
+
         if (files.empty())
-            cout << "No files allocated." << endl;
+            cout << "| No files allocated.                                          |" << endl
+                 << "+---------------+-------------+--------+-------------------------+" << endl;
     }
 };
 
@@ -170,13 +195,13 @@ int main()
 
     LinkedFileAllocation lfa(diskSize);
 
-    int choice;
+    int choice, fileSize;
     string fileName;
-    int fileSize;
 
     do
     {
-        cout << "---Linked File Allocation---" << endl
+        cout << endl
+             << "---Linked File Allocation---" << endl
              << "   1. Allocate File" << endl
              << "   2. Deallocate File" << endl
              << "   3. Display Files" << endl

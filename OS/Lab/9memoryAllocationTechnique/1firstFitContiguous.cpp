@@ -27,6 +27,7 @@ void printFinalMemoryState(const vector<int> &blocks, const vector<string> &allo
 
 int main()
 {
+	system("color f0");
     int n, m;
     cout << "Enter number of memory blocks : ";
     cin >> n;

@@ -62,8 +62,7 @@ int main()
 
     vector<int> frames;
     vector<int> lastUsed(nFrames, -1); // Track when each frame was last used
-    int pageFaults = 0;
-    int pageHits = 0;
+    int pageFaults = 0, pageHits = 0;
 
     printTableHeader(nFrames);
 

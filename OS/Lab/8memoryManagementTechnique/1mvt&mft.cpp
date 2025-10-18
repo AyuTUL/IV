@@ -20,18 +20,19 @@ int main()
         cin >> processes[i];
 
     // MFT Technique
-    cout <<endl<< "---MFT (Fixed Partitioning)---" << endl;
-    int totalBlocks = memSize / blockSize;
-    int usedBlocks = 0;
-    int internalFragmentation = 0;
+    cout << endl
+         << "---MFT (Fixed Partitioning)---" << endl;
+    int totalBlocks = memSize / blockSize, usedBlocks = 0, internalFragmentation = 0;
 
-    cout << "Total blocks available : " << totalBlocks << " (each " << blockSize << " KB)" << endl
+    cout << "Total blocks available : " << totalBlocks << " (each " << blockSize
+         << " KB)" << endl
          << string(40, '-') << endl;
 
     for (int i = 0; i < n && usedBlocks < totalBlocks; i++)
         if (processes[i] <= blockSize)
         {
-            cout << "Process P" << (i + 1) << " (" << processes[i] << " KB) -> Block " << (usedBlocks + 1);
+            cout << "Process P" << (i + 1) << " (" << processes[i] << " KB) -> Block "
+                 << (usedBlocks + 1);
             int waste = blockSize - processes[i];
             internalFragmentation += waste;
             if (waste > 0)
@@ -40,23 +41,26 @@ int main()
             usedBlocks++;
         }
         else
-            cout << "Process P" << (i + 1) << " (" << processes[i] << " KB) -> TOO LARGE for block" << endl;
+            cout << "Process P" << (i + 1) << " (" << processes[i]
+                 << " KB) -> TOO LARGE for block" << endl;
 
     // Handle remaining processes that couldn't be allocated
     for (int i = usedBlocks; i < n; i++)
         if (processes[i] <= blockSize)
-            cout << "Process P" << (i + 1) << " (" << processes[i] << " KB) -> NO BLOCKS AVAILABLE" << endl;
+            cout << "Process P" << (i + 1) << " (" << processes[i]
+                 << " KB) -> NO BLOCKS AVAILABLE" << endl;
 
     cout << string(40, '-') << endl
          << "Used blocks : " << usedBlocks << "/" << totalBlocks << endl
-         << "Total internal fragmentation : " << internalFragmentation << " KB" << endl
-         << "External fragmentation : " << (totalBlocks - usedBlocks) * blockSize << " KB" << endl;
+         << "Total internal fragmentation : " << internalFragmentation << " KB"
+         << endl
+         << "External fragmentation : " << (totalBlocks - usedBlocks) * blockSize
+         << " KB" << endl;
 
     // MVT Technique
     cout << endl
          << "---MVT (Dynamic Partitioning)---" << endl;
-    int remainingMemory = memSize;
-    int allocatedProcesses = 0;
+    int remainingMemory = memSize, allocatedProcesses = 0;
 
     cout << "Total memory available : " << memSize << " KB" << endl
          << string(40, '-') << endl;
@@ -64,13 +68,16 @@ int main()
     for (int i = 0; i < n; i++)
         if (processes[i] <= remainingMemory)
         {
-            cout << "Process P" << (i + 1) << " (" << processes[i] << " KB) -> ALLOCATED";
+            cout << "Process P" << (i + 1) << " (" << processes[i]
+                 << " KB) -> ALLOCATED";
             remainingMemory -= processes[i];
             cout << " [Remaining : " << remainingMemory << " KB]" << endl;
             allocatedProcesses++;
         }
         else
-            cout << "Process P" << (i + 1) << " (" << processes[i] << " KB) -> CANNOT ALLOCATE" << " [Need : " << processes[i] << ", Available : " << remainingMemory << "]" << endl;
+            cout << "Process P" << (i + 1) << " (" << processes[i]
+                 << " KB) -> CANNOT ALLOCATE" << " [Need : " << processes[i]
+                 << ", Available : " << remainingMemory << "]" << endl;
 
     cout << string(40, '-') << endl
          << "Allocated processes : " << allocatedProcesses << "/" << n << endl

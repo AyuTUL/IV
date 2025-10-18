@@ -62,8 +62,7 @@ int main()
 
     vector<int> frames;
     vector<int> arrivalTime(nFrames, -1); // Track when each frame arrived (for FIFO tie-breaking)
-    int pageFaults = 0;
-    int pageHits = 0;
+    int pageFaults = 0, pageHits = 0;
 
     printTableHeader(nFrames);
 
@@ -91,8 +90,7 @@ int main()
             else
             {
                 // Find optimal frame to replace with proper FIFO tie-breaking
-                int replaceIdx = 0;
-                int farthest = i + 1;
+                int replaceIdx = 0, farthest = i + 1;
 
                 for (int j = 0; j < nFrames; j++)
                 {

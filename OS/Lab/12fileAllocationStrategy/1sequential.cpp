@@ -9,8 +9,7 @@ using namespace std;
 struct File
 {
     string name;
-    int startBlock;
-    int length;
+    int startBlock, length;
 
     File(string n, int start, int len) : name(n), startBlock(start), length(len) {}
 };
@@ -112,13 +111,43 @@ public:
     {
         cout << endl
              << "Allocated Files :" << endl
-             << "File Name\tStart Block\tLength\tEnd Block" << endl
-             << string('-', 30) << endl;
+             << "+---------------+-------------+--------+-----------+" << endl
+             << "| File Name     | Start Block | Length | End Block |" << endl
+             << "+---------------+-------------+--------+-----------+" << endl;
+
         for (const auto &file : files)
-            cout << file.name << "\t\t" << file.startBlock << "\t\t"
-                 << file.length << "\t" << (file.startBlock + file.length - 1) << endl;
+        {
+            cout << "| " << file.name;
+            // Pad file name to 13 characters
+            for (int i = file.name.length(); i < 13; i++)
+                cout << " ";
+
+            cout << " | " << file.startBlock;
+            // Pad start block to 11 characters
+            int startLen = to_string(file.startBlock).length();
+            for (int i = startLen; i < 11; i++)
+                cout << " ";
+
+            cout << " | " << file.length;
+            // Pad length to 6 characters
+            int lenLen = to_string(file.length).length();
+            for (int i = lenLen; i < 6; i++)
+                cout << " ";
+
+            cout << " | " << (file.startBlock + file.length - 1);
+            // Pad end block to 9 characters
+            int endLen = to_string(file.startBlock + file.length - 1).length();
+            for (int i = endLen; i < 9; i++)
+                cout << " ";
+
+            cout << " |" << endl;
+        }
+
+        cout << "+---------------+-------------+--------+-----------+" << endl;
+
         if (files.empty())
-            cout << "No files allocated." << endl;
+            cout << "| No files allocated.                              |" << endl
+                 << "+---------------+-------------+--------+-----------+" << endl;
     }
 };
 
@@ -131,13 +160,13 @@ int main()
 
     SequentialFileAllocation sfa(diskSize);
 
-    int choice;
+    int choice, fileSize;
     string fileName;
-    int fileSize;
 
     do
     {
-        cout << "---Sequential File Allocation---" << endl
+        cout << endl
+             << "---Sequential File Allocation---" << endl
              << "   1. Allocate File" << endl
              << "   2. Deallocate File" << endl
              << "   3. Display Files" << endl

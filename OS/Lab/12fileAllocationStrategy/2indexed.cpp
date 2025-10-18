@@ -9,9 +9,8 @@ using namespace std;
 struct File
 {
     string name;
-    int indexBlock;
+    int indexBlock, fileSize;
     vector<int> dataBlocks;
-    int fileSize;
 
     File(string n, int idx, vector<int> blocks, int size)
         : name(n), indexBlock(idx), dataBlocks(blocks), fileSize(size) {}
@@ -36,16 +35,14 @@ public:
         cout << endl
              << "Disk Status : ";
         for (int i = 0; i < diskSize; i++)
-        {
             if (disk[i] == 0)
                 cout << "0 ";
             else if (disk[i] == 1)
                 cout << "D ";
             else if (disk[i] == 2)
                 cout << "I ";
-        }
-        cout << endl;
-        cout << "Legend : 0=Free, D=Data Block, I=Index Block" << endl;
+        cout << endl
+             << "Legend : 0=Free, D=Data Block, I=Index Block" << endl;
     }
 
     // Find free blocks for data
@@ -85,15 +82,7 @@ public:
             return false;
         }
 
-        // Find free blocks for data
-        vector<int> dataBlocks = findFreeBlocks(fileSize);
-        if (dataBlocks.size() < fileSize)
-        {
-            cout << "Allocation not possible - insufficient free blocks" << endl;
-            return false;
-        }
-
-        // Find free block for index
+        // Find free block for index first
         int indexBlock = findFreeIndexBlock();
         if (indexBlock == -1)
         {
@@ -101,25 +90,19 @@ public:
             return false;
         }
 
-        // Check if index block conflicts with data blocks
-        if (find(dataBlocks.begin(), dataBlocks.end(), indexBlock) != dataBlocks.end())
+        // Find free blocks for data, excluding the index block
+        vector<int> dataBlocks;
+        for (int i = 0; i < diskSize && dataBlocks.size() < fileSize; i++)
         {
-            // Remove index block from data blocks and find another data block
-            dataBlocks.erase(find(dataBlocks.begin(), dataBlocks.end(), indexBlock));
-            vector<int> additionalBlocks = findFreeBlocks(1);
-            bool found = false;
-            for (int block : additionalBlocks)
-                if (block != indexBlock && find(dataBlocks.begin(), dataBlocks.end(), block) == dataBlocks.end())
-                {
-                    dataBlocks.push_back(block);
-                    found = true;
-                    break;
-                }
-            if (!found)
+            if (disk[i] == 0 && i != indexBlock)
             {
-                cout << "Allocation not possible - insufficient free blocks" << endl;
-                return false;
+                dataBlocks.push_back(i);
             }
+        }
+        if (dataBlocks.size() < fileSize)
+        {
+            cout << "Allocation not possible - insufficient free blocks" << endl;
+            return false;
         }
 
         // Allocate index block
@@ -166,23 +149,51 @@ public:
     {
         cout << endl
              << "Allocated Files :" << endl
-             << "File Name\tIndex Block\tData Blocks\t\tFile Size" << endl
-             << string(60, '-') << endl;
+             << "+---------------+-------------+---------------------+-----------+" << endl
+             << "| File Name     | Index Block | Data Blocks         | File Size |" << endl
+             << "+---------------+-------------+---------------------+-----------+" << endl;
 
         for (const auto &file : files)
         {
-            cout << file.name << "\t\t" << file.indexBlock << "\t\t";
+            cout << "| " << file.name;
+            // Pad file name to 13 characters
+            for (int i = file.name.length(); i < 13; i++)
+                cout << " ";
+
+            cout << " | " << file.indexBlock;
+            // Pad index block to 11 characters
+            int idxLen = to_string(file.indexBlock).length();
+            for (int i = idxLen; i < 11; i++)
+                cout << " ";
+
+            cout << " | ";
+            // Build data blocks string
+            string dataBlocksStr = "";
             for (int i = 0; i < file.dataBlocks.size(); i++)
             {
-                cout << file.dataBlocks[i];
+                dataBlocksStr += to_string(file.dataBlocks[i]);
                 if (i < file.dataBlocks.size() - 1)
-                    cout << ",";
+                    dataBlocksStr += ",";
             }
-            cout << "\t\t\t" << file.fileSize << endl;
+            cout << dataBlocksStr;
+            // Pad data blocks to 19 characters
+            for (int i = dataBlocksStr.length(); i < 19; i++)
+                cout << " ";
+
+            cout << " | " << file.fileSize;
+            // Pad file size to 9 characters
+            int sizeLen = to_string(file.fileSize).length();
+            for (int i = sizeLen; i < 9; i++)
+                cout << " ";
+
+            cout << " |" << endl;
         }
 
+        cout << "+---------------+-------------+---------------------+-----------+" << endl;
+
         if (files.empty())
-            cout << "No files allocated." << endl;
+            cout << "| No files allocated.                                         |" << endl
+                 << "+---------------+-------------+---------------------+-----------+" << endl;
     }
 };
 
@@ -195,13 +206,13 @@ int main()
 
     IndexedFileAllocation ifa(diskSize);
 
-    int choice;
+    int choice, fileSize;
     string fileName;
-    int fileSize;
 
     do
     {
-        cout << "---Indexed File Allocation---" << endl
+        cout << endl
+             << "---Indexed File Allocation---" << endl
              << "   1. Allocate File" << endl
              << "   2. Deallocate File" << endl
              << "   3. Display Files" << endl

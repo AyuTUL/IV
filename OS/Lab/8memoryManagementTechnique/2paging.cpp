@@ -1,13 +1,13 @@
 // Lab 8.2: WAP to simulate paging technique of memory management
 #include <iostream>
-#include <vector>
 #include <iomanip>
+#include <vector>
+
 using namespace std;
 
 struct Process
 {
-    int id;
-    int size;
+    int id, size;
     vector<int> pages;
 
     Process(int pid, int psize) : id(pid), size(psize) {}
@@ -16,9 +16,7 @@ struct Process
 class PagingSystem
 {
 private:
-    int pageSize;
-    int totalMemory;
-    int totalPages;
+    int pageSize, totalMemory, totalPages;
     vector<bool> pageTable;     // true = occupied, false = free
     vector<int> frameToProcess; // which process occupies each frame
 
@@ -30,23 +28,13 @@ public:
         frameToProcess.resize(totalPages, -1);
     }
 
-    void displayMemoryInfo()
-    {
-        cout << endl
-             << "---PAGING MEMORY MANAGEMENT---" << endl
-             << "Total Memory Size : " << totalMemory << " KB" << endl
-             << "Page Size         : " << pageSize << " KB" << endl
-             << "Total Pages       : " << totalPages << endl
-             << string(30, '-') << endl;
-    }
-
     bool allocateProcess(Process &process)
     {
-        int pagesNeeded = (process.size + pageSize - 1) / pageSize; // Ceiling division
+        int pagesNeeded =
+            (process.size + pageSize - 1) / pageSize; // Ceiling division
 
-        cout << endl
-             << "Process P" << process.id << " (Size : " << process.size
-             << " KB) needs " << pagesNeeded << " pages" << endl;
+        cout << "P" << process.id << " (" << process.size
+             << " KB) -> " << pagesNeeded << " pages needed";
 
         // Check if enough free pages available
         int freePages = 0;
@@ -58,8 +46,7 @@ public:
 
         if (freePages < pagesNeeded)
         {
-            cout << "ERROR : Not enough free pages! Available : " << freePages
-                 << ", Required : " << pagesNeeded << endl;
+            cout << " | ERROR : Insufficient pages (Available : " << freePages << ")" << endl;
             return false;
         }
 
@@ -75,7 +62,7 @@ public:
 
         process.pages = allocatedPages;
 
-        cout << "Process P" << process.id << " allocated to pages : ";
+        cout << " | Allocated : ";
         for (int page : allocatedPages)
             cout << page << " ";
         cout << endl;
@@ -95,7 +82,8 @@ public:
         {
             cout << "|" << setw(6) << i << " |";
             if (pageTable[i])
-                cout << setw(7) << "BUSY" << " |" << setw(9) << ("P" + to_string(frameToProcess[i])) << " |";
+                cout << setw(7) << "BUSY" << " |" << setw(9)
+                     << ("P" + to_string(frameToProcess[i])) << " |";
             else
                 cout << setw(7) << "FREE" << " |" << setw(9) << "-" << " |";
             cout << endl;
@@ -115,7 +103,8 @@ public:
 
             cout << "+--------+" << endl;
             if (pageTable[i])
-                cout << "|   P" << frameToProcess[i] << "   | " << startAddr << "-" << endAddr << " KB" << endl;
+                cout << "|   P" << frameToProcess[i] << "   | " << startAddr << "-"
+                     << endAddr << " KB" << endl;
             else
                 cout << "|  FREE  | " << startAddr << "-" << endAddr << " KB" << endl;
         }
@@ -134,14 +123,13 @@ public:
                 freePages++;
 
         cout << endl
-             << "---MEMORY STATISTICS---" << endl
-             << "Total Pages       : " << totalPages << endl
-             << "Used Pages        : " << usedPages << endl
-             << "Free Pages        : " << freePages << endl
-             << "Memory Utilization: " << fixed << setprecision(2)
-             << (double)usedPages / totalPages * 100 << "%" << endl
-             << "Internal Fragmentation : Minimal (fixed page size)" << endl
-             << "External Fragmentation : None (non-contiguous allocation)" << endl;
+             << "---STATISTICS---"
+             << endl
+             << "Used : " << usedPages << " | Free : " << freePages
+             << " | Utilization: " << fixed << setprecision(2)
+             << (double)usedPages / totalPages * 100 << "%"
+             << endl
+             << "Internal Fragmentation : Minimal | External Fragmentation : None" << endl;
     }
 };
 
@@ -149,15 +137,14 @@ int main()
 {
     int totalMemory, pageSize, numProcesses;
 
-    cout << "Enter total memory size (KB) : ";
+    cout << "Total memory (KB) : ";
     cin >> totalMemory;
-    cout << "Enter page size (KB) : ";
+    cout << "Page size (KB) : ";
     cin >> pageSize;
-    cout << "Enter number of processes : ";
+    cout << "Number of processes : ";
     cin >> numProcesses;
 
     PagingSystem pagingSystem(totalMemory, pageSize);
-    pagingSystem.displayMemoryInfo();
 
     vector<Process> processes;
 
@@ -165,12 +152,13 @@ int main()
     for (int i = 0; i < numProcesses; i++)
     {
         int processSize;
-        cout << "Enter size of Process P" << (i + 1) << " (KB) : ";
+        cout << "Process P" << (i + 1) << " size (KB) : ";
         cin >> processSize;
         processes.push_back(Process(i + 1, processSize));
     }
 
-    cout << endl<<"---PROCESS ALLOCATION---" << endl;
+    cout << endl
+         << "---PROCESS ALLOCATION---" << endl;
 
     // Allocate each process
     for (auto &process : processes)

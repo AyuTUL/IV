@@ -57,8 +57,7 @@ int main()
     for (int i = 0; i < m; i++)
     {
         bool isAllocated = false;
-        int worstIndex = -1;
-        int maxWaste = -1;
+        int worstIndex = -1, maxWaste = -1;
 
         // Find the worst fit block (largest block that can accommodate the process)
         for (int j = 0; j < n; j++)

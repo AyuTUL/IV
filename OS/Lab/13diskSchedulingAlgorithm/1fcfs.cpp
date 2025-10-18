@@ -1,6 +1,7 @@
 // Lab 13.1: WAP to simulate FCFS disk scheduling algorithm
 #include <iostream>
 #include <vector>
+#include <math.h>
 using namespace std;
 
 int main()
@@ -28,7 +29,7 @@ int main()
     }
     cout << endl
          << endl
-         << "Total head movement = " << total_movement << endl;
-    cout << "Average head movement = " << (double)total_movement / n << endl;
+         << "Total head movement = " << total_movement << endl
+         << "Average head movement = " << (double)total_movement / n << endl;
     return 0;
 }

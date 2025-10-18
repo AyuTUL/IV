@@ -63,8 +63,7 @@ int main()
 
     queue<int> q;
     vector<int> frames;
-    int pageFaults = 0;
-    int pageHits = 0;
+    int pageFaults = 0, pageHits = 0;
 
     printTableHeader(nFrames);
 

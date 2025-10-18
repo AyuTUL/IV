@@ -63,8 +63,7 @@ int main()
     vector<int> frames;
     vector<int> frequency(nFrames, 0);    // Track frequency of each frame
     vector<int> arrivalTime(nFrames, -1); // Track when each frame arrived (for FIFO tie-breaking)
-    int pageFaults = 0;
-    int pageHits = 0;
+    int pageFaults = 0, pageHits = 0;
 
     printTableHeader(nFrames);
 

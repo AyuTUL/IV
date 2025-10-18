@@ -22,8 +22,7 @@ struct Directory
     }
 };
 
-Directory *root;
-Directory *current;
+Directory *root, *current;
 
 void showCurrentLocation()
 {
@@ -152,7 +151,6 @@ void searchFile()
     string fileName;
     cout << "Enter file name to search : ";
     cin >> fileName;
-
     auto it = find(current->files.begin(), current->files.end(), fileName);
     if (it != current->files.end())
         cout << "File '" << fileName << "' found." << endl;
