@@ -1,4 +1,7 @@
 functions of dll: fpeaf
+dll is 2nd layer of OSI model
+node to node delivery of messafge error free using MAC address
+
 framing:
 	takes packets from nl and encapsulates them into frames
 	sends each frame bit by bit on hardware
@@ -32,17 +35,20 @@ dll uses flow control mechanism to prevent overruninng the receiver
 
 
 llc:
-	interface between mac and l
+	interface between mac and nl
 	provides logic for data link
 	controls synchronizaiton, flow control and error checking
+	identifies which netowrk protocol is being used
+	defined by IEEE 802.2
 
 mac:
 	provides control for accessing transmission medium
 	moves packets from one network medium to another across shared transmision medium
-	handles physical addressing
+	handles physical addressing ie adding MAC address to frame
 	when sending data ato another device, encapsulates higher level frames into frames
 appropirate for transmission medium
 	deals with actuial control of media
+	defined by IEEE 802.X (802.3-ethernet, 802.11-wifi)
 
 framing approach:
 bit stuffing: ro differentiate payload and flag, when 0 is followed by consecutive 1's stuff 0
@@ -96,6 +102,22 @@ selective repeat arq protocol:
 	reset timer
 	wait for ack
 
+piggybacking:
+	delay outgoing ACK and attach it to next data paocket
+	when data frame arrives, receiver waits and doesnt immeditaely send ACK back
+	receiver waits till NL moves to next packet 
+	ACK is associated with this outgoing frame
+	ACK traavels alobng with necxt frame
+
+multiple acces protocol/channel allocation techniques:
+	used for when thre is no dedicated link between sender and receiver, multiple stastions
+can access channel simultaneously
+	to reduce collision and cross talk
+
+random access protocol: aloha, csma, csma/cd, csma/ca
+controlled access: rservation, polling, token passing
+channeliation protocls: fdma, tdma, cdma
+
 aloha:
 	random access multiple access protocol for wlan
 	multiple station can transmit data at same time can cause collision
@@ -113,6 +135,82 @@ slotted aloha:
 	if 2/mroe transmit in same slot, colssion and retrnasmit after random delay
 	amx threoughput =36.8%
 
+csma:
+	carrier sense multiple access
+	device checks channel first before sending
+	if channel busy, wait till free
+	collision may occur when 2 stastion transmit at same time
+
+	1 persistent csma:
+		station listens to channel
+		transmit if idle, wait if busy
+		if multiple channel are waiting amd transmit as soon as idle, collision
+
+	non persistent csma:
+		stsation listens to channel
+		if busy, waits random time then checks again
+		if idle, transmits
+		reduces chance of collision by not crowding channel right after becoming free
+
+	p persistent csma:
+		busy, wait
+		idle, transmit with probablity p
+		or next for next time slot with probablity 1-p
+		right value of p blances collision rate nad delay
+
+csma/cd:
+	collision detection
+	cs: device listens if channel is idle before sending
+	ma: if idle, multiple can access but only one can transmit at a time
+	if idle, transmit data
+	cd: check channel even while transmitting, if collision, immediately stop
+	device send jam signal to inform all edvices about collision
+	device waits random time using backoff algorithm to retransmit
+
+csma/ca:
+	collsion avoidance for wifi ieee 802.11
+	cs: device listens if channel is idle
+	interframe space: if idle, device waits small amount of time before proceeding
+	random backoff timer: counts down when channel is idle
+	transmit data when backoff timer reaches 0
+	if data received successfully, receiver sends ACK
+	if collision, no ACK, sender tries again
+
+controlled access protocols:
+	rigfht to transmit is regulated to avoid collsion
+
+reservation:
+	time is divided into slots
+	devices reserve time solts in advance before transmitting
+	device sends reservation request in special ocntrol slot
+	if resrevation accepted, device is assigned a slot to transmit
+
+polling:
+	central controller asks each device one by one if want to send data
+	if yes send else move to next device
+
+token passing:
+	token is special message that circulates in network
+	if device has token, it can transmit
+	after transmit, pass token to next device
+
+channelization process:
+	divides channel into separate logical parts so many uiser can transmit at same time
+using different chanels
+
+fdma:
+	frequency division multiple access
+	divide bandwidth into sperate frequncy band
+	each user gets dedicated frequncy channel
+
+tdma:
+	time divison mukltiple access
+	divide time into slots
+	each user transmits in own time slot with same frequncy
+
+cdma:
+	code division multiple access
+	all users transmit at same time and frequency but unique code to seprate data
 hdlc:
 	group of communciation protocol fro trnasmiting data between nodes
 	bit oriented protocol

@@ -110,7 +110,7 @@ ipv4 datagram:
 
 ipv6 datagram:
 	version 4: always 6 for ipv6
-	traffic class 6: simlair to ipv4 tos
+	traffic class 8: simlair to ipv4 tos
 	flow label 20: used to label packets in same flow
 	payload length 16: length of payload excluding header
 	next header 8: identify next header

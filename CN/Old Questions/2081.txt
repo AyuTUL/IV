@@ -1,0 +1,60 @@
+1. 
+CRC = 1101
+ACtual bit transmitted = 1101011011 1101
+
+2.
+
+
+3.
+reason of transition from ipv4 to ipv6:
+limited address space:
+	2^32 unique address, as internet connected devicse increase, become insufficient
+
+unnecessary and variable header field:
+	unused, packet processing slower and complicated for routers
+
+fragmenetation in router
+	slows down performance nad increases router load, should be done by sender not routers
+
+addressing model:
+	ues class based or NAT based addressing
+	inefficient use of IP address and adds complexity to routing
+
+NAT:
+	limited ips->many devices share one public ip
+	breaks end to end connectivity principle of internet 
+	complicates application like voip,p2p
+
+broadcast vs multicast:
+	caueses unncesary traffic
+	multicast not well supported
+
+QOS:
+	no effective support for real time services lke voice/vidioe
+
+ipv6 datagram:
+	packet of data transmitted over ipv6 network
+	version 4: always 6 for ipv6
+	traffic class 8: simlair to ipv4 tos
+	flow label 20: used to label packets in same flow
+	payload length 16: length of payload excluding header
+	next header 8: identify next header
+	hop limit 8: same as ttl in ipv4, decrements at each router
+	source 32: sender address
+	destination 32: receriver address
+
+4.
+in connection oriented network service, end to end connection is established between
+sender and receiver before transfer of data and is terminated after completion
+requires authentication before transmittind data packets, called handshaking so is more reliable
+the order in whic hthe packets are sent by sender is maintained nad received in same order
+guarantees data packet transfer
+eg tcp
+
+5.
+provides control for accessing transmission medium
+moves packets from one network medium to another across shared transmision medium
+handles physical addressing
+when sending data ato another device, encapsulates higher level frames into frames
+appropirate for transmission medium
+deals with actuial control of media
