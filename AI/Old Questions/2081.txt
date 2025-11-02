@@ -22,6 +22,44 @@ bfs dfs uniform cost search			greedy best first a* hill climbing
 heuristics not used				heuristics used
 less efficient as exploring blindly		more efficient guided by heristic values
 complete					not always complete 
+effective for smaller search space		for larger search space
+
+hill climbing:
+informed search that finds optimal solution by continuously moving in the direction of 
+increasing value guided by heristic function
+no back tracking
+
+search starts at non optimal state
+cheks immediate neighbour state
+if neighbour has higher heuristic value than current state, agent moves to neighbour
+repeat until it reaches peak value with no nieghbour with higher value
+peak is either global or local maximum
+
+simple hill climbing:
+only evaluates nieghbour state selectes one that optimizes current cost
+
+stochastic hill climbing:
+selects neighbouring nodes randomly
+greedy
+
+steepest ascent hill climbing:
+examiens all neighbouring nodes of curretn state and selects one closest to goal
+
+problems:
+local maximum/foothill problem:
+local maxima is peak state better than all enighboyrs but not than state farther away
+occure in sight of sollution so called foothiuil
+backtrack to earlier node and try goind in diffrent direction
+
+plateau problem:
+all enighbors have same value so curretn sate doesnt change
+take very big or sdmall steps
+randomly select sates far away
+
+ridge problem:
+special form of local maximunm
+multiple local maxima same as global maxima
+move in different directions or use bidirectional search
 
 intelligence:
 ability to percieve, le arn, reason,adapt and make decisions to solve problems or acheive
@@ -43,7 +81,7 @@ foundations are disciplines that contribute ideas, viewpoints and techniques to 
     Computational complexity
 
 3. Philosophy
-    Concepts of mind, reasoning, consciousness
+    Concepts of mind,  reasoning, consciousness
     Debates on ethics, free will, and machine morality
 
 4. Psychology and Cognitive Science
@@ -66,7 +104,7 @@ script:
 structured knowledge representation that describes a stereotyped sequence of events in particular
 context. it uses fram like structure to repsent commonly occcuring expreiences
 
-components of script:
+components of script: tprers
 1. entry condition: conditions that must be satisfied before execution of script can occur
 2. results: conditions that will be true after exit
 3. props: objects involed in script
@@ -111,6 +149,7 @@ fuzzy logic:
 form of many valued logic in which truth valkues of variables may be real number from 0 to 1
 handles concept of partial truth
 mathematical way of repsenting vagueness/imprecise information
+uses membership function to define degree to which an input belongs to a particular fuzzy set
 
 minmax algorithm in game search:
 used in 2 player adversarial games to simulate all possible move and slecet the move that
@@ -130,3 +169,59 @@ copmare inital value and terminal state value and min will go to higher node
 step 3:
 find utility value for maximizer
 copmare inital value and terminal state value and max will go to higher node
+
+nlp:
+field of cs that allows computers to understand hum anguaeg in written, spoken or scribbled form
+uses stud of langugages,statisstics based modesl,ml,dl
+allows computer to anylauze and process text/voice data to grasp theri full meaning including
+speakers intentions and emotions
+eg chabots, gigital assistants, tts, grammar checker
+
+nlp techniques: tksss
+alorithms used to enable machine to undersatnd,interpret and genrate human language
+
+tokenization: breaking down text into smaller units
+-word tokenzaion: split texct into individual words
+-sentence tokenziation: split text into sentences
+
+keyword extraction:
+analkyzes text to indetify most important keywrds/phrasese
+used for search engine optimization(seo), sm monitoring, business intelligence
+
+sentiment analyisi:
+detects and interprest the emotional tone behimd text
+analzye text to idefnity sentiments like +ve -ve neutral
+used for custmore feedback analysis,sm monitoring, custmore reviews
+
+sumamrization:
+sumarizes longer text like artiles,reprts to make it more maangeable for time sensisstive readers
+
+speech recognition:
+converts spoken language into text (automatic speech recoginiotn asr)
+uesd by virtual assistants like siri or ga to undersatnd spoken commands
+
+steps: lssdp
+lexical analysis/tokenization:
+breaking input into sammler units like words
+identifying boundaries between tokens and stripping punctuations
+goal is to create meaningfulk words for further prcoessing
+
+syntactic analsys/parsing:
+analyzing grammatical structure of text
+text is arranged in a way that helps understand how words relate to each other using parse tree
+checks if inut follows syntax of given language
+
+semantic analysus:
+derive meaning of sentence
+cionverts syntatctic structure into meaningful representation to ensure meaning aligns with contetx
+word sense disambiguation, meaning of words is determined by surrounding context
+
+discourse integration:
+undersatndign larger chiunks of text
+ensures sentences are connected logically
+meaning of one senetecnes can be interpreted based on previous and subsequent sentence
+
+pragmatic analysis:
+takes into account intended meaning, deoending on context
+deals with how real world knowledge infulences meaning nof text
+considers factors like speakers intent, social context, relation between participants in convo

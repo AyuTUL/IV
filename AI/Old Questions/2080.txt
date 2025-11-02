@@ -15,12 +15,12 @@ Distribute ∨ over ∧ to get conjunctive normal form
 Example: (A ∨ (B ∧ C)) becomes (A ∨ B) ∧ (A ∨ C)
 
 properties of ai agent:
-ineternal:
+ineternal: larg
 	learning/reasoning: learns from apst expreiences and adapts
 	rectivity: responds approporitaly to environmental changes
 	autonomy: act sindependtly, controls its own states and decisions
 	goal oruiented: infuels environemnt to achieve well definded ohjectives
-external:
+external: mccc
 	communication: interact with umans/ai agent in environemnt to complete task
 	cooperation: collab with other agenst for problems exceed cacpaiblity of single agent
 	mobility: can move across electronic comm network
