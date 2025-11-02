@@ -7,6 +7,26 @@ start node respetns intial sate
 goal node sreprseents desired state
 each edge may have cost
 
+S:[S,A,Action(s),Result(s,a),Cost(s,a)]
+S: set of all possible states
+A: set of all possible actions
+Action(s): which action can be performed in state s
+Result(s,a): state reached after performing action a in state s
+Cost(s,a): cost of performing action a in state s
+
+gbfs vs a*:
+chooses best possible path at current state	chooses most promising path
+eval function f(n)=h(n)				eval function f(n)=h(n)+g(n)	
+h(n): cost from node n to goal			g(n): cost from start node to node n
+not optimal, ignores g(n)			if h(n) is admissible h(n)<=h*(n)
+						consistent h(n)<=c(n,m)+h(m)
+not complete, stuck in infite loops		complete if branching factor is finite and cost
+						at every action is fixed
+time complexity: O(b^m)				O(b^d) 
+space complexity: O(b^m)			O(b^d)
+m: max depth of search space			b: brnching factor
+						d: depth of solution
+
 a* search:
 informed search algorithm that ues info about path cost and heuristics to find shortest
 path between nodes
@@ -159,6 +179,27 @@ it compares and prefers better outcome samong several to reach a goal.
 eg: delivery drone that selcets route with blacne of speed,safety and battery usage
 fig
 
+game search:
+game is a complex multi agent environment that gives rise to adversarial serach which invlives
+navigating htroughg game tree containg all possible moves and counter moves. moves represent
+the actions of multiple agents.
+game is formally defined as a search problem with following elemts:
+S0: inital state that defiens how game is set up at start
+PLAYER(s): defines which player has the move in state s
+ACTION(s): defines set of legal moves in state s
+RESULT(s,a): defines result of action a in state s
+TERMINAL-TEST(s): checks if game is over in state s
+UTILITY(s,p): defines final numeric value for game that ends in terminal state s for player p
+
+minmax algo:
+recursive algorithm used to find optinmal movse for a player assuming opponent is also playing
+optimally
+2 players MAX:seeks maximized utiliy value MIN:sekks minimized utiolty value
+optimal strategy is determined by caclculaitn the minmax value of each node
+performs DFS down to terminal nodes where utility values are known
+during backtrack phase, AMX nodes choose max value from successor state
+MIN nodes choose min value 
+
 semantic network:
 graphjical knowledge representation technique compposed of nodes that repressent obejcts/
 concepts/events linked by arcs/edges taht represnet relation between nodes like is-a has-a
@@ -168,6 +209,96 @@ components:
 2. structural: links and nodes form directed graph where labels are placed on link and nodes
 3. semantic: meaning are related to links and laels of nodes
 4. procedural: cosntructors create new links,nodes and destructors romve them
+
+genetic algorithm:
+search heuristic inspired by Charles Darwin's theory of natural evolution and selection used
+to solve optimization problems in machine learning. it operates on evolutionary generational
+cycle to find high quality solution
+flowchart:
+Start
+initial population
+calcualte fitness
+no
+selection
+crossover
+mutation
+terminate
+yes
+best individuals
+output
+stop
+
+phases of ga:
+initialziaiton:
+The process begins by randomly generating a set of candidate solutions called the population. 
+Each individual solution is a chromosome, composed of genes (parameters).random binary strings
+are used for initialization
+
+fitness assignment:
+A fitness function is applied to evaluate the ability of each individual (chromosome) 
+to solve the problem. Individuals receive a fitness score, and the higher the score, 
+the higher the probability of being selected for reproduction.
+
+selection:
+process of choosing 2 parents from population for crossing and reproduction for offspring
+all selected individuals are arranged in a pair of twos to increase reproduction
+these individuals transfer genes to next generation
+
+-roulette wheel/fitness proportionate selection: 
+ probabilitis selction that assigns probabiltiy of selection to each individual on the basis
+of fitness, higher fitness more chance to get selected
+
+-tournament selection:
+running several tournaments among few individuals randomly chosen from population
+winner of each tournament ie highest fitness is selected for next generation
+
+-rank based selection:
+assings selcetion probablity based on rank of individual's fitness rather than fitness itself
+by sprting popuplation by fitness
+
+reproduction:
+2 bvariation operators are applied to parent population to create child
+
+-crossover:
+process of taking 2 parent solutions and prodcuing child
+reproduction operator selects a random pair of 2 individuals for mating
+cross site is selected at random along string length
+position values are swapped between 2 strings following cross site
+
+--single point crossover
+2 mating chormosomes are cut once at coressponding points and sections after the cuts are exchanged
+crossover point is selected at random
+
+--2 point crossover
+2 crossover points are chosen on parent chromosomes then segment between these points are
+swapped to reate offspring
+
+--livery/uniform crossover
+each gene in offpsring is independent ly chosen from either parent with equal probability
+
+--inheritable genetic algorithm:
+cetrain genes are inherited by offspriong to ensure high quality solution
+balance preservation with exploration - controlled diversity
+
+-mutation:
+mutation operator inserts random genes in offspring to maintain diversity in population
+fliiping bits in chromosomes
+solves problem of premature convergence and enchances diversification
+
+--flip bit mutation:
+a parent is chosen and mutation chromosome is randomly generated
+for a 1 in mutation chromosome, coresspondign bit in parrent is flipped to  create child
+
+--gaussian mutation:
+addign random value drawn from gaussian distribution to individuals gene values
+
+--exchange/swap mutation:
+2 positions in chromosome are randomly selected and exchanged to create new individual
+
+termiantion:
+The cycle continues until a stopping criterion is met, such as reaching a pre-defined fitness 
+threshold or a maximum number of iterations (epochs). The best individual in the final
+ population is the solution.
 
 PEAS of medicine delivery drone:
 Performance	
@@ -213,3 +344,133 @@ Sensors
 - User input interface (keyboard, touchscreen)
 - API access to medical databases/test results
 
+
+machine vision:
+ability of computer to see
+a system with machine vision uess video cameras, analog to digital conversion, digital signal
+processing to visaully analyze an activity
+sensitivity: ability to detect weak impulses or see in dim light
+resolutiuon: ability to differentiate between objects
+holding other factors constant, improving sens reduces resolution and vice versa
+
+components:
+image sensor: 
+responsile for analyzing images captuerd by camera to determine accuracy of assembly or presence
+of defects
+types: orthographic projection (rectangular fov, suitable for infrared sensors)
+perspective projection (trapezoidal fov, suitable for camera type senors)
+
+vision processor:
+runs machine vision algorithm to process raw image data from sensor to extract usefi=ul info
+function is to  ensure image processing is completed without error
+
+communication interface:
+conencts various parts of vision system, facilitating data transmission between device(like
+smart camera) and software run on separate computer
+
+lighting: mlqfx
+every vision sequence requires lighting analysis sequence using sources like LED,mercury,xenon
+quartz halogen or fluroerscent
+choice of lihting depends on systems purpose and size of vision sattion
+
+lens:
+light gathering component that must be matched iwth image sensor
+this trsnasparent matriial uses curved sides to disperse light rays
+
+nlp:
+field of cs that allows computers to understand hum anguaeg in written, spoken or scribbled form
+uses stud of langugages,statisstics based modesl,ml,dl
+allows computer to anylauze and process text/voice data to grasp theri full meaning including
+speakers intentions and emotions
+eg chabots, gigital assistants, tts, grammar checker
+
+nlp techniques: tksss
+alorithms used to enable machine to undersatnd,interpret and genrate human language
+
+tokenization: breaking down text into smaller units
+-word tokenzaion: split texct into individual words
+-sentence tokenziation: split text into sentences
+
+keyword extraction:
+analkyzes text to indetify most important keywrds/phrasese
+used for search engine optimization(seo), sm monitoring, business intelligence
+
+sentiment analyisi:
+detects and interprest the emotional tone behimd text
+analzye text to idefnity sentiments like +ve -ve neutral
+used for custmore feedback analysis,sm monitoring, custmore reviews
+
+sumamrization:
+sumarizes longer text like artiles,reprts to make it more maangeable for time sensisstive readers
+
+speech recognition:
+converts spoken language into text (automatic speech recoginiotn asr)
+uesd by virtual assistants like siri or ga to undersatnd spoken commands
+
+nlu:
+ablity of system to understand human lagnugage
+interpreting,manalyzing and comprehending the meanign behind text/speech nioput
+goal is to convert human language into form understood by machine for processing
+spoken/typed sentnec->NLU->sebtebces meanings
+
+steps: tls
+tokenizatoin: 
+splting input into indivudal words
+includes punctuations,other sysmbols and words from all languages
+
+lexical nalaysis:
+tokesns are placed in dictionary including their parst of speech(nouns/verbs)
+includes identifying phrases to be placed in separate databsae for later use
+
+syntactic analysis:
+tokens are analyzed for their grammatical structure
+indentifying each words roels and their ambiguity between mulitple interpretations
+
+nlg:
+procduing meaningful phrases and sentences in the form of natural alngue from machine
+representation system like KB or logical form
+generating text appearing to be wrtten by a human without the need for a actual human 
+used to create songs,movie scripts,sepech
+formal representation->NLG->english expression
+
+steps: lssdp
+lexical analysis/tokenization:
+breaking input into sammler units like words
+identifying boundaries between tokens and stripping punctuations
+goal is to create meaningfulk words for further prcoessing
+
+syntactic analsys/parsing:
+analyzing grammatical structure of text
+text is arranged in a way that helps understand how words relate to each other using parse tree
+checks if inut follows syntax of given language
+
+semantic analysus:
+derive meaning of sentence
+cionverts syntatctic structure into meaningful representation to ensure meaning aligns with contetx
+word sense disambiguation, meaning of words is determined by surrounding context
+
+discourse integration:
+undersatndign larger chiunks of text
+ensures sentences are connected logically
+meaning of one senetecnes can be interpreted based on previous and subsequent sentence
+
+pragmatic analysis:
+takes into account intended meaning, deoending on context
+deals with how real world knowledge infulences meaning nof text
+considers factors like speakers intent, social context, relation between participants in convo
+
+constraint satisfaction problem:
+problem in which solution has to meet certain predefined conditions
+components:
+V: variables, finite set of variables (V1,V2,,) that hold the solution
+D: domain, set of diescrte values (D1,D2,...) from which variables piock their values
+C: constraints, finite set of rules that specifies allowed combo of valur for variation
+each contraint Ci involes scope(variables participating) and relation(defines allowable values)
+
+a soliution is assignemnt of domain values that satisfies all constraints
+
+map coloring:
+csp where goal is to color adjacent regions diferenty
+V: states in the map WA NA SA Q NSW V T
+D: set of colors availabe for assignment to each varialbse Di={red,green,blue}
+C: contrainst that adjacent regions requier diferent coors WA!=NT
