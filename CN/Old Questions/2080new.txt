@@ -1,0 +1,87 @@
+1.
+classful addressing is a system that divides ipv4 address space into fixxed size class
+each class has predetermined defauilt subnet mask and range
+
+A 0:range, default subent mask 255.0.0.0/8, unicast, 0 and 127 reserved
+B 10: range, 255.255.0.0/16, unicast
+C 110: range, 255.255.255.0/24, unicast
+D 1110: range, multicast
+E 1111: range, experimental use
+
+2.
+flow control restricts amount of data that sender can transmit before waiting for ack
+to snsure flow of data doesnt overwhelm receiver
+
+stop and wait ARQ protocol is error control protocol used for realiable data transmission
+in noisy channel
+sender sends single frame to receiver and starts timer. if receiver succesfully recives frame,
+ it sends ACK with sequence no. of next frame to sender for confirmation. sender sends next frame
+if snder doesnt receive ACK withint time frame, it assumes frame has been lost and retransmits
+duplicate frame is discarded at receiver side
+if receiver doesnt receive frame then it sends NACK to sender and sender retransmits
+
+low transmission rate
+waiting period means bandwith is wasted
+
+3.
+TCP datagram format:
+source port 12: holds port number of source app to identify transmitting app
+dest port 16: holds port number of refeiving app to send data to appropriate app
+sequence number 32: ensure data is receied in proper order by ordergin segemts
+ACK number 32: contains upcomding SN, acknowledgeing feedback upto that point
+data offset 4: indicates starting point of TCP payload and stores size of TCP header
+control falg 9: regulates communcation (SYN for conn,ACK for ack,Fin for termin,RST for reset)
+window size 16: specifesi size of senders receive window for lfow control
+checksum 16: reveals if haeder/segment was damaged during transportation
+urgent pointer 16: points to packets first byte of urgent data
+options variable: represent diffrent TCP otion
+data variable: contains app dat qabeing transmitted 
+
+-reliable service:
+	guarantees data delivery using flow control(sender controlled by receiver window size)
+and error control mechanisms(acknowledgement/transmission)
+
+-stream delivery:
+	handles data as a stream of bytes, ensuring ordered segmenting and reassembly
+
+-applications:
+	used by protocols requiring high reliabiilty like HTTP,HTTPS,FTP,SMTP
+
+4.
+network toppology is physical arrangement fo computers,cables and other componesnts on a network
+affteciong speed and performance
+
+-bus:
+	all computers are attached to continous calbe(backbone) in a linear format
+	simple,less expensive,easy to add new nodes\
+	heavy traffic slows performance, difficult to troubleshoot,if backbone fails whole netowo
+
+-star:
+	all cables rubn from computer to central connecting device hub/swtich
+	easy to setup,single computer failre doesnt fail whole netowrk,easy error detection
+	if central device fail,whole netowrk stops,costs mroe to cable
+
+-ring:
+	each computer is connected to next qith last connected to firwst formign a ring
+	info travels in one direction(clock/anti)
+	easy to setup,equal chance for all computers to access resources,single cable conn
+between nodes
+	failure of one computer affects whole netowrk,adding/removing netowrk distrubs neetowk,
+difficult to troubleshoot
+
+-mesh:
+	each node is linked to others thorugh intermediate nodes with redudandant paths
+	all nodse are directly conncete to one another
+	wires requied is n(n-1)/2
+	fault tolerance,easy to trobubleshoot
+	difficult to intall,exenseive
+
+-tree:
+	combo of star and bus topology, structured like branches in a treww
+	high scalability(leaf nodes can add more nodes),easy maintenance and fault identifica
+	requies large no of calbes,expenseive
+
+-hybrid:
+	combo of more than 2 topologies, inheriting the adv and disadv of included topologies
+	combines benifits,highly reliable,used for large network
+	complex design,expensive,diffcult to isntall

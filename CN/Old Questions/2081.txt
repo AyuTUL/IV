@@ -1,11 +1,44 @@
 1. 
+appedning a sequence of redundant bits called CRC bits to end of message so that resulting
+message can be exactly divisble by generator polynomial
 CRC = 1101
 ACtual bit transmitted = 1101011011 1101
 
-2.
+2. mfd
+app layer is the highest abstraction layer of TCP/IP model that provides interface and protocols
+needed by users. it servers as window for application services to access the network and display
+reciived information to user
 
+file transfer: allows user to access,retrieve and manage files on a remote computer
+mail services: provides the basis for email forwarding and storage facilites
+directory services: provides database source access for global infor about various services
 
-3.
+DNS is a global syustem for transalting IP address into human readle domain name
+required because it is easier to remember domain names (google.com) than their IP address (192.
+DNS clients sends requests to server which converts a name (forward DNS lookup) or IP
+address (reverse DNS lookup)
+DNS implemetns a distributed database to store the naes of all available hosts on internet                    
+
+types of DNS query: rin
+-recursive: 
+DNS client provides hostname and DNS resolver msut provide answer, relevant reousrce record
+or error message if it cant be found
+resolver satrts a recursive query process, beginning with DNS root server until it finds the 
+authoritative name server that holds the requested information
+
+-iterative:
+DNS provides hostname and DNS rewsolver returns best answer it can
+if DNS resolver has relevant records in cache, it retunrs
+if not, it refers the DNS client to DNS rootr server or another authoritative name server
+closeset to required domain zone
+
+-non recursive:
+DNS resolver already knows the answer
+either iimediately returns a DNS record or quereois DNS NAme server which is authoritative for 
+record
+in both cases no need for additional round of queies and response immediatly return to client
+
+3. ahlfabn
 reason of transition from ipv4 to ipv6:
 limited address space:
 	2^32 unique address, as internet connected devicse increase, become insufficient
@@ -17,8 +50,12 @@ fragmenetation in router
 	slows down performance nad increases router load, should be done by sender not routers
 
 addressing model:
-	ues class based or NAT based addressing
+	ues class based or NAT(netowrk address translation) based addressing
 	inefficient use of IP address and adds complexity to routing
+
+limited Qos:
+	ipv4 lacked explicit features for flow labeling and priiorty needed for real time
+services like voice/video
 
 NAT:
 	limited ips->many devices share one public ip
@@ -29,32 +66,141 @@ broadcast vs multicast:
 	caueses unncesary traffic
 	multicast not well supported
 
-QOS:
-	no effective support for real time services lke voice/vidioe
-
 ipv6 datagram:
 	packet of data transmitted over ipv6 network
 	version 4: always 6 for ipv6
-	traffic class 8: simlair to ipv4 tos
+	traffic class 8: simlair to ipv4 tos, distinguish type of IP datagram
 	flow label 20: used to label packets in same flow
 	payload length 16: length of payload excluding header
 	next header 8: identify next header
 	hop limit 8: same as ttl in ipv4, decrements at each router
-	source 32: sender address
-	destination 32: receriver address
+	source 128: ipv6 sender address
+	destination 128: ipv6 receriver address
 
 4.
 in connection oriented network service, end to end connection is established between
 sender and receiver before transfer of data and is terminated after completion
+design is based on telephone system eg TCP
+
+characteristics:
+-connection establishment:
+	creation of dedicated end to end connection between sender and receriver before trrans
+
+-relaibility:
+	more reliable as it guarantees data packet transfer due to authorization called handshaking
+
+-ordering:
+	all packets recived in same order they are setn by sender
+
+-phases of communication:
+	user follow sequeunce: conn establish,inforamtion send,connection release
+
 requires authentication before transmittind data packets, called handshaking so is more reliable
 the order in whic hthe packets are sent by sender is maintained nad received in same order
 guarantees data packet transfer
 eg tcp
 
-5.
-provides control for accessing transmission medium
-moves packets from one network medium to another across shared transmision medium
-handles physical addressing
-when sending data ato another device, encapsulates higher level frames into frames
-appropirate for transmission medium
-deals with actuial control of media
+5. spead
+MAC is lower sub layer of DLL
+
+-access control:
+	provides control for accessing transmission medium
+	required when more than 2 devices are connected to common link,determining which device
+controls link at any time
+
+-physical addressing:
+	adds physical(MAC) address of sender and reciever in header of each frame
+
+-data movement:
+	responsible for moving data packets from one network interface to another across shared
+transmission
+
+-encapsulation:
+	when sending data, it encapsulates higher level frames into frames appropriate for
+transmission medium
+
+-specific access methods:
+	defines specific access methods for different LANs
+	CSMA/CD fro ethernet LANS nad token passing for token ring/bus LANs
+	deals with actual control of media
+	
+6.
+Network Function Virtualization (NFV) is a network acrchitectrue for accelerating serivce
+deplyoment for netowrk operatoers and reduce the cost by seprating functions like firewall,
+routers and load balancers which have traditionally been rn on dedicated commputer hardware
+
+-cost reduction: 
+	purchasing software on satndard servers instead of expensive dedicated network equipment
+
+-increased efficeiny:
+	efifcent in space,pwoer,cooling compared to proppiretary hardware solution
+
+-faster deployment:
+	faster time to deploy network services
+
+-flexibility and saclabiilty:
+	flexibilty, elasticc slace up and down capacity
+
+-hardware independence:
+	supports infrastructure independent from hardware
+	allows netowkr operatos to implement netowrk [plciy without worrying about hardware
+placement or traffic routign through specific functions
+	provides new way to create, distribute and mange netweork devices/services using
+virtual software based applications
+
+8. 
+web server vs proxy server:
+hosts websites and responds to HTTP requests	ACts as intermediary machine, translating traffic
+from clinets, serving web content		between eotwrks/protocls, separting end user clinet 
+						destinations
+location is destinatoin where web content is	sits between clinet and external netwrok(froward
+stored						proxy) or betweeen netowrk and internal resource
+						(revers eproxy)
+delivers web apges to clients			controls internet usage, manage bandwidth,
+						provides privacy benefits, improves security, 
+						provicdes access to blockde resources
+seraches for requested page, if found, sends	evaluates outbound requests, caces data to speed
+to client via HTTP response			up common requests, hides clinests IP adress
+
+9.
+traffic shaping algorithm to control rate of traffic sent into netwrok helping to smooth out
+bursty traffid and ensure network stability
+iamgeine a bucket that holdfs tockens. tokesns are genrated and addesd to bucket at fixexd rate
+(r tokens/sec). to transmit a packet of size n, sender must remove n tokens from bucket.
+if enough tokens are availblae in bucket, packet is sent immediately else packet is either
+dealyaed until enough tokens accumuilate or discarded. bucket has max acapity B. if token
+generation rate exceeds capacity, extra tokens are discarded, meanign the bucket sets a limit
+on aomunt of burstiness allowed
+
+10.
+PPP is internet protocol used for router to router traffic ad home user to isp traffic
+
+-packet framing: encapsulates NL datagrams into DLL frame
+-multi protocol support: can carry NL data from any NL protocol and has bility top demultiplex 
+	data upwards
+-bit transparency: msut be able to cary any bit pattern in data field
+-error detection: error detection but not correction
+-connection liveness: can detect and signal link failure to NL
+-authentication: permits user identificatoin
+
+11.
+use radio wave of different frequncies and dont need wire to transmit signals
+
+radio waves:
+	3kHz-1Ghz
+	omnidirectional
+	penetrate ttherough walls easily, suitable for indorr and outdoor communication
+	used in AM FM radio. TV,Wifi,cell phone
+
+micro wave:
+	1-300Ghz
+	unidirectional, needs LOS,prevents interference with ohter aligned antenna pairs
+	used for PPP communcaiton
+
+12a.
+Internet Control Message Protocol (ICMP)
+used for error reporting and diagnostic fucntion in IP network
+not sending user data between systems but sending control messgaes realted to netowrk operations
+ICMP message include fileds like TYpe and Code to specify nature of message and checksum for 
+error checking
+
