@@ -1,0 +1,5 @@
+12 b.
+RAID (redundant array of independent disks)
+ues multiple physcial disk drives to create logical unit, aiming to increase performance
+and provide data redundacy to protect against drive failure
+suppoerts direct access to file blcoks and effectively addresses issue of external fragmentation
