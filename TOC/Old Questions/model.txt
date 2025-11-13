@@ -7,7 +7,7 @@ one of the following forms:
     A→BC
         Where A,B,C∈V (non-terminals) and B, C are not the start symbol
     A→a
-        Where a∈Σa∈Σ (a terminal)
+        Where a∈Σ (a terminal)
 
 E-NFA:
 An ε-NFA (Epsilon Non-deterministic Finite Automaton) is an NFA that allows
@@ -17,7 +17,13 @@ Formally, ε-NFA is a 5-tuple:
 (Q, Σ, δ, q₀, F) where:
     Q: set of states
     Σ: input alphabet
-    δ: transition function → Q × (Σ ∪ {ε}) → P(Q)
+    δ: transition function → Q × (Σ ∪ {ε}) → 2^Q
     q₀: start state
     F: set of final states
 
+multi track TM					multi tape TM
+single tape is logically divided into multiple	multiple sperate tapes
+parallel tracks
+one unified tape head that reads all k symbols	separate head for each tape taht moces independt 
+from k tracks in single step
+for storages					increace computation speed

@@ -4,11 +4,29 @@ gives set of states as outpout. It can return 1/more states.
 
 CFG:
 CFG is a formal grammar used to gegenrate context free language\
+used to describe syntax of languages
 it is defined as a 4 tuple: G=(V,T,P,S)
-V: set of variables/non-terminals
-T: set of termianls
+V: finite set of variables/non-terminals
+T: finite set of termianls
 P: production rules, A->alpha where alpha=(V U T)* and A belongs to V
-S: starting symbol
+S: starting symbol, S belongs to V
+
+TM:
+abstract machines used to simulate any modern coimputers
+formally defined as 7 tuple: TM=(Q,Σ,Γ,δ,q₀,B,F)
+Q: finite set of states
+Σ: finite set of input symbols
+Γ: finite set of tape symbols
+δ: transistion function δ:QxΣ->Γx(R/L)xQ
+q₀: starting state, q belongs to Q
+B: blank symbol
+F: set of final states, F subset of Q
+
+δ(q,X)=(p,Y,D)
+q: current state
+X: current tape symbol pointed at by tape head
+p: next state
+D: =L, tapes head moves left by 1,=R tape head moves right by 1
 
 kleen vs positive closure:
 length os tring 0/more 		1/more
@@ -21,6 +39,28 @@ may be divided into 3 parts,z S=xyz such that follkowing coniitons ,must be true
 	xy^iz belognms to a for all i>=0
 	|y|>0
 	|xy|<=P
+
+Multi Stack TM					Semi infinte Tape TM
+uses more than one stack			tape is infinite only in right direction
+memory is 2/more stacks in LIFO			memoryt is single tape that is infinite at one end
+no tape,push and pop on stack			head can move left or right but not beyond left end
+computeational power is equivalent to ordinary TM
+easier to model certain lang like PDA's		simpler since one side of tape is restricted
+similar to recursiv efunction calls		memory iwth fixed starting boundary(array)
+
+intractablility:
+problem is intractable if no program can solve it in limited amouintof time/space
+alothough program is decidable(solvable in theory), cant be solved efficeinty
+techoinuqr of solving problems that cant be solved in polynomial timem susally exponential
+time algorithms
+
+time complexity:
+time complexity of TM T is function T Time (x) where it is the no. of stesps taken by the
+computation T(x). if T(x) doesnt halt, T Time (x) is undefined
+
+spac ecomplexity:
+space complexity of TM T is function T Space (x) where is the no. of disctinct tape cells
+visited during cimouation T(x). if T(x) doesnt halt, T Space (x) is undefined
 
 Arden's therom:
 if P and Q are 2 regular expressions and P doesnt contain empty string epsilon then eqn R=Q+RP

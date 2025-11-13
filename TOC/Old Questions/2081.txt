@@ -1,5 +1,10 @@
+1.
 pda:
-pda is a type of automation that uses astack as additional memeory to recognize context free language
+pda is a type of abstractm achine that uses astack as additional 
+memeory to recognize context free language
+consists of input table, finite state control, stafck
+FIG
+
 	pda=(Q,sigma,gamma,delta,q0,z0,F)
 Q: finite set of states
 sigma: finite set of input symbols
@@ -10,6 +15,21 @@ z0: intial symbol of stack, z0 belongs to gamma
 F: set of final states, F subset of Q
 pda read inputs symbol. then it looks at top of stack. based on current state,input symbol and top of 
 stack, it transitions to a new state  and may push/pop from stack
+
+acceptance:
+-by final state-The language accepted by P by final state, denoted L(P),
+ is the set of strings w such that the PDA starts in the initial 
+configuration (q0​,w,Z0​) and reaches a configuration (q,ϵ,A),
+ where the input is exhausted (ϵ) and the final state q is 
+a member of the set of final states F. 
+L(P)={w∣(q0​,w,Z0​)⊢∗(q,ϵ,A)}, such that q∈F
+
+-by empty stack-he language accepted by P by empty stack, denoted N(P),
+ is the set of strings w such that the PDA starts in (q0​,w,Z0​) and 
+reaches a configuration (q,ϵ,ϵ), where the input is exhausted 
+and the stack is completely empty. This acceptance criterion holds 
+for any state q∈Q. 
+N(P)={w∣(q0​,w,Z0​)⊢∗(q,ϵ,ϵ)}, for any q∈Q
 
 kleen clousre:
 set of all strings with length 0/more over alphabet sigma

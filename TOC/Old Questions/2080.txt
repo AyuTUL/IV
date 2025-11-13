@@ -10,6 +10,17 @@ NFA is a 5-tuple:
     q₀: start state, q brlongs to Q
     F: set of final states, F subset of Q
 
+nfa						dfa
+>=0 transitions for a sy,bol from given statew	exactly one transition
+machine chooses from multiple possible next sta	next state is uniquleyt determined by current sate/inp
+e transition  allowed				not allowed
+many paths for sinlge string			one path of execution
+accepted if at least oen path leads to F	accepts if single path leads to F
+transition function
+harder to implement since many states		easier to implement since unique poath\
+every nfa can be ->dfa				cant be made simpelr
+smaller and easier to contruc			larger than equivalent nfa
+
 CFG:
 A Context-Free Grammar (CFG) is a formal grammar used to describe the 
 syntax of languages (especially programming languages and natural languages).
