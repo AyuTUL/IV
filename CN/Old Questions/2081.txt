@@ -4,20 +4,38 @@ message can be exactly divisble by generator polynomial
 CRC = 1101
 ACtual bit transmitted = 1101011011 1101
 
-2. mfd
+2. mdnf
 app layer is the highest abstraction layer of TCP/IP model that provides interface and protocols
 needed by users. it servers as window for application services to access the network and display
 reciived information to user
 
-file transfer: allows user to access,retrieve and manage files on a remote computer
 mail services: provides the basis for email forwarding and storage facilites
-directory services: provides database source access for global infor about various services
+
+directory service: provides distributed database sources and access to global info
+about various objects nad services
+
+network virtual terminal: software version of physical terminal and allows user to log on to
+remote host
+
+file transfer: allows user to access,retrieve and manage files on a remote computer
+
 
 DNS is a global syustem for transalting IP address into human readle domain name
 required because it is easier to remember domain names (google.com) than their IP address (192.
 DNS clients sends requests to server which converts a name (forward DNS lookup) or IP
 address (reverse DNS lookup)
-DNS implemetns a distributed database to store the naes of all available hosts on internet                    
+DNS implemetns a distributed database to store the naes of all available hosts on internet
+
+how dns works?
+you type domain name www.example.com in 
+cmomputer sends request to DNS resolver asking for IP address assocaited with domain name
+if IP address for domain name is in cache, it returns to compter and process complete
+else DNS resolver sends request to DNS root server asking for IP address for top level domain
+TLD of domain name(.com)
+root server refers to  authoritative server for .com TLD
+DNS resilver sends reuqest to AS for .com TLD asking fro IP Address of domain name
+AS returns IP address
+comupter uses ip address to connect to web server hosting website associated with domain name
 
 types of DNS query: rin
 -recursive: 
@@ -27,7 +45,7 @@ resolver satrts a recursive query process, beginning with DNS root server until 
 authoritative name server that holds the requested information
 
 -iterative:
-DNS provides hostname and DNS rewsolver returns best answer it can
+DNS clinet provides hostname and DNS rewsolver returns best answer it can
 if DNS resolver has relevant records in cache, it retunrs
 if not, it refers the DNS client to DNS rootr server or another authoritative name server
 closeset to required domain zone
@@ -38,7 +56,7 @@ either iimediately returns a DNS record or quereois DNS NAme server which is aut
 record
 in both cases no need for additional round of queies and response immediatly return to client
 
-3. ahlfabn
+3. halfban
 reason of transition from ipv4 to ipv6:
 limited address space:
 	2^32 unique address, as internet connected devicse increase, become insufficient
