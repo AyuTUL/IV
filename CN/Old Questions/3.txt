@@ -6,7 +6,7 @@ framing:
 	takes packets from nl and encapsulates them into frames
 	sends each frame bit by bit on hardware
 	at receiver end, dll picks up signal from harware and assembles them into frames	
-	parts of frame:
+	parts of frame: FIG
 		header: contains souce and destination address of frame
 		payload: contains message to be delivered
 		trailer: contains error detection and correction bits
@@ -17,7 +17,7 @@ framing:
 			doesnt require additional boundary bits to identyi start end of frame
 		variable size:
 			size of aech frame is different
-			additional mechanism are used to mark end of one frame and start of anooreh
+			additional mechanism are used to mark end of one frame and start of another
 
 physical addressing:
 	after frames, adds physical addres(MAC) of sender and receiver in header of frame
@@ -51,7 +51,7 @@ appropirate for transmission medium
 	defined by IEEE 802.X (802.3-ethernet, 802.11-wifi)
 
 framing approach:
-bit stuffing: ro differentiate payload and flag, when 0 is followed by consecutive 1's stuff 0
+bit stuffing: ro differentiate payload and flag, when 0 is followed by 5 consecutive 1's stuff 0
 	stuffed bit removed at receiver side
 
 byte stuffing: special byte ESC is stuffed before every byte in message with same pattern as 
@@ -62,7 +62,13 @@ error detection and control:
 	detect and retransmit data frames that might be lost/corrupted during transmission
 
 error and flow control:
-simplest protocol:
+sender side
+receiver side
+sender side (No ACK)
+sender side(NACK)
+
+simplest protocol: only flow control part
+	data trnasfer in noiseless channel
 	no flow/error control
 	unidirectional, frames travel in one direction from sender to receiver
 	assumed that reciever can immedialite handle frame with negligible processing time
@@ -76,31 +82,39 @@ stop and wait protocol:
 
 stop and wait ARQ protocol:
 	data transfer in noisy channel
-	sender sends one frame at atime then wiats for ack from reciver before seding antoher
-	when sender detects error, waits for next ack before resending frame
-	if erro is detected receiver sends nack to sender for retransmission
+	sender maintains time out clock which is started when a frame is sent
+	if receiver receives frame corercetly, it returns ACK to sender with sequence
+no. of next frame to be sent
+	if receiver receives damaged frame, it discards and returns NACK to sender for
+retransmission of frame
+	if receiver doesnt send ACK/NACK to sender, after timeout clock expires,
+sender assumes either frame/ACK was lost then retransmits frame and receiver
+discards duplicate
 
-go back and ARQ protocolP:
+go back N ARQ:
 	data transfer in noisy channel
-	sliding window protocol where sender sends window of packets to receiver
-	receivers sends back ack to indicate succesfful receive of packet
-	if sender doesnt receive ack witrhing timeout, it retransmits entire window of packets
-	if packet is recived with error, receiver disards and sends nack with squence no.
-	if sender doesnt receive ack retransmits entire window of packet
-	if sender receives nack retransmits only damaged packets
+	sender sends multiple frames at aonce in a buffer called sending window
+with sequence no. frin i to i+N-1, N is window size without recevieng ACK of previous frames
+	sender maintains timeout clock for each frame
+	if receiver receives all frames correctly, retuns ACK of next frame no.
+	if receiver receives damaged frame, it discards and returns NACK for retransmission of only
+those damaged frames
+	if receiver doesnt send ACK/NACK, after timeout clock expires, sender
+assuems either frame/ACK was lost then retransmits entire window starting from frame
+whose timer expired and receiver discards duplicate
 
-selective repeat arq protocol:
-	sender transmits window of packets i to i+N-1 to receiver and sets time rfor each packet
-	waits for ack from receiver
-	receiver receives packet and checks for error
-	if correct sends ack i+1
-	if error,discard and sends nack i
-	if sender doesnt receive ack before timer expires, retransmits only that frame
-	reset timer for that frame
-	wait for ack
-	if nack received, sender retransmits only that frame
-	reset timer
-	wait for ack
+selective repeat ARQ:
+	data transfer in noisy channel
+	sender sends multiple frames at aonce in a buffer called sending window
+with sequence no. frin i to i+N-1, N is window size without recevieng ACK of previous frames
+	sender maintains timeout clock for each frame
+	receiver receives multiple frames withing receiving window size
+	if receiver receives all frames correctly, retuns  ACK of next frame no.
+	if receiver receives damaged frame, it discards and returns NACK for retransmission
+	if receiver doesnt send ACK/NACK, after timeout clock expires, sender
+assuems either frame/ACK was lost then retransmits only packet with NACK
+
+	
 
 piggybacking:
 	delay outgoing ACK and attach it to next data paocket
@@ -117,6 +131,13 @@ can access channel simultaneously
 random access protocol: aloha, csma, csma/cd, csma/ca
 controlled access: rservation, polling, token passing
 channeliation protocls: fdma, tdma, cdma
+
+
+random:
+	all stations have same priorty
+	aany stastion can send data depending on mediums state(idle/busy)
+	no fixed time for sending data
+	no fixed sequnce of statsion to send data
 
 aloha:
 	random access multiple access protocol for wlan
@@ -138,9 +159,11 @@ slotted aloha:
 csma:
 	carrier sense multiple access
 	device checks channel first before sending
+	if idle, start ransmit data
 	if channel busy, wait till free
 	collision may occur when 2 stastion transmit at same time
-
+	
+	casma access modes:
 	1 persistent csma:
 		station listens to channel
 		transmit if idle, wait if busy
