@@ -1,0 +1,33 @@
+1.
+classless inter domain routing is modern system taht doesnt rely on fixd classes to define
+netowrk boudnaries
+uses prefix length to explicity sate how many bits are used for netowrk and host portion
+allows flexible division and assigment for ip address, efficinet and less wastage
+foundation for vlsm
+
+4.
+packet siwtching is swithcign techqniue for long distance comms in whichi messagfe is divied
+into smllaer unieauly nunbermed packets
+packets are trnasmitted individually across network, tkaing shortrstest availble path
+packets are reassembled at destination in correct order
+
+adv:
+efficiet bandwidth use as multipe suers can use same chnnal simultaniely
+reliably as if intermidate node is busy, aockets canb be dynamically rerouted
+csot effective as doestn requiere secodnary storage like in message switching
+
+disadv:
+variable delay(jitteR) as packets may travel different routes and arrive out of order
+overhead: packet need heade with sourfe,dest addres and sequnce number ,inefificent for small
+
+9.
+IMAP internet message access protocol			POP3
+messages are stored and synced in remote server		messages are downlaoded in local machine
+users can log in and access mail sever simult		single device access
+from multiple devices	
+messages are removed from server only if deleted by	deleted after downlaodead
+use permanetly
+
+SNMP
+simple network managemtn protocol
+AL protocol for netowrk mangement fiunctions like performance,failt,secury mgmt

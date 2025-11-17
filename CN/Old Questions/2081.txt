@@ -131,7 +131,7 @@ controls link at any time
 
 -data movement:
 	responsible for moving data packets from one network interface to another across shared
-transmission
+transmission medium
 
 -encapsulation:
 	when sending data, it encapsulates higher level frames into frames appropriate for
@@ -168,30 +168,37 @@ virtual software based applications
 
 8. 
 web server vs proxy server:
-hosts websites and responds to HTTP requests	ACts as intermediary machine, translating traffic
-from clinets, serving web content		between eotwrks/protocls, separting end user clinet 
-						destinations
+hosts websites and responds to HTTP requests	ACts as intermediary machine between client 
+from clinets, serving web content		seeking resoucres and external serevr
 location is destinatoin where web content is	sits between clinet and external netwrok(froward
 stored						proxy) or betweeen netowrk and internal resource
 						(revers eproxy)
 delivers web apges to clients			controls internet usage, manage bandwidth,
 						provides privacy benefits, improves security, 
 						provicdes access to blockde resources
-seraches for requested page, if found, sends	evaluates outbound requests, caces data to speed
-to client via HTTP response			up common requests, hides clinests IP adress
-
+sclient sends request directly to server and	client sends request to proxy which forawds
+server responds					and retrives response
+	
 9.
 traffic shaping algorithm to control rate of traffic sent into netwrok helping to smooth out
 bursty traffid and ensure network stability
-iamgeine a bucket that holdfs tockens. tokesns are genrated and addesd to bucket at fixexd rate
-(r tokens/sec). to transmit a packet of size n, sender must remove n tokens from bucket.
-if enough tokens are availblae in bucket, packet is sent immediately else packet is either
-dealyaed until enough tokens accumuilate or discarded. bucket has max acapity B. if token
-generation rate exceeds capacity, extra tokens are discarded, meanign the bucket sets a limit
-on aomunt of burstiness allowed
 
-10.
+1. Token Generation: A conceptual "bucket" holds tokens, which are generated and added to the 
+bucket at a fixed rate (r tokens/sec). The bucket has a maximum capacity (B).
+2. Packet Transmission: To transmit a packet of size n, the sender must consume n tokens from
+ the bucket.
+3. Immediate Send: If enough tokens are available when a packet arrives, the tokens are 
+removed, and the packet is sent immediately. This allows for bursts, provided the bucket 
+has stored tokens.
+4. Delay/Discard: If the packet arrives and there are insufficient tokens, the packet
+ is either delayed until enough tokens accumulate or is discarded entirely. This mechanism 
+ensures that the long-term average output rate does not exceed the token generation rate.
+
+10. campeb
+byte oriednted dll protocl for trannsmitting data between network opints
 PPP is internet protocol used for router to router traffic ad home user to isp traffic
+FIG
+flag address control protocol payload FCS/payload flag
 
 -packet framing: encapsulates NL datagrams into DLL frame
 -multi protocol support: can carry NL data from any NL protocol and has bility top demultiplex 
@@ -222,3 +229,6 @@ not sending user data between systems but sending control messgaes realted to ne
 ICMP message include fileds like TYpe and Code to specify nature of message and checksum for 
 error checking
 
+IGMP(Internet GRoup Management Protocol)
+network layer protocol used by host sto tell local multicast router wjich multicast hroup
+they want to join/leave

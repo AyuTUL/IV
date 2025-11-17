@@ -1,0 +1,57 @@
+1.
+Open System Interconnection reference model is a layered architecture netowrk model thaht
+explains how packets travewls thorugh various layters to another device on a netowkr
+despite efifiece in netowr media of sender and receiver
+
+physical: lttpdb
+line configuration
+transmission media
+transmission mode
+physical topology
+daat transfer rate
+bit transmission
+
+DLL: fpeaf
+framing
+physical addressing
+error control
+access control
+flow control
+
+netowrk: ripnfl
+routing
+internetowrkng
+packetiation
+NAT
+fragmentation
+logical addressing
+
+transport: mcpscfe
+multiplexing demultiplexing
+congestion control
+process to process delivery
+segemntation and reassmebly
+connection ceontrol
+flow control
+error control
+
+sesion:
+maintain sesion
+token mgmt
+track all events
+eastablish and termintae session
+data
+
+pressentation:
+data representaion
+ensure data is readable by app
+format of data
+DS selection
+data trnafer syntax and semantics like ASCII UNICODE
+data
+
+app: mdnf
+mail services
+directoyr services
+network virtual terminal
+file transfer

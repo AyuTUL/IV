@@ -2,32 +2,62 @@
 classful addressing is a system that divides ipv4 address space into fixxed size class
 each class has predetermined defauilt subnet mask and range
 
-A 0:range, default subent mask 255.0.0.0/8, unicast, 0 and 127 reserved
+A 0:range, default subent mask 255.0.0.0/8, unicast, 0 and 127(loopback address for diagnostic 
+testing) reserved
 B 10: range, 255.255.0.0/16, unicast
 C 110: range, 255.255.255.0/24, unicast
 D 1110: range, multicast
 E 1111: range, experimental use
 
+Link State Routing:
+dynamic router that overcomes scalabitliy isseus of distance vector routing
+dijkstra/SPF
+eg: OSPF, IS-IS
+
+mechanism:
+full topology knowledge:mainstains complex database with full netowrk topology withing its area
+unlike DV which is based on info exhance between neighbours
+LSA: routesr exchange topology updates in small packets called LSA. udpates are incremental
+and event triggered(not periodic) for faster convergence
+independenmt calc: each router compiles LSA into topoogical database
+calculates shortest path from itself to all other destination
+SPF algorithm: uses dijkstra algorithm on database to determine optimal apth, ersulting in SPF tree
+
 2.
+DLL feature
 flow control restricts amount of data that sender can transmit before waiting for ack
-to snsure flow of data doesnt overwhelm receiver
+to snsure flow of data doesnt overwhelm receiver and data loss
 
-stop and wait ARQ protocol is error control protocol used for realiable data transmission
-in noisy channel
-sender sends single frame to receiver and starts timer. if receiver succesfully recives frame,
- it sends ACK with sequence no. of next frame to sender for confirmation. sender sends next frame
-if snder doesnt receive ACK withint time frame, it assumes frame has been lost and retransmits
-duplicate frame is discarded at receiver side
-if receiver doesnt receive frame then it sends NACK to sender and sender retransmits
+stop and wait ARQ protocol FIG
+flow ocntrol mechanism in noisy channel
+ARQ means when frame is los sender tretnasrsmits it
+sender side:
+sender maintains time out clokc which is srated when single frame is sent
+then waits for ACK from receiver
+if sender receives ACK, it esnds next frame
 
-low transmission rate
+receiver side:
+receiver processes frame
+if frame is received correctly reutrns ACK with sequence no. of nesxt expected frame
+if damaged, discards damged frame andsends NACK with sequence no. of damaged frame
+
+sender case receives no ACK/NACK :
+if no any ACK is rrecived, afte time out clock expires, sender assumes frame or ACK is lost
+retransmits frame
+waits for ACK from receiver
+
+sender case receives NACK:
+retransmits only damaged frame
+
+low transmission rate due tioi waiting for every single ACK
 waiting period means bandwith is wasted
+inefficint for high latency netowrk
 
 3.
 TCP datagram format:
-source port 12: holds port number of source app to identify transmitting app
-dest port 16: holds port number of refeiving app to send data to appropriate app
-sequence number 32: ensure data is receied in proper order by ordergin segemts
+source port 16: holds port number of source app to identify transmitting app
+dest port 16: holds port number of refeiving app to send data to appropriate app at destinatoin
+sequence number 32: ensure data is receied in proper order by ordergin segemts and reassembly
 ACK number 32: contains upcomding SN, acknowledgeing feedback upto that point
 data offset 4: indicates starting point of TCP payload and stores size of TCP header
 control falg 9: regulates communcation (SYN for conn,ACK for ack,Fin for termin,RST for reset)
@@ -85,3 +115,122 @@ difficult to troubleshoot
 	combo of more than 2 topologies, inheriting the adv and disadv of included topologies
 	combines benifits,highly reliable,used for large network
 	complex design,expensive,diffcult to isntall
+
+5.
+circuit swiotjcing techinque for long distance c ommunction by establishing dedicated connectoin
+bewteen sender and receiver
+eg: tcp, telephone call
+FIGss
+connection establishment: request signal is sent,ACK is returned and path is established,takes times
+info transfer: data flws in fixed cirvuit at constate rate
+connection terminatoin: paht is realeased after transmiion is comlete
+
+adv:
+-dedicated channel ensures reliable bandwisdth throughtout the session
+-suitable for real time apps like voice call since data arrives in correct oredr withou delay
+-desont require error control since no data loss after conn estrablishment
+
+disadv:
+-if pah is connceted but no data is transfeered, bandiwth is wasted
+-since deicated, no other data can be transferred even if channel is free
+-establishing connection takes time
+-expenseive due to reserving resource
+
+6.
+LLC:
+interface netween MAC and NL
+suncrhonization,error control,flow control
+defined by IEEE 803.2
+provides logic for data link
+identifies which network protocl is being used
+
+HDLC:
+DLL bit oriednted prtoocl for both point to potn and multiploint comm
+
+nornmal response mode(NRM): FIG, primary stastion sends comands, secondary responds
+used for both point to point and multipoint
+asynchronous balanced mode(ABM): FIG both stastions can send commands and respond to command
+used only for point to point comms
+
+FIG flag address control payload fcs flag
+FIG
+Supervisory: 1st control bit is 10, no info field, for flow/error control w/o piggybacking
+Unnumbered: 1st control bits are 11, miscellaneous functions like link management
+Information: 1st control bit is 0, user data from nl iwth flow/error control piggybacked
+
+7.
+unicast						multicast
+sends packet from 1 send to 1 reciever		1 sender to multiple seelcted receivers
+one to one type communication			one to many
+one packet per destination			one packet sent once, duplicated by routers when
+						needed
+uses unicast ip address class ABC		multicast IP address class D
+routing table contains entries for each destn	maintains multicast group membership info
+diercet packet delivery to single IP		packet relpciation at routers to reach group
+web browsing,file transder			streaming media to muktipel devices simultaneou
+
+8.
+port address is 16 bit numerical albel assigned to specifi process(app) running on a host,
+defining where ata should be deliered once it reaches destination device
+socket address is combo of ip adrerss and port number, uniquely identifes host along with
+netweokring application running in that host, acting as single endpoint for communincation
+
+leaky buceklt algorithm: FIG
+traffic shaping algorthim to regulate data ouptut at constant rate
+
+incoming data packets are stored in a fixed size queue acting as bucket
+packtes are removed from queue and transmitte at constant fixed rate r
+this smooths out any burts of incoming traffic
+if rate of incoming traffic exceeds capacity of queue, excess packets are discarded
+
+9.
+DNs is global system used for translating IP address into human readable domain name vice versa
+phone book of internet
+
+FTP FIG
+stadard Internet proteocol based on clent server model for transmitting files between
+computers over TCP/IP conenctions
+ueses 2 separte communication channels:
+-control channel: TCP port 21 for commands and responsesm, remaining open throught session
+-data channel: TCP port 20 for transferring file content, opened and clseod for each file trnfer
+clinets can upload,download,delte,rename and copy files on a server
+
+SFTP
+secure shell FTP
+operates over sercure encrypted SSH connection
+protects against man in the middle attacks, aiuthtenticates both user and server,data integrity
+
+
+10.
+SDN Software Defined Netwokring
+FIG
+sdn is architecture designed to make networks more flexible and centrally controllable by 
+separting netwokr's control logic from its forwarding device
+
+app layer: contains user apps and netowrk functions(intrusion detection,load balacners)
+apps communicate resource request to controller
+
+control layer: centralized software element that manages policies and matinats global view
+of newtoek(control plane)
+uses info from apps to decide hwo to route packets
+northbounds API- communicate to applcaitions
+southbound API- communicate to infrastructure
+
+infrastructuer layer: composed of physical forawrding device sliek routes
+devices executre hte forawindg rules defined by htre controller (Data plane)
+
+12.
+ipv4 is 32 bit adsdressing scheme for uniqiuely identify devices connected to network
+identification- idenitfy device on newtork
+llcoation addressing-specfiy where device is located
+written as 4 decimal numbers separted by dots
+2^32 unique address divied into classes ABCDE
+address is split into netowrk and host portion
+supports unicast,multicast,broadcast address types
+due to limited adderss space, NAT required ro conserger public IP
+
+infrared is wireless transmission media for short range communcation
+freeunce is 300GHz-400Thz
+cant penetrate walls, require los
+prevents intereferecne between systems in adjacent rooms like remote controls
+cant be used outside since sun ray also contin infrared which interfere with ocmms

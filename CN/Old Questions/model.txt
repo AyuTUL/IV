@@ -1,0 +1,139 @@
+2.
+routing algorithm is set of operations used in NL to direct internal traffci efficinetly
+mathematically determine best path maong multiple for data packet to travel from source to
+destinatoin accroess interconnexted netwrosk
+dunamic algorithms ensure routers can automatically react to topology canges without manual input
+
+distance vector routing algorithm/bellman ford:
+
+knowledge base: each router maintains a table(vector) ahta list best knowndistance to every
+destination along with output line to reach that destination
+
+information exchange: router periodcailly pass a copy of their entire routing table to
+directyl connected enighbour routers
+
+update rule: when router receives table, calculate new path cost by adding cost to negihbou
+if new calculated path offeres lower cost than curretn entry, router updates it tables to
+use new path
+
+DV							LS
+knowledge base is limited to neighbour information	full knowledge(toppologicqal database) of
+only, non specific knowledge of distatn networks 	all raouters and links within its area
+send sentire routing table				sends samll incremental updates(LSA)
+update trigger is periodic even if no change occur	event triggered(only when topology changes)
+slower, usceptible to routing loops and count to infini	fast convergence
+bellman ford algorithm					dijsktrs spf algrothim
+
+3.
+congestion occurs when load on netowrk exceeds its capacity, result in packet dealy/loss
+and degraded performance
+congestion control technique aims to prevent or remove it
+
+open loop congestion control (prevention): dwara
+orevent congestion before it starts iwtouht using real tiem feedback after ssystem is running
+
+discarding policy: routers may prevent congestion by discarding corrupted or less sensitive
+packges while mainting quality of message
+
+window policy: protocol should adopt highly selcetive window mechanism like slecte repeat arq
+whicih only ressends damaged/lost packets avoiding unncessary duplication cauysed by protolcs
+like go back n
+
+ACK policy: receiver should reduce no. of ACK sent bysending singel ACK fofr mulitple packets
+or piggybacking as ACKS also add tro netowrk load
+
+Retransmissoin polocy: timers mst be set so that frames arent retransmitted tto qruickly as
+unncessary retransmission add to netowrk load and congestion
+
+admission control: in vitraul circuit networks. the swich checks the resouce requierment of new
+flow, if resources are insufficent or congestion is likely, router denies establishing virtual
+connection
+
+closed loop congestion protocl(removl): bice
+principle moniteors netowrk, detects congestion and provides feedback to adjust system opration
+,correcting the problem afte rit ahs occured
+
+back pressure: FIG node to node technique for virtual ciruits only
+congested node stops accepting packets from immdaite upstream node, forcing congestion backward
+until source is warned to slow down
+
+implicit signaling: sourfe guesses hat congestion is occuring based on external symptoms like
+not receing ACKS within time out period and slwos donw its rate
+
+choke packet: when router detects utlization exceeding threshold, sands specila choke packet
+directyl to source explicityly telling to reduce traffic
+
+explicit signalling: node eexperincing congestion incldes a signal with data packets themselvse
+rather than separte chjoke packet to wanr other entites
+fprawd signlaing (toi destination) or backward signaling( tosource)
+
+5.
+token bus and ring utilize contreol access protocl called token passing which spefial message
+called token grants holding station permssion to transmit data
+
+token bus (IEEE 802.4): FIG
+physically uses bus/tree topology connected with coax calbles but noedes are logically 
+connected in virtual ring
+token cirvulates among station follwing sequnce of virtual ring
+when sstation receives token, it transmits data
+if not data, passes token to next stastion in virtual ring seuqnece
+
+token ring(IEEE 802.5): FIG
+physical ring/star topology is used wher trnasmission is unidirectional
+satstoin waits for token to arrive, when it captures token, transmits data onto the ring
+after transmitting, it releases token to continue circulation to next station, providing
+equal access opportunity for all stastion
+uses manchester differential encoding
+data transfer rate is 14 to 16 mbps
+piggybacking
+variable sized framing
+
+6.
+netowrk traffic analysis:
+performance managemtn:monitor various paratamer like resposne time to esnure smooth operatoin of
+netweor and guarantee predefined Qof for users
+Fault mgmt: detect failures when they happen,isolate failed compopnet and plan for traffic restor
+SEcurity and monitoring: aloolw sfiltering of netowrk data (like by proxy servers/firewall)
+
+8.
+frame relay					ATM
+variable packet size				fixed packet seize
+csot is low					costlier
+more packet delay				less
+less reliable					more erliable
+packet transfer speed is less			high
+throughput os moderate				high
+no error and flow control			yes
+used for data trnasmission in WAN		used for transmitting integrated ata,voice idd
+
+9.
+proxy serfer is intermediate for client reuqestn diierecting them tro resoucres avlibl form
+deifferet sercer (internet)
+security: hides clinest internal private IP making netowrk ID anonymous and lyer of secuirty
+perofrmance: data caching
+monitoring: like firewall for network data monitoring and filtering
+
+mail service: for forwarding and stroign emails
+
+SMPT: FIG
+clinet server protocl fro send email from senders client to senders mail server
+mail server to mil server acroess intente
+
+POP3: FIG
+used by recipients clinet t extract mail from receivers mail server
+message is downloaded to local machiane and deleted from server
+
+IMAP: Internet Message Acces Protocol
+receive emails, messages are stored and synec on remote server, allowign users to logn in 
+and access same mailbox from multipel divsers simultaneouly
+
+10.
+clinet query: user tyes domian name in broswer and computer sends querty to DNS resolver
+root server: if resolver doesnt have ans, queries to DNS root server
+TLD server: root server refers resolver to TLD authoritative server
+authoritative server: tld server refers resolver to ANS for specific domain holding needed info
+
+DNS records are info held by AS
+contain IP address and other connectivity details for hostname
+after DNS resolver finds ip address, it uses to connect to web server
+IP adddress is cached bty resovler for future use resultign in non recursive query next time
