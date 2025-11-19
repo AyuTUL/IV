@@ -1,0 +1,69 @@
+1.
+sleep: system call used by a process to be blcoked if it need sto wait for specific resource
+or condition before entring CS, the process is removed from CPU schedule
+
+wakeup: system call sued by p[rocess to move a lseeping process from blocked to ready state
+as it leaves CS
+
+producer consumer problem:
+2 processes sue and cosumer, who share common fixed size buffer
+wake up singal can e lsot leading to deadlock
+
+rpduer: generate bit of data, put it into buffer and start again
+consumer: consume data from buffer one at a time
+
+if buffer is empty, consumer should not try to access data ite mfrom it
+producer should not produce any data item if buffer is full
+
+counter: counts data items in buffere
+shared between 2 processes and pdated by both
+
+working:
+counter value is checked by consumer before consuming
+if counter==1 or >1 then start excuting process and udpate counters
+producer check buffer for value f counter for adding data
+if counter < max value, it means there is some space in buffer
+
+problem scenario:
+if buffer is empty, consumer checks shared counter
+if count ==0, consumer decides to execute sleep()
+if consuemr is interruipted afte rchecking count but befiore calling sleep():
+	-producer runs, adds item and calls wakeup(consumer)
+	-wakeup signal is lost because cinsuemr is not yet asleep(blocked)
+	-consumer resumes & executes sleep(), blocking indefinetly for a signal that was aldy sent
+
+#define N 100
+int count =0;
+
+void producer(void) {
+	int item;
+	while(TRUE) {
+		item=produce_item();
+		if(count==N) sleep();
+		insert_item(item);
+		count++;
+		if(count==1) wakeup(consumer);
+	}
+}
+
+void consumer(void) {
+	int item;
+	while(TRUE) {
+		if(count==0) sleep;
+		item=remove_item();
+		count--;
+		if(count==N-1) wakeup(producer);
+		consume(item);
+	}
+}
+
+2.
+page fault occurs when prgoram tries to access page via virtual address but hardware detern=mines
+that page is not currently in phyiscal memory because present/asetn bit in page table entry is 0
+
+hanfling process:
+trap: CPUT traps into OS kernel
+victim slection: if memory is full, os runs page replacement algo to chosoe a page to evict
+IO(Write back): if victim page's modifed bit is set, OS writes modified page bac kto disk
+page fetch: OS retrieves needed page form seconary storage into newyl freed frme
+restart: isntruction that origanlly caused frame is restarted

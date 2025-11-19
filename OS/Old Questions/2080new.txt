@@ -169,15 +169,85 @@ if a process reads lock=0 but is preemted before setting lock=1, 2nd process als
 lock=0 leading both process to enter CS simultaneoulsy
 
 9.
+avoid naming conflict: allow multiple users to use same file name
+logical organization: allow uesrs to group related fiels into nested sub directories
+path names:support specifying files using eirther absolute/relative path name
 
+10.
+magnetic idsk consiste of:
+platters: circular magnetic surface stacked on a spindle
+tracks: concentric rings on surface of platter
+cylinders: set of corresponding tracks across all stacked platters, used for seeking
+sectors: angular segmetns of track that stroe acutal data(512 bytes), includes preamble,
+the data field and ECC(error correcttion code) fied for error reovery
 
+11.
+WS is set of pages that a process is expected to use durign specifc time interval
+mdeium term scheduling conecpt that helsp OS manage memory allcoation for proeeces,ensuring
+that only pages that are freuqntly accessed(following locality of reference) are loaded
+into main memory to optimizae memory usage
 
+clock replacement algorithm:
+apge frames are arragned in circular list like a clock
+each page has a reference bit(R)
+when page fault occurs, algorithm inspects the page pointed to by the hand
+	R=0; page is evicted,new page is inserted and hand advances
+	R=1; page is given 2nd chance, R is set to 0 and hadn advances
+	process repeats until page with R=0 is found
 
-
+12 a.
+I node is fundamental file system structre that holds metadata about single file/directory
+excludign file name and actual data content
+stores details such as permission, timestamps, owner identi, pointers to file's physical
+data blocks
+for large files, indoes use multi level indexes(indirect,doubly indirect) to locate data blocks
 
 
 12 b.
 RAID (redundant array of independent disks)
 ues multiple physcial disk drives to create logical unit, aiming to increase performance
 and provide data redundacy to protect against drive failure
+distributes data across disks to reduce impact of individual disk failures
 suppoerts direct access to file blcoks and effectively addresses issue of external fragmentation
+
+FIG
+level 0: striping
+-block level striipng with non redudant disk array
+-best io performance acheived when data is striped acoess multiple controllers with only one
+drive per controller
+-high read throughput but no fault otlerance
+-best write throuput since no redundant info to wrtie
+-any disk failure results in data loss
+
+level 1: mirroring
+-mirrored disks with no parity
+-files are striped across half the disks
+-data is written to 2 places, data nad mirro disks
+-best fault tolearnce
+-on failure use surviving disk
+
+level 5: striping with parity
+-parioty info is distributed over all disk instead of storing in deidated disk
+-parity for blocks in same rank is generated on writes, recorded in distributed lcoation
+and checked on reads
+-no more bottlenext as parity stress evens out by using all disks to store party info
+-no possiblity of losing dat aredundancy since one idsk doesnt store all parity info
+-can handle uipto single disk faliure only
+
+level 6: striping with double parity
+-blocvk level string with double distributed parity
+-increases fault tolerance upto 2 drives failures in array
+-each disks has 2 parity blocks stored on different disks across the array
+-practical infrstructure fro maintaining high availaiblity ssytems
+-large parity overhead
+
+level 01:
+-mirror of stripes, achieveing both replcaition and sharing of data between disks
+-usable capacity is same as raid 1 array in which one half of drives is used to mirror toher half
+
+level 10/1+0: combining mirrornig and striping
+-combines both raid 1 and 0 by layering them in oppoiste order
+-mulitoe raid 1 blocks are connected with each other to make it like raid 0
+-nested/hybrid raid config
+-used where huge disk performace with redundacy is required
+-cost per unit memory is high since data is mirrored
