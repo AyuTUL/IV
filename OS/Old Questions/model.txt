@@ -67,3 +67,99 @@ victim slection: if memory is full, os runs page replacement algo to chosoe a pa
 IO(Write back): if victim page's modifed bit is set, OS writes modified page bac kto disk
 page fetch: OS retrieves needed page form seconary storage into newyl freed frme
 restart: isntruction that origanlly caused frame is restarted
+
+
+4.
+shell is os interface allwoing suers to enter commands directly (CLI)
+system call si fundamental inerface between app programs and priviledege os kernel
+allows programs to reuqest services tha reuqrie kernel level provolege(io,process creation)
+
+FIG read(fd,buffer,nbytes)
+1-3: 
+-calling progrm pushes paramenter onto stack
+-1st and 3rd parameter are called by vale nad 2nd is called by address
+
+4:call library routine wihic involes pushing return address nto stack and jumping to routine
+
+5:library procedure places system call number in a place where OS expects it like register
+
+6:library procesure executes TRAP instruction to siwthc from user mode to kernel mode and
+start execution at fixed addrses wihting kernel
+
+7:kernel examines system call number then distapches it to correct system call handler
+this correct number is given in table of system call handles by pinters reference at system
+call number
+
+8:system call handler runs
+
+9:operation is compelted, and user is iven back control once TRAP isntrution is set
+
+10:this procdure returns to user progra, like how qall normal library procedures do
+
+11:OS clears stack by incremeting enough so it is empty
+
+5.
+interactive scheduling system algo
+responsetime: minizmie delay between user request and system response
+propoeotionaloty: service time are consitent with user expectation
+
+prioirty scheduling: job with highest prioirty runs first,preemtive or non premptive
+
+adv:
+-allows critical,time sensistiver porcess to complete quickly
+-flixble,supporting dynamic changes to process importance
+
+disadv:
+-starvation,low pirioty jobs may be indefinitrel postponted if high poriotr jobs continually
+enter the queue
+-reuqier implementaiton of aging to prevent stravation
+
+6.
+deadlock					starvation
+2 processes are said to be deadlock if one	a process is sid to be satraved if schdelar 
+process is waiting fro a event that can only	repeadtedly delays/ignores it in favour of 
+be caused by another				others
+cuased by all4 coditon				caused by greedy algo like sjf,prioirty
+affects all deadlock process			only starved process,others conitnue
+detected by ressource allocation graph		detected by pbseriving wait times isntead of algo
+solved by killing process,res premption,rollbackbetter algo,aging,RR
+process are permantly blocked and cant run	can run but denied resources
+
+7.
+rac econdition occurs when 2/more procesess concurrently access ad manipulate shraed data
+and the correctness of relts depedns on unpredictable order in which teh processes excite
+their read/write operations
+
+8.
+directory implemetaion:
+simple directoy: directy contains fixed size entries where disk address and file attributes
+are stored directly within directry itself
+
+using inodes: each directory entry is fized size and contians only file name and opinter to
+file;s inode
+actual dis kaddress and attributes are sotred externally in indoe structre
+removin an enry leaves fized size space that is easy to reuse
+
+10.
+disk scheduling algorthim is to minimize total seek time(time disk arm takes to move to proer 
+trafck) by optimizing orer of IO reuest, overall disk performance and throufhput is improived
+
+best but imprctical-SSTF,starvation,desnser regions
+
+11.
+process							threads
+heavyweight/resouce intenseive 				light wieght,les resoruce 
+swithcing need sinteraction with OS			no
+multiple process,each proces exuctes same code but	all threads share same files and child proces
+has own memory and resoruces
+if a process is blocked,siccessve orcess cant run
+unless fiorst is blocked				can
+multiple proceses w/o thread use more resourec		multpel threads pricesuse ferwe resorucrs
+in multiple porcess, each process operates indepent	one thread acan change another thread
+
+ue of thread:
+data sharing:
+responsiveness:
+modularity:
+speed up:
+convenience:

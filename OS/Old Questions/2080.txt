@@ -1,0 +1,81 @@
+7. file allocation
+contiguoues						linked list
+file occupeis set of continuous blocks on disk		file is a linked list of disk blocks
+							each block contians pointer to next
+spport both sequential and random access		only sequential due to pointer traversal
+very fas						slower
+internal andexternal fragmentation			no external fragmentaion
+less structural overhead				pointer consme memory within dat ablock
+ difficult to increase fize size as depends on		flexible
+availibilty of contiguous memory	
+FIG
+
+8.
+paging 						segmentation
+fixed size units calle dpages are mapped	varialble sized logical units alled segments
+to frames
+internal fragmentaion				external fragmenetation
+logical adress: p+d				s+d
+size is specified by hardawre			by iser
+
+9.
+belady anomly is the phenomeno of increaing number of page faults on uncreaing no of frames
+in memory
+affect by belady: FIFO,random,2nd chance
+example
+
+monoprogramming					multi
+one program at a time				more than one
+cpu is idle during io				when io, cpu siwthces to nexct program
+less memory reuquined				more
+fixed size partiioning				both fixed and vairable
+
+10.
+peterson solution
+#define FALSE 0
+#define TRUE 1
+#define N 2
+int turn;
+int interested[N];
+void enter(int process)	{
+	int other;
+	other=1-process;
+	interested[process]=TRUE;
+	turn=process;
+	while(turn==process && interested[other]==TRUE);
+}
+void leave(inr process) {
+	interested[process]=FALSE;
+}
+
+#define N 100
+int count=0;
+void producer(void) {
+	int item;
+	while(TRUE) {
+		item=produce_item();
+		if(count==N) slepp();
+		insert_item();
+		count++;
+		if(count==1) wakeup(customer):
+	}
+}
+void consumer(void) {
+	int item;
+	while(TRUE) {
+		if(count==0) sleep();
+		item=remove_item();
+		count--;
+		if(count==N-1) wakeup(producer);
+		consume(item);
+	}
+}	
+
+enter:
+	TSL REGISTER,LOCK
+	CMP REGIOSTER,#0
+	JNE enter
+	RET
+leave:
+	MOVE LOCK,#0
+	RET
