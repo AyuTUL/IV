@@ -1,0 +1,224 @@
+1.
+SELECT CustomerName FROM Customer
+WHERE  Address='Lalitpur' ORDER BY CustomerName ASC;
+
+SELECT COUNT(DISTINCT CustomerID) FROM Borrows;
+
+SELECT CustomerName FROM Customer AS c
+JOIN Borrows AS b ON c.CustomerID=b.CustomerID
+JOIN Loan AS l on b.LoanNumber=l.LoanNumber
+WHERE l.Amount>=500000;
+
+SELECT AVG(Amount) FROM Loan GROUP BY LoanType;
+
+2. informal desgin guidelines for relational schema
+-imparting clear semantics to attributes in relations
+-reducing redundant information in tuples
+-reducing null values in tuples
+-disallow possiblity of generating spurirous tuples
+
+3.
+FD is relationship among atributes ina relation
+let A and B are atrributes of relation R 
+if each value of B os associated with exactly one value of A, then B is said to be FD on A,A->B
+A is determinant and B is object of determinant 
+FD a->b holds if 2 tuiples have same value for a then they alkso have same values for b
+if t1[A]=t2[A] then t1[B]=t2[B]
+
+normalization basis: minimize redundancy and insertion,delte,update anomalies baseed on fd pk
+constraint enforcement: formalize real wolr dconstarints 
+
+normalizaiotn:
+process fo decompasing bad relation by breaig ndown their attributes into smaller relations
+to minimize data redundancy and insertion,deletion,update anomalies and hepl maitnain
+data consistency in databse
+
+FIG jersey player club competition
+			domestic european
+
+1nf:
+-deos not have multi valued attribuitres,composite attributes and theri combos
+-domain of attribute must include only atomic(simple indivisbile) values
+FIG playerinfo(jersey# name club# league location)
+
+2nf:
+-already in 1nf
+-evrey non prime attribute is fully dependet on pk of relation(no partial dependcy)
+FIG playerinfo(jersey# name ) clubinfo(club# league location) pc(jersey#,club#)
+
+3nf:
+-already in 2nf
+-evrey non prime attribute is non transitively dpenent on pk (no transitive dependecy)
+FIG playerinfo(jersey# name ) clubinfo(club# location) competiton(club,league) pc(jersey#,club#)
+
+3.
+deadlocks is condition wher no process proceeds fore execution and each waits for resources
+acquired by other process aka circular waiting
+occur in concurrencyt control  scenario when using lokcign techniques where transactions
+block each other indefinitely while trying to acquire exclsuive rights to data items
+
+T1		T2
+Lock(x)
+Write(x)	
+		Lock(y)
+		Write(y)
+Lock(y)	(wait)
+		Lock(x) (wait)
+
+deadlcok prevention
+wait die scheme:
+non preemptive technique
+when transaction Ti requests data item held by Tj, Ti is allowed to wait only if TS(Ti)<TS(tj)
+else Ti is rolled back(dies)
+prefers younger transaactions
+FIG
+
+wound wait scheme:
+preemptive technique
+when transaction Ti requests data item held by Tj, Ti is allowed to wait only if TS(Ti)>TS(tj)
+else Tj is rolled back(Ti is wounded by Tj)
+prefers older transaactions
+
+deadlock detection:
+checks wheter deadlock satte actuaslly exists before taking actions
+using wait-for graph schedule
+deadlock when there is chain of transaction waiting for realese of data item hld by next transaction
+in chain
+
+starvation:
+process requesting resource has been delayed fro ling tinme
+professe with higher prioty contilusy utlize resounce preventing low porioity process from
+acquiring those resourcse
+solved by fcfs,aging
+
+4.
+self describing natrue of dataase system:
+contains not only database itself but also coploete description(metadata) stoed in dbms catalog
+
+insulation between prgoarsm and ata and data absatraction:
+structure of data files is stored separately in dbms catalog
+changes to structure fo file not requitre changling all pgraoms that access tat file
+
+supoprt of multiple views of data:
+servers many uesers with multiple views
+view is subset f databse containg virtual/deried data
+
+sharing of data and multi user transaction processing:
+multiple user sca adcess database concurrently 
+uses concureny control techinque for corerct opeation of concurrent transactions
+
+5.
+data independece is the ablity to change the schemda at one level of database system wityhout
+affecting schema at next higher level
+
+physical:
+-changes in physical storage odesnt affect conceptuial schema
+-eg: changing from heap file to b tree index
+
+logical:
+-changes in conceptual schema doesnt affect external sceham/apps
+-eg: adding new column to table doesnt affect user view
+-harder to achieve than physical
+
+FIG
+framework that separates database into 3 levels of abstraciton to separate user apps from
+physical storage to simpllify,mange and sercure atabse
+
+physical schema:
+-lowest level of abstravtion
+-describes how data is physicallyt stored in databse
+-includes storage devices,compression,index,file strcutre
+-eg: student data stored in hard disk as binary file sorted by roll
+
+logical schema:
+-middle level of abstraction
+-describes entire database structue for community of users
+-describes entites,relationshio,constaints(pk,fk),data types
+-physical data independece
+-eg:student(roll,name,major) with roll pk
+
+view schema:
+-highes level of abstraction
+-describes how indivudal users/apps see data
+-each user has customized view
+-allows access control,simplification,securty
+-eg: teacher view:stdent(roll,name), finace view:student(roll,fee)
+
+6.
+specilazation is top down approach that bnreaks down superclass entity into sub class by 
+maximizing difference between members of ennity by indentifying unqiue attributes
+eg: emplooyee into player and coach 
+FIG
+
+disjoint contraints: speicifes how many sub class an entity can be part of
+disjoint(d): entity can be member of at most one sub class
+overlapping(o): entity can be member of more thanb one sub class
+
+completmeness: speicifes whether every entity in superclass must belong to some subclass
+total participation: every entity in suerclass must belong to a subclass(double line)
+partial participation: enity in superclass may not belong to any subclass(single line)
+
+membership: how ennity of superclass become memebr of subclass
+condifiotn defined: by evaluating condition applied to superclass
+user-defined: ach enity is specified individually by database user during operation
+
+7.
+type of record based logical model which represnt database as collection of relations(tables)
+arrangement of relation stastas such that every stae staisfies all integrity constraints
+defined on the schema
+
+characteristics of relation:
+-each relation must have distinct/unique name
+-relation must not have 2 atrributes with same name
+-each attribute must have disctinct name
+-duplicate tuples must not be present in relation
+-each tuple must have exacrtly one data value for an attribute
+-tuples i relation are not order sensistivwe
+-aattributes are not order sensitive
+
+domain constraint:
+specifes that value of each atrbiute within a tuple must be atomic value from attribute's
+domain dom(a)
+domain is defined as set of aceptable values a colummn is allowed to contain based on data type
+
+8.
+TRC is non procedura query language/declarative language
+provides only description of query stating what result to obtain but not methods to solve it
+query is expressed as {t | P(t)} where t:resulting tuple and P(t):predicate containing conditions
+that must be satisfied
+
+9.
+when transactions are executing concurrently in interleaved fashion, orer of execution of
+operations from various transaction is called schedule
+schedule is called seriablze if executing transactions concurrently produces sme final result
+as running the transactions sequentially in some serial order
+goal of concurreyn control is to ensure serialzibiltiy
+
+types:
+confilctc serriableza:
+-schedule that can be transformed into serialzible schedule by swapping only non conflicitng
+opetaions
+-detected by transaction precedence grpah is acyclic
+-operation are non conflicting if:
+	-they are from different trsanctions
+	-at least one of them is write operation
+	-tehy operate on same dat aitem
+
+view seriablze: whose view(final result) equals a serial schedule
+
+schedules based on recoverability: how easily system can recover from transaction/ssytem failure
+
+recovarble schedule:
+whenever Ti commits, all Tj that wrote an item read by Ti must have already commited
+ensure that once a transaction is commited,it wont be need to roll back
+
+cascadeless:
+every transaction reads only those data items that have been writtedn by committed trnasactions
+
+schdeules requiring casecaded rollbck:
+uncomitted transaction reads item written by failed transaction
+if 1st transaction fials,2nd(reading) trnasaction must also be rolled by leading to cascading
+
+strict:
+stringent type where a transaction cant read/write data item until alst trnastion that wrote
+has been comiited

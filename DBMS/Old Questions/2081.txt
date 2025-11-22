@@ -1,0 +1,279 @@
+1.
+enitty is an objedct that exists in real word independently
+may be physical(employeE) or conceptual (job)
+
+entity type is set of entites that share same attributes
+eg: entity type employee defiens all emplyess
+
+entity set is set of collection of entities of particular entitiy type stored in database
+at any point in time
+referred to using same name as entity type
+
+ER diagram for airline ticket booking
+1. identify entities:
+	customer,flight,ticket
+
+2. set attributes to entites
+	customer-cid(PK),cname,address,email,no. of visits)
+	flight-flightno.(PK),source,destination,deprature_time
+	ticket-tid(PK),number_bought,discount
+
+3. establish relationships
+	customer books ticket
+	ticket belogns to filght
+
+4. set mapping cardinalities
+	1 customer books N ticket
+	1 ticket belogns to 1 filght
+
+2.
+SELECT b.Book_name FROM BOOK AS b
+JOIN USES AS u ON b.BookID=u.bookID
+JOIN USER AS us ON u.UserID=us.UserID
+WHERE us.User_name='Hari';
+
+SELECT b.Book_name FROM BOOK AS b
+JOIN PUBLISHER AS p ON b.PublisherID=p.publisherID
+WHERE p.Publisher_name='ABC publication';
+
+SELECT COUNT(BookID) AS No._of_books FROM BOOK 
+WHERE Author='Ram';
+
+3.
+transaction is defined as coolection fo several opetaions on database that appears to be
+single unit from POV of database user. eg transfwer of funds from oen account to another
+ius single unit from custpemrs POV but within database ysstem, it consisst of several tasks
+
+atomicity:
+-enusres transaction is either completely executed or not at all
+-if trnasaction is unsuccessful due to failure/contraints, any chagnes made to adatabase udring
+transaction must b undone throuh ROLLBACK/ABORT command
+-prevents database from staying in partial state
+
+consistency:
+-ensures that after complete excution of transaction wiothout interferecen from other
+concurretn transaction, takes database from one consistent state to anotther
+-state during excution if called inconsistent state which must be hidden to user
+
+isolation:
+-trnsaction is not interfered by concurrent exeuction of other transactions
+-satte of database after concurretn execution of transaction must be equivalent to state
+reached after serial execution of trnsaction in same orer
+-effects on database due to execution of transaction must ber invisible to another transaction
+until it has been sucessfully committed
+
+durability:
+-chqanges applied to database afte rexcution of transaction must be persistent
+-once transation is committed, all updates to database must remain permanentyl even during
+failures like syustem crash and power loss
+
+conflict serializability:
+used to identify  correct schedules when transaction executions are interleaved
+schedule is correct if it is equivalent to serial schedule
+
+a schedule is conflict serializable if it is equiavlent to serial schedule by swapping
+non-cinflicting operations or its precedence graph of commited trasnactions is acyclic
+
+conflicting oeprations:
+-they belong to differet transactions
+-they operate on same data item
+-at least one of them is write operation
+
+4.
+referential integrity contraint is rule defined bewtween 2 relations in a database to maitnain
+consistency among teh tupels in those relations
+implemented by using a foreign key that points to the primary to of another relation
+
+tom aintain logical consistenc of database state
+if a ar ecord exists in one table(dependent table R1), the record it referecnes in other table
+(parent table R2) alsos must exist
+prevents creation of orphan data, situtation where foreign key points to primary key value
+that doesnt exist or has been deleted
+
+eg: club(jersey PK), player(jersey pk)
+
+5. FIG
+3 schema architecture is a framwwork to spearate database into 3 lvels of abstraction to
+seprate user apps from physical database and allow data independece to simplify dataavse mgmt,
+maintenance and secuirty
+
+internal level/physical schema:
+-olwest level of abstraction
+-decribes how data is physically stored in database
+-includes file structures,indexes,compression,storage devices
+-eg: student data is stored as binary records in files on hard ish sorted by roll
+
+conceptual elve/logical shcema:
+-middle level of abstration
+-describes structure of entire database for community of users
+-independent of physical storage thorugh physcia ldata independec
+-includes entites,relationships,constraintsr(PK,FK),data types
+-eg: STudent(Roll,anem,major) is a alogica ltable with roll as PK
+
+external level/view schema:
+-higesht level of asbtraction
+-describes how individual suers/apsp see data
+-each user can have customized view
+-independent of conceptual level thorugh logical data independec
+-allows access control,simplification,security
+eg: teachers view:Student(roll,name), finance depratment view: sTudent(roll,feeStatus)
+
+6. informal desgin guidelines for relational schema
+-imparting clear semantics to attributes in relations
+-reducing redundant information in tuples
+-reducing null values in tuples
+-disallow possiblity of generating spurirous tuples
+
+7.
+dat amodesl are collection of conceptual tools for describing data,relationsihps ,data semantics
+and data constinats
+
+I. objectb ased logical models:
+-represent data as objects, simliar to oop concept
+-focuse on encapsuilation,inheritance and polymorphism, suitable for compelxt data strucutres
+
+i. ER model: FIG
+-represnets real word data in structured way
+-designign datavbase structure by defning enties with attributes connected via relationshi
+and contraints before actual implementation
+entoty is distinguisahbe object that exists, each antity is associated with set of attributes
+describing it, relationship is assocaition among several ennities, set of all entitesi or realtion
+of same type si caleld enity/relationship set,mapping cardinalites express no. of entities to which
+another entity can be associated via relationship set
+
+ii.object oriented model:
+-integrate4d oop concept with database system
+-repesnets data as objects like in oop in java,c++
+stores dat aas objects, functions called methods that work on that data
+obejcts are grouped into claseses acting as templates
+to hange object, we use its methods keeping internal detilas hidden
+no need to rewrite whoile prorgam tro update behaviour
+for hadling compelxreadl word data
+
+II. record based logical model:
+-organizes data into fixed format records like rows in a table
+-each record is made of fields(aatricbutes), each field holds a type
+-describes how data is structured at logcail elvel
+
+i. relational model: FIG name,position,salary position,salary
+-data and relationsihps are represeneted by collection of tables(relations)\
+-each table has rows(rrecords/tuples) and columns(attributes)
+
+ii. netwrok model: FIG
+-data is stored as records conenced by links like a graph
+-relationships are represented by pointers
+
+iii. hierarchical model: FIG
+-data is organized in tree structure
+-each parent can have many children but each child only has one parent
+-relationsihp is reprsent d by values contained by records
+
+III. physical data model:
+-shows how data is actually tstode in computer like on hard drives,memory,storage blocsk
+-deals with low level details like file formats,indexzes,block sizeas,access methods
+-used by DBAs to optimize performance
+-eg: student records stoed as binary file inxdex by roll in fixed blokc legnth for fast earch
+
+i. unifying model: represnste all types of data structreus in single unified way
+ii. frame memory: represents data in frames, wihch are blocks/chunks of memory, each frame
+stores bnoth data and metad data about strctre of data
+
+IV. self describing model:
+-semi structured data model meaning adta comes with its own descriptoipn(metadat)
+-metadata describse strctuer o data,data types,relationships among data
+-eg: in relational database, system stores info about tables(like colulmn anme nad ata types)
+in data dictironary so users dont need to defien them separtely
+
+8.
+data- rawfacts found after iobservation/experiment, not meaningful
+database-collection of data in orgaminzed manner
+dbms-computerized records keeping system for storing,manipulating and retreieving data
+database sytem-collective system of compponents fro reguatling,mangaing and using database
+including hardware,people,techniques for haandling database
+dbms catalog-part of database system that stores schema description
+contians info called meta data such as structure of each file,type and storage format of ata tiem
+
+9.
+join is binary relation operator used to combine tuples of multiple relation on the bsis
+of matching values in common atrbiutes
+cartesian product of relation followed by selection criteria
+
+FIG club player plyaer jersey
+
+I. inner join: resulting join relation only includes tuples satusfying matching criteria,exclusindf
+
+i. theta join: join condition can be any comparison operator (<>+>+<+!=)
+ii. equi join: join condition can only be equality ocmparison operator
+iii. natural join: tupels are joined by matching same values in common atrributes and elimitn
+redundant attributes
+
+II. outer join: resulting join reslation includes tuples satisfying matchign criteria as well
+as tupels with missing criteria
+
+i. left outer join: resulting join relation includes all tupels of left relation. tuples in left
+relation without matfhing values in right relation have atrributes filled by NULL vaue
+ii. right outer join: resulting join relation includes all tuples of right relation. tuples in
+right relation without matchign values in left relation have attributes filled by NULL value
+iii. full outer join: resulting join relation has all tuples of both relations, tupels of any
+relation without matchign values in other relation have attributes filled by NULL value
+
+10.
+deferred update approach is know as NO-UNDO/REDO recovery based on deferred update
+defer/postpone any actual updates to database on disj until transaction successfully compeltes
+its execution and reaches its commit point
+after transaction reaches its commit point and log is force written to disk,only then are the 
+updates recorded in the database
+
+if a transaction fails before reacign tsi commit poitn, there is no ned to undo any operations
+becasue the transaction has not affected database on disk in anyway
+so only REDO type log entries are needed in log(including new value AFTER of item)
+UNDO type log entries arent needed during recoverry
+
+11.
+deadlocks is condition wher no process proceeds fore execution and each waits for resources
+acquired by other process aka circular waiting
+occur in concurrencyt control scenario when using lokcign techniques where transactions
+block each other indefinitely while trying to acquire exclsuive rights to data items
+
+T1		T2
+Lock(x)
+Write(x)	
+		Lock(y)
+		Write(y)
+Lock(y)	(wait)
+		Lock(x) (wait)
+
+12.
+specializtion and generaliztino are used inEER diagram to handle sub and super classes
+FIG
+
+specialization:
+-top down approach
+-higher level entity(superclass) is broken down into 2/more lower level entites(subclass)
+-for maximizing te difference between members of entity by identifying their unique attrbiutes
+-eg:breaking down emplyee into player and coach based on role
+
+generaliaation:
+-bottom up approachj
+-2/more lower level entiteis are combined to form higer level entity
+-eg: combing haaland,kane,mbappe into generalized entity striker
+
+constraints:
+membership constraints: determine how entiyt become member of subclass
+
+-condition-defined constraints: membership in subclass is determined automatically by evaluating
+a condition/predicate applied to atributes of superclass
+
+-user defined constraitns:membership in subclass is explicityly specifed for each entity in
+subclass by databse users during operations
+
+disjoint constraints: specify whether entity can belong to more than 1 sublcass iwhn specialis
+
+-disjoint constraint: specifies that entity can be member of at most one subclass of speclia
+-overlapping constraint: specfies that entity can can belong to more than one subclass simultan
+
+completeness constraints: specify whether evry entity in superclass must be member of some sub
+
+-total participation constraint: every entity in superclass must be a member of at least one subclass
+
+-partial participation constantin: entity in superclass may not belong to any subclass
