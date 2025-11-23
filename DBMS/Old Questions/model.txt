@@ -1,0 +1,216 @@
+2.
+normaliation is proces sof breaking down bad relation into samller relations to minimize
+data redundacny,insertion,update,delte anomailes manitain dat aconsistnecy
+
+unf: jersey player club competition (location league)
+
+1nf:
+-doesnt contain compsite/multi value attributes
+-domain of attribute must be atomic
+jersey# player club# location league
+
+2nf:
+-every non prime attribute must be fully dependent on prime attribute(no partial dependecy)
+jersey* player , club# location league, jersey#,club#
+
+3nf:
+-every non prime atrribute must bne non transitigely dependt on prmie atrvite
+jersey# platyer, club# location, club# league, jersey# club#
+
+3.
+
+relation algebra is procedural language that decribes how to obtain reulst
+takes instance of relation as input and gives instrance of realtion as output
+uses operator to perform queries
+
+selkect(sigma):
+unary operation
+used for slecting subset of tupels from realtion accorin to given selection conditrion
+
+proiject(pie):
+unary relational operator
+selecting certain atrributes from relation and discarding other coumls
+
+union(U):
+binary realtion operatr for union of 2 union compatible relations
+inclues all tuples in both relaions and elimintea duplicat etuples
+
+set difference(-):
+binary relation operator that finds tuples in 1 but not in 2
+
+cartesian product(x):
+merges column from 2 rlations regrdles sof common attributes
+all combintion of tupes of 2 relations
+
+rename(rho):
+rename relation name and attribute name
+rho_s(B1,B2) (R) where S is new relation nae and B1,B2 ar new attribute names
+
+4.
+database schema is overall desgin of database
+defines structrue,data typs and costraints
+physical schema,logical schema and sub schemas
+
+DBA:
+database users that maintain database description in original form
+responsible for overall control of database system
+
+schema definiton adn modifciotn: createtion and modifciton of orignal description of database
+structure and the way that structure is reflected by files of physical database
+
+storagestrcuter and access method defn:
+determinse how data is physcially soted on dis,including file organization,portionaing
+and tablespace mgmmt. dba chooess best acces methdos fro query efficiny through indeing
+strats liek b tree,hasmaps.bitmaps
+
+granting authoriation for data acecs: granting as=cess to database to different users
+
+routine maintenance:making backu copies of adatabawe and repaijing damange top databse
+due to hardawre/software failure/misue
+
+6.
+referential integrity contraint is rule defined bewtween 2 relations in a database to maitnain
+consistency among teh tupels in those relations
+implemented by using a foreign key that points to the primary to of another relation
+
+tom aintain logical consistenc of database state
+if a ar ecord exists in one table(dependent table R1), the record it referecnes in other table
+(parent table R2) alsos must exist
+prevents creation of orphan data, situtation where foreign key points to primary key value
+that doesnt exist or has been deleted
+
+eg: club(jersey PK), player(jersey pk)
+
+7.
+FD is relationship contraint among atributes ina relation
+let A and B are atrributes of relation R 
+if each value of B os associated with exactly one value of A, then B is said to be FD on A,A->B
+A is determinant and B is object of determinant 
+FD a->b holds if 2 tuiples have same value for a then they alkso have same values for b
+if t1[A]=t2[A] then t1[B]=t2[B]
+
+8.
+need for concurrency prtoocl: acid
+
+2pl:
+concurreny control protocl for serilzability
+process used to gain ownership of hared resources wtihout creatin gpossiblity of deadlock
+in distributesd systems
+a transaction following 2pl has alllock operations preced first unlock operation
+
+trnasaction lieftime is divied into 2 distinct phaes:
+growing phase:
+-acuisition only: transciton can only acquite locks shread(s) or exclusive(x) but cant release
+-lock point: trnascaiont acuire locks nutil all locks for execu,point hwere final lock is acquired
+-updgraindg: lock conversion shared to excluse may be perfomred
+
+shrinking phase:
+-release only: only release locks but cant acqurie new locoks
+-downgrading: lock conversion X to S
+
+types of 2pl:
+strict:
+-all X held by transaction are released only after transaction commits
+-schedule is recovedrasble and cascadeless, possible deadlock
+
+rigorous:
+-most restricve variant
+-both X and S are held until commit
+
+conservative:
+-compelte deadlock prevention
+-transction must pre declare and lock all iteswm it needs befreo excution
+-if cant acquire all necesary locks,waits withtou locking until all are availbe
+
+9.
+need for database recovery: durability, atomic
+
+shadow paging: FIG
+recovery technique that considers database aas colection of fiexd size disk blocks
+
+directory setup: directory is maintainded in nmemory whose entries point to most recent
+datbawse pages(curretn directoy)
+
+shadow copy: when trnsaction beins, curent directoryy is copied into shadow directory which is
+saved on disk, curetn directory is used for transaction operations
+
+updates: when a write operaion occurs, a new copy of modified page is created and writeen
+elsewhere on unused disk block, old copy is not overwaritten
+
+recovery/commit: old version is referece by sahdow directry and new version is referenced
+by current directory, if transaction commits, current directoty becomes new shadow directory
+if its fails, system reverts to sate pointed to by shadow directy, effectilvy ignoring
+chanes made by failed trsanction
+
+10.
+centralzed					client server
+entire dbms in one machine			dbms in servre,app in client
+all processing in server			split beween cleint and server
+single tier architecture			two/3 tier
+user interact via dumb terminals		via smart clinets(app logic)
+poor scalabiltiy				better (Add more clients)
+one failure stops whoile syetsm			clint inde-pendet
+high er network load				lower network load
+used in legac sytems				modern entrerprise db apps
+FIG
+
+11.
+transaction is defined as coolection fo several opetaions on database that appears to be
+single unit from POV of database user. eg transfwer of funds from oen account to another
+ius single unit from custpemrs POV but within database ysstem, it consisst of several tasks
+
+atomicity:
+-enusres transaction is either completely executed or not at all
+-if trnasaction is unsuccessful due to failure/contraints, any chagnes made to adatabase udring
+transaction must b undone throuh ROLLBACK/ABORT command
+-prevents database from staying in partial state
+
+consistency:
+-ensures that after complete excution of transaction wiothout interferecen from other
+concurretn transaction, takes database from one consistent state to anotther
+-state during excution if called inconsistent state which must be hidden to user
+
+isolation:
+-trnsaction is not interfered by concurrent exeuction of other transactions
+-satte of database after concurretn execution of transaction must be equivalent to state
+reached after serial execution of trnsaction in same orer
+-effects on database due to execution of transaction must ber invisible to another transaction
+until it has been sucessfully committed
+
+durability:
+-chqanges applied to database afte rexcution of transaction must be persistent
+-once transation is committed, all updates to database must remain permanentyl even during
+failures like syustem crash and power loss
+
+12.
+specializtion and generaliztino are used inEER diagram to handle sub and super classes
+FIG
+
+specialization:
+-top down approach
+-higher level entity(superclass) is broken down into 2/more lower level entites(subclass)
+-for maximizing te difference between members of entity by identifying their unique attrbiutes
+-eg:breaking down emplyee into player and coach based on role
+
+generaliaation:
+-bottom up approachj
+-2/more lower level entiteis are combined to form higer level entity
+-eg: combing haaland,kane,mbappe into generalized entity striker
+
+constraints:
+membership constraints: determine how entiyt become member of subclass
+
+-condition-defined constraints: membership in subclass is determined automatically by evaluating
+a condition/predicate applied to atributes of superclass
+-user defined constraitns:membership in subclass is explicityly specifed for each entity in
+subclass by databse users during operations
+
+disjoint constraints: specify whether entity can belong to more than 1 sublcass iwhn specialis
+
+-disjoint constraint: specifies that entity can be member of at most one subclass of speclia
+-overlapping constraint: specfies that entity can can belong to more than one subclass simultan
+
+completeness constraints: specify whether evry entity in superclass must be member of some sub
+
+-total participation constraint: every entity in superclass must be a member of at least one subclass
+-partial participation constantin: entity in superclass may not belong to any subclass

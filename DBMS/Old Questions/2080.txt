@@ -1,0 +1,91 @@
+2.
+normaliation is proces sof breaking down bad relation into samller relations to minimize
+data redundacny,insertion,update,delte anomailes manitain dat aconsistnecy
+
+unf: jersey player club competition (location league)
+
+1nf:
+-doesnt contain compsite/multi value attributes
+-domain of attribute must be atomic
+jersey# player club# location league
+
+2nf:
+-every non prime attribute must be fully dependent on prime attribute(no partial dependecy)
+jersey* player , club# location league, jersey#,club#
+
+3nf:
+-every non prime atrribute must bne non transitigely dependt on prmie atrvite
+jersey# platyer, club# location, club# league, jersey# club#
+
+3.
+2pl:
+concurreny control protocl for serilzability
+process used to gain ownership of hared resources wtihout creatin gpossiblity of deadlock
+in distributesd systems
+a transaction following 2pl has alllock operations preced first unlock operation
+
+trnasaction lieftime is divied into 2 distinct phaes:
+growing phase:
+-acuisition only: transciton can only acquite locks shread(s) or exclusive(x) but cant release
+-lock point: trnascaiont acuire locks nutil all locks for execu,point hwere final lock is acquired
+-updgraindg: lock conversion shared to excluse may be perfomred
+
+shrinking phase:
+-release only: only release locks but cant acqurie new locoks
+-downgrading: lock conversion X to S
+
+types of 2pl:
+strict:
+-all X held by transaction are released only after transaction commits
+-schedule is recovedrasble and cascadeless, possible deadlock
+
+rigorous:
+-most restricve variant
+-both X and S are held until commit
+
+conservative:
+-compelte deadlock prevention
+-transction must pre declare and lock all iteswm it needs befreo excution
+-if cant acquire all necesary locks,waits withtou locking until all are availbe
+
+
+locks are concurrency control protocl that uses locks to synchronize access
+
+binary lock:
+2 sates 1,0
+if data tietm is locked(1), cant be accessed b any transtition tateempteing t operfroem
+data oepration on it
+item can only be access when lock is 0
+
+shared(s):
+read locked
+gratns permission
+multiple trnsactions can hold S lock concurerntly on same item suince reading donest change data
+
+excluseive(x):
+write locked
+grants perssion to read and write data item
+only single transation can hold X lock on item at a tim
+
+4.
+dbms is software ystem to store,retruve,amange and maniuplate data efficienlty
+strucutred way of organizing data in database ensuring data integrity,security and easy access
+
+traditional file system is method of storing data in flat files(.dat,.csv) without strucutre
+database, each file contains recors dbut there is no relationshoip between files, leading to
+dta redundacny and inconsistency
+
+data redundancy control: normalization, redudnat data in multipel loations
+data consistency: constraints, manual
+dat asharing: concurrent access b multiple users, one user at a time
+data integrity: accuracy and validy by contraints and validation
+security: authenticsation,authoriazation,acces control at various levels
+backup and refovery: built in from failurs
+data independece: seprate physical storage from logica lrepresntation change wihtout affect
+effiecient qurery prcescicng: powerful query langulage like sql for complex dat aretrival
+centralized mgmt: single repo for data with central admin
+concurrecy control:mange simulatnrous access by multiople users to prevent inconsistencies
+
+
+
+

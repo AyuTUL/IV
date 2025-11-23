@@ -222,3 +222,76 @@ if 1st transaction fials,2nd(reading) trnasaction must also be rolled by leading
 strict:
 stringent type where a transaction cant read/write data item until alst trnastion that wrote
 has been comiited
+
+10.
+concurrenycy control is managemnt procedure that allows simulatnours excution of transaction
+without allowing the mton conflict with each other
+need:
+-mutual exclusion between confliciting trsansdactions
+-resolving potential read-write and write-write ocnfilects
+-pressever database consistency
+-ensure schedule excuted are seriablaze
+
+timestamp protocol:
+unique idenitifiers called timestapms =(TS) are associte wiht each transacion t tp ensure
+serializability
+tS can be geenrated either by assinin current vaslue of clock to trwansaction or by attachinf
+value of logical counter
+odering of TS is determined by atge of transatoin
+eg: transaction created at 002 clock time is older than all ther transactoins whidh ome after
+and prioity may be given to older one
+
+uniqueness: no eual TS value can exist
+monotonicity: time stamp values always increase
+
+data itsm X in database are manaed using 2 spcial TS:
+write-TS(x): latest time dat aitem has been succefully writen into
+read-TS(x): lateset time data ietm has been succesfully read from
+
+whenever transaction T tries to issure read/write operation, timestamp orering algorithm compars
+timestamp of T witrh Read-TS(x) and Write-TS(x) to ensre timestamp orfer of transaction
+executon is not violated
+
+case 1: transaction issues Read(x)
+if WriteTS(x)>TS(T) then abort and rollback T and reject eopration
+if WriteTS(x)<=TS(T) then execute read(x) operation of T and set ReadTS(x) to max{TS(t),ReadTS(x)}
+
+case 2:transaction T issues Write(x)
+if WriteTS(x)>Ts(T) or ReadTS(x)>TS(T) then abort and rollback T and reject operation
+else execute write(x) operation and set WriteTS(x) to TS(T)
+
+eg:TS of T1 and T2 are 100 and 110,initial value of x is 500
+T1	T2	TS
+Read(x)		ReadTS(x)=100
+	Read(x)	ReadTS(x)=110
+x+=200
+	x+=200
+	write(x)WriteTS(x)=110
+write(x)	writeTS(x)>TS(T1) TS order is violated
+Abort T1
+if T1 is not aborted then it iwll suffer from lost update problemn and maake x=500 instead of 700
+
+11.
+data reocver:
+atomciity and durability: committed transactions persits and uncomiited transactions are undone
+if failre
+data loss prevention
+
+recovery technqiuie based on immediate upate:
+when transaction issues update command, database on disk is immediately updated without having to
+wait for transaction to each commit point
+provisons for unsoing effect of udpate operations applied to datbase by failed transaction
+classief inot reuqireing both UNO/REDO operations
+
+12a.
+transaction is collectino of eopratiosn on database that looks like single unit from pov
+of user 
+execution sequnce inclueds opearties inliek begin,read,write and ends in eitehr commit or rollback
+/abort
+succesfull transaction prteocessing must satify ACID properties
+
+12b.
+weak ennity has no key attributes
+cant exist independtly and has to be indentiifed by another strong t=ennity
+double rectangular box
+relationship linking it to owner entity is double diamond
