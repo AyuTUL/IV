@@ -17,14 +17,15 @@ steps of resolution using skolemization:
 -Apply resolution rule to derive new facts or contradictions.
 
 uninformed vs informed search:
-no domain specific knowledge			uses problem specific heuristics
+no domain specific knowledge like		uses problem specific heuristics
+closessnes/lcoation of goal			like estimated cost to goal,path cost
 bfs dfs uniform cost search			greedy best first a* hill climbing
-heuristics not used				heuristics used
+brute force traversal,heuristics not used	heuristics used, explores msot promising path first
 less efficient as exploring blindly		more efficient guided by heristic values
 complete					not always complete 
 effective for smaller search space		for larger search space
 
-hill climbing:
+hill climbing: FIG
 informed search that finds optimal solution by continuously moving in the direction of 
 increasing value guided by heristic function
 no back tracking
@@ -45,7 +46,7 @@ greedy
 steepest ascent hill climbing:
 examiens all neighbouring nodes of curretn state and selects one closest to goal
 
-problems:
+problems: FIG
 local maximum/foothill problem:
 local maxima is peak state better than all enighboyrs but not than state farther away
 occure in sight of sollution so called foothiuil
