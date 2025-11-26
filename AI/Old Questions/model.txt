@@ -1,3 +1,4 @@
+1.
 heuristic search:
 Heuristic search is an informed search technique that uses problem-specific knowledge
  (called heuristics) to find the most promising path to a goal state.
@@ -53,10 +54,84 @@ fig: what the world is like now->what it willl be like if i do action a->how hap
 in such a state->what action i should do now
 state	how the world evolves	what my actions do	utility
 
+NLP processe:
+-tokenization: input text is broken down into smaller units called tokens like word,setece
+
+-lexical analysis: tokesn are processed and assigend to crorecpoinding entries in dictionary
+idntifying parts of speech for each toke nlike noun verb prnoun
+
+-syntactic analyssis: tokes are analyzed for grammatical srtucutre
+cheking if input follow grammar of language and dieitnfying each word's role resulting in
+parse tree represetnation
+
+-semantci analysis: dervies meaning of sentence
+converts syntactical strcuture into meningful repsenation and ensure aligns with correct contrxt
+ie word snes disambiguation
+
+-discourse integration:understanding larges chukns of txt
+ensure sentences are logically connected. meaning of curretn sentcne my depend of prveis
+
+-pragmatic analysis: intended meanign of text based on extranl contrxt seaokrs intenit
+ultizing real world knoweldge
+
 belief network:
 probablistix grpah model for represneting knowledge about uncertain domain where each node
 corresponds t oa random varaible and each edge represnts conditional probability for
 corresponding prorbaility for corresponding random vraibles.
+
+expert system:
+computer progarm that uses ai to solve problems within speacilzard domain
+taht oridnarliy reuiesr human expertise
+designed to provde desgino making ability like huma nexpert
+
+componenets:
+knowledge base: problem solving,support component
+-core klnowlede of system like gfacts adn regulations releveant to domain algon with
+rules for problem solving
+-knowledge is stored in for of if then rules
+-as more knowledge is stored in kb, performance of syste increases
+
+inference engine:
+-core engine that acts as control mechanism
+-gahter relevant information from knowledge base,analze it and identidfy soution to user sissue
+-aaplies logical reasoning like backward/forward chainging to match facts with rules and deduce
+new info
+
+knowledge acuisition adn learnign module:
+-enables expert system to gather knowledge from variosu sources like human experts,textbooks
+and faciliteates transfer of that knowledge into kb
+
+UI:
+-comm bridge between non expert user and expert system
+-accepts input queries from user and disaplays result derived by ssytem
+
+explanation module:
+-provides user with justification for conclusion reached by system.exaplning reasoinng stesps
+taken by inference engine
+-for transparency and user trust
+
+naive bayes modeL;
+supervised learning algorithm used to solve classification problems 
+based on bayes theorm and predicts coutomces based on probabilites
+
+working mechanism:
+-bayes theorem:
+uses bayes theorem to calculate posterior probablity using conditional proablity
+P(H/E)=P(E/H).P(H)/P(E)
+where 
+	P(H/E): posteriror
+	P(E/H): likelihood
+	P(H): prior
+	P(E): marginal
+
+-naive assumption:
+makes the fundametanl assumption taht all featuers involved are independet of one another
+eg: if predicting whether a fruit is apple based on color,shape,tastse, naive assumes that
+color contributes to classificaiton independtly of shape feature
+
+-process: FIG
+convert data set into frequcny table->create likelihood table(probabilit of feautre)->
+use bayes theorem to calculate posteriro probablity
 
 min max algorithm in game search:
 used in 2 plyer zero sum game like chess and tic tac toe where one player tries to maximaize

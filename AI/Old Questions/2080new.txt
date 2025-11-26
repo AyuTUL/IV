@@ -1,5 +1,6 @@
+1.
 state space graph:
-representation of all possible staes in a problem domain and the transionts between them
+representation of set of all possible staes in a problem domain and the transionts between them
 due to actions
 nodes repsent possible stes of problem
 edges represnte actions that take agent from oen state to another
@@ -11,17 +12,17 @@ S:[S,A,Action(s),Result(s,a),Cost(s,a)]
 S: set of all possible states
 A: set of all possible actions
 Action(s): which action can be performed in state s
-Result(s,a): state reached after performing action a in state s
-Cost(s,a): cost of performing action a in state s
+Result(s,a): returns state reached after performing action a in state s
+Cost(s,a): returns cost of performing action a in state s
 
 gbfs vs a*:
 chooses best possible path at current state	chooses most promising path
 eval function f(n)=h(n)				eval function f(n)=h(n)+g(n)	
 h(n): cost from node n to goal			g(n): cost from start node to node n
-not optimal, ignores g(n)			if h(n) is admissible h(n)<=h*(n)
-						consistent h(n)<=c(n,m)+h(m)
+not optimal, ignores g(n) and misses cheapest	if h(n) is admissible h(n)<=h*(n)
+path						consistent h(n)<=c(n,m)+h(m)
 not complete, stuck in infite loops		complete if branching factor is finite and cost
-						at every action is fixed
+						of every action is fixed
 time complexity: O(b^m)				O(b^d) 
 space complexity: O(b^m)			O(b^d)
 m: max depth of search space			b: brnching factor
@@ -114,6 +115,7 @@ completeness: incomplete may loop indefinitely or miss goal in cyclic graphs
 time complexity: O(b^m) m: max depth of search space
 space complexity: O(b^m) m: max depth of search space
 
+2.
 unification:
 making 2 different logical atomic expression idential by finding a substituation
 meaning of setntace shouldnt be chages but it should b eexpressed in multiple ways
@@ -143,6 +145,40 @@ begin resolution process:
 	or until no new cluse can be derived then conclusion cant be derived from premisises
 5. interpret result
 
+3.
+supervised					unsupervised
+trained with labelled data			trained with unlabelled adta
+training is performed in presence of supervisor	trial and error,no external guidance
+to find function that maps input to output	find underlying structures,patterns in data
+solving classification and regreesion problems	solveing assocaitive minig,clusternig,anolamny
+						detection
+used to make predictions			used to cluster data
+spam filtering,predicting real esate pricse	groupiong customers with simlari purchasing habi
+
+
+naive bayes modeL;
+supervised learning algorithm used to solve classification problems 
+based on bayes theorm and predicts coutomces based on probabilites
+
+working mechanism:
+-bayes theorem:
+uses bayes theorem to calculate posterior probablity using conditional proablity
+P(H/E)=P(E/H).P(H)/P(E)
+where 
+	P(H/E): posteriror
+	P(E/H): likelihood
+	P(H): prior
+	P(E): marginal
+
+-naive assumption:
+makes the fundametanl assumption taht all featuers involved are independet of one another
+eg: if predicting whether a fruit is apple based on color,shape,tastse, naive assumes that
+color contributes to classificaiton independtly of shape feature
+
+-process: FIG
+convert data set into frequcny table->create likelihood table(probabilit of feautre)->
+use bayes theorem to calculate posteriro probablity
+
 AI:
 branch of science that deals with buidling helping machines that solve complex problems in
 human like fashioin
@@ -170,6 +206,7 @@ eg: autonomus vechiles that make decsion based on sensor data to avoid obstacles
 
 agent:
 anthing that perceives its enivornent through esnsors and acts uppon it using actuators
+to achieve its goal
 fig
 
 utility agent:
@@ -191,15 +228,41 @@ RESULT(s,a): defines result of action a in state s
 TERMINAL-TEST(s): checks if game is over in state s
 UTILITY(s,p): defines final numeric value for game that ends in terminal state s for player p
 
-minmax algo:
-recursive algorithm used to find optinmal movse for a player assuming opponent is also playing
-optimally
-2 players MAX:seeks maximized utiliy value MIN:sekks minimized utiolty value
-optimal strategy is determined by caclculaitn the minmax value of each node
-performs DFS down to terminal nodes where utility values are known
-during backtrack phase, AMX nodes choose max value from successor state
-MIN nodes choose min value 
+minmax algorithm in game search:
+recursive search strategyused in 2 player adversarial games to simulate all possible move and 
+slecet the optimal moves for current player by assuming opponent playsa optimally
 
+players:
+MAX- tries to achieves max possible utiltiy value
+MIN- tries to achieves min possible utiltiy value
+
+mechanism:
+DFS to explore entire game tree down to terminal nodes with fiexd utilty values
+
+backtracking: as algo recursively returns from terminal nodes,
+	-nodes controlled by MAX pick max value from children
+	-nodes controlled by MIN pick min value from children
+
+optimal decision:
+value derived at root node(initila satE) represents highest value MAX can guarantee
+aginst optimal oppnoent
+
+step 1:
+algorith generates enitre game tree
+apply utility function to get utiliy value for terminal states
+A is intial state
+maximiser has worst case initila value - infinity
+minimiser has wort case intila value + infinty
+
+step 2:
+find utility value for minimizer
+copmare inital value and terminal state value and min will go to higher node
+
+step 3:
+find utility value for maximizer
+copmare inital value and terminal state value and max will go to higher node
+
+7.
 semantic network:
 graphjical knowledge representation technique compposed of nodes that repressent obejcts/
 concepts/events linked by arcs/edges taht represnet relation between nodes like is-a has-a
@@ -210,11 +273,13 @@ components:
 3. semantic: meaning are related to links and laels of nodes
 4. procedural: cosntructors create new links,nodes and destructors romve them
 
+8.
 genetic algorithm:
 search heuristic inspired by Charles Darwin's theory of natural evolution and selection used
 to solve optimization problems in machine learning. it operates on evolutionary generational
 cycle to find high quality solution
-flowchart:
+
+flowchart: FIG
 Start
 initial population
 calcualte fitness
@@ -228,18 +293,19 @@ best individuals
 output
 stop
 
+
 phases of ga:
-initialziaiton:
+initialziaiton: FIG
 The process begins by randomly generating a set of candidate solutions called the population. 
 Each individual solution is a chromosome, composed of genes (parameters).random binary strings
 are used for initialization
 
-fitness assignment:
+fitness assignment: FIG
 A fitness function is applied to evaluate the ability of each individual (chromosome) 
 to solve the problem. Individuals receive a fitness score, and the higher the score, 
 the higher the probability of being selected for reproduction.
 
-selection:
+selection: FIG
 process of choosing 2 parents from population for crossing and reproduction for offspring
 all selected individuals are arranged in a pair of twos to increase reproduction
 these individuals transfer genes to next generation
@@ -407,7 +473,7 @@ speech recognition:
 converts spoken language into text (automatic speech recoginiotn asr)
 uesd by virtual assistants like siri or ga to undersatnd spoken commands
 
-nlu:
+nlu: FIG
 ablity of system to understand human lagnugage
 interpreting,manalyzing and comprehending the meanign behind text/speech nioput
 goal is to convert human language into form understood by machine for processing
@@ -467,7 +533,7 @@ D: domain, set of diescrte values (D1,D2,...) from which variables piock their v
 C: constraints, finite set of rules that specifies allowed combo of valur for variation
 each contraint Ci involes scope(variables participating) and relation(defines allowable values)
 
-a soliution is assignemnt of domain values that satisfies all constraints
+a soliution is assignemnt of domain values to all vairables that satisfies all constraints
 
 map coloring:
 csp where goal is to color adjacent regions diferenty

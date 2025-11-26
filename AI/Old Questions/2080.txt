@@ -25,3 +25,124 @@ external: mccc
 	cooperation: collab with other agenst for problems exceed cacpaiblity of single agent
 	mobility: can move across electronic comm network
 	character: imitate human like behaviour
+
+selection: FIG
+process of choosing 2 parents from population for crossing and reproduction for offspring
+all selected individuals are arranged in a pair of twos to increase reproduction
+these individuals transfer genes to next generation
+
+-roulette wheel/fitness proportionate selection: 
+ probabilitis selction that assigns probabiltiy of selection to each individual on the basis
+of fitness, higher fitness more chance to get selected
+
+-tournament selection:
+running several tournaments among few individuals randomly chosen from population
+winner of each tournament ie highest fitness is selected for next generation
+
+-rank based selection:
+assings selcetion probablity based on rank of individual's fitness rather than fitness itself
+by sprting popuplation by fitness
+
+reproduction:
+2 bvariation operators are applied to parent population to create child
+
+-crossover:
+process of taking 2 parent solutions and prodcuing child
+reproduction operator selects a random pair of 2 individuals for mating
+cross site is selected at random along string length
+position values are swapped between 2 strings following cross site
+
+--single point crossover
+2 mating chormosomes are cut once at coressponding points and sections after the cuts are exchanged
+crossover point is selected at random
+
+--2 point crossover
+2 crossover points are chosen on parent chromosomes then segment between these points are
+swapped to reate offspring
+
+--livery/uniform crossover
+each gene in offpsring is independent ly chosen from either parent with equal probability
+
+--inheritable genetic algorithm:
+cetrain genes are inherited by offspriong to ensure high quality solution
+balance preservation with exploration - controlled diversity
+
+-mutation:
+mutation operator inserts random genes in offspring to maintain diversity in population
+fliiping bits in chromosomes
+solves problem of premature convergence and enchances diversification
+
+--flip bit mutation:
+a parent is chosen and mutation chromosome is randomly generated
+for a 1 in mutation chromosome, coresspondign bit in parrent is flipped to  create child
+
+--gaussian mutation:
+addign random value drawn from gaussian distribution to individuals gene values
+
+--exchange/swap mutation:
+2 positions in chromosome are randomly selected and exchanged to create new individual
+
+expert system:
+computer progarm that uses ai to solve problems within speacilzard domain
+taht oridnarliy reuiesr human expertise
+designed to provde desgino making ability like huma nexpert
+
+componenets:
+knowledge base: problem solving,support component
+-core klnowlede of system like gfacts adn regulations releveant to domain algon with
+rules for problem solving
+-knowledge is stored in for of if then rules
+-as more knowledge is stored in kb, performance of syste increases
+
+inference engine:
+-core engine that acts as control mechanism
+-gahter relevant information from knowledge base,analze it and identidfy soution to user sissue
+-aaplies logical reasoning like backward/forward chainging to match facts with rules and deduce
+new info
+
+knowledge acuisition adn learnign module:
+-enables expert system to gather knowledge from variosu sources like human experts,textbooks
+and faciliteates transfer of that knowledge into kb
+
+UI:
+-comm bridge between non expert user and expert system
+-accepts input queries from user and disaplays result derived by ssytem
+
+explanation module:
+-provides user with justification for conclusion reached by system.exaplning reasoinng stesps
+taken by inference engine
+-for transparency and user trust
+
+fully,un,partial:
+-agent has access to compelte state at each point in time,chess
+-agent has no sensors,agent playing chess with no visual input
+-agent has incomplete acces sto acess/noisy sensors,eg self driving car in fog
+
+deterministic,non,stochastic:
+-next state is compeltely determined by current state and a tion,puzzle game
+-actions are charcterized by possible outcomes without probablity,stock market prediction
+-outcomes involve randomness quantified in terms of probabilties,card games
+
+epsiodci,sequential:
+-expreince is divide dinto episodes;past actions dont afect future ones,detecing edefet parts
+-curretn decision can affect all future actions,driving car
+
+static,dynamic:
+envrnoent doesnt change when agent is thinking,crossword
+-enviornemtn changes while agent is computing,real time games
+
+discrte,continues:
+-finite number of disctinct states,percepts and acrtions,board games
+-infinte no.of state sand actions,roobt navigation
+
+single gent,multi agent:
+-one agent operates by itself,solitaire
+-multiple agesnt interact,soccer
+
+known,unkown;
+-resul to fall acitnso is know to user,tic tac toe
+-agent needs to learn how it works to peform action,robot exploring new building
+
+accessible,inaccessible:
+-agent can obtain complete and correct info about environemtn,weather station measuring temp
+-cant get accurate info abnout environemtn,understandinh uhman emotions based on facial exp

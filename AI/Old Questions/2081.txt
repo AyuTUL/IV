@@ -1,8 +1,11 @@
+2.
 skolemizatio:
 step in converting fopl formula into cluase form by eliminating existentail quantifiers. it is
 done by:
 -Replacing ∃x with a Skolem constant if it's not inside any universal quantifier.
--If ∃x is within the scope of ∀y, replace x with a Skolem function: f(y).
+Example: ∃xQ(x) becomes Q(C1)
+-If ∃y is within the scope of ∀x, replace y with a Skolem function: f(x).
+(Example: ∀x∃yP(x,y) becomes ∀xP(x,g(x)))
 
 skolen constant:
 special constant used in skolemization, a process in fopl that removes esitenctial quntifiier
@@ -16,6 +19,7 @@ steps of resolution using skolemization:
 -Convert to Conjunctive Normal Form (CNF).
 -Apply resolution rule to derive new facts or contradictions.
 
+3.
 uninformed vs informed search:
 no domain specific knowledge like		uses problem specific heuristics
 closessnes/lcoation of goal			like estimated cost to goal,path cost
@@ -23,11 +27,12 @@ bfs dfs uniform cost search			greedy best first a* hill climbing
 brute force traversal,heuristics not used	heuristics used, explores msot promising path first
 less efficient as exploring blindly		more efficient guided by heristic values
 complete					not always complete 
-effective for smaller search space		for larger search space
+effective for smaller search space		for larger search space where exhaustive search
+ot where no domaina knowledge						is imopractical
 
 hill climbing: FIG
-informed search that finds optimal solution by continuously moving in the direction of 
-increasing value guided by heristic function
+informed search that finds optimal solution by starting with random state then
+continuously moving in the direction of increasing value guided by heristic function
 no back tracking
 
 search starts at non optimal state
@@ -62,8 +67,9 @@ special form of local maximunm
 multiple local maxima same as global maxima
 move in different directions or use bidirectional search
 
+4.
 intelligence:
-ability to percieve, le arn, reason,adapt and make decisions to solve problems or acheive
+ability to percieve, learn, reason,adapt and make decisions to solve problems or acheive
 goalss in a dynamic environment
 
 foundations of ai:
@@ -101,11 +107,32 @@ foundations are disciplines that contribute ideas, viewpoints and techniques to 
     Data modeling and analysis
     Essential for machine learning and pattern recognition
 
-script:
+5. FIG
+-reinforcement learning is feedback based ML techinque wher an agent learns to behave optimally
+in enivonment py performing actions and observing results of those actions(experice)
+-learning occur by trial and error
+-agent recoeves +ve feedback(reward) for good action and -ve feedback(penalty) for bad action
+-since there is no labelled data, agent learns automtically by experince
+-used in serquutial dwecision making problems wher goal is long term like goal playing,robotics
+
+ann to simulate OR gate:
+net input yin​=b+∑xi​wi​ and applies an activation function y=f(yin​) which thresholds the input.
+Weights: w1​=1, w2​=1
+Bias: b=−0.5
+Activation Function (Threshold θ=0): y=1 if yin​>0, and y=0 otherwise
+
+
+
+6. ucs
+ucs is modifed form of bfs for searching in weghted grpah/tree
+beings at root node and continues search by visitng next node with least toal path cost from root
+used instead of bfs when path cost is not uniform across all edges
+complete,optimal,b^d,b^d
+
+7.
+script:tprers
 structured knowledge representation that describes a stereotyped sequence of events in particular
 context. it uses fram like structure to repsent commonly occcuring expreiences
-
-components of script: tprers
 1. entry condition: conditions that must be satisfied before execution of script can occur
 2. results: conditions that will be true after exit
 3. props: objects involed in script
@@ -132,6 +159,7 @@ Script: Visiting a Doctor
 
   Entry Conditions:
     - Patient is feeling unwell
+    - Pateint has money
 
   Scenes:
     1. Patient arrives at the clinic
@@ -145,6 +173,34 @@ Script: Visiting a Doctor
 
   Result:
     - Patient receives diagnosis and treatment plan
+    - Patient spends money
+
+9.
+-robotics is multidiscplianry field concerned with desgin,contruction,opreation and use of robots
+-integrating mechanical,electrical engi,AI,control systems
+-robots are machiens creaed to perform task autonomously or semi to assist humans
+
+componets:
+-mechanical construciton: form/shape to accomplish task
+-eletcrical components: for power and crontrol
+-compter program/AI: determenies what when how robnot acts
+-actuators: movement
+-sensors: detect environmental changes
+
+mv in robotics:
+mv is ability of a computer to see,utilzaitng componeset like vdeo cameras,A/D converters
+and digital signal processing to visually analyze activites
+
+perception and object detection:
+mv provides sensory ability(sight) for raobots to detect changes in environemnt
+to pass total Turing test to perceive obejcts and manipualte them
+object detection in autonomous vechicles
+
+real time naviagtion:
+insatnneouly sesns obstackles in path and pre pla ntheir journey
+
+sensor input processing:
+cptuers images and runs algo to process raw data to extract useful info to  guide robots avctions
 
 fuzzy logic:
 form of many valued logic in which truth valkues of variables may be real number from 0 to 1
@@ -152,9 +208,26 @@ handles concept of partial truth
 mathematical way of repsenting vagueness/imprecise information
 uses membership function to define degree to which an input belongs to a particular fuzzy set
 
+
+11.
 minmax algorithm in game search:
-used in 2 player adversarial games to simulate all possible move and slecet the move that
-maximezes player's minimum gain, assuming opponent playsa optimally
+recursive search strategyused in 2 player adversarial games to simulate all possible move and 
+slecet the optimal moves for current player by assuming opponent playsa optimally
+
+players:
+MAX- tries to achieves max possible utiltiy value
+MIN- tries to achieves min possible utiltiy value
+
+mechanism:
+DFS to explore entire game tree down to terminal nodes with fiexd utilty values
+
+backtracking: as algo recursively returns from terminal nodes,
+	-nodes controlled by MAX pick max value from children
+	-nodes controlled by MIN pick min value from children
+
+optimal decision:
+value derived at root node(initila satE) represents highest value MAX can guarantee
+aginst optimal oppnoent
 
 step 1:
 algorith generates enitre game tree
