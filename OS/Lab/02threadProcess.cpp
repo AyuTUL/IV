@@ -6,9 +6,6 @@
 
 using namespace std;
 
-/* ---------------- Process Management Section ---------------- */
-
-// Forward declaration
 void CloseHandles(PROCESS_INFORMATION &processInfo);
 
 bool StartProcess(LPCTSTR processPath, PROCESS_INFORMATION &processInfo)
@@ -69,8 +66,6 @@ void CloseHandles(PROCESS_INFORMATION &processInfo)
         CloseHandle(processInfo.hThread);
     ZeroMemory(&processInfo, sizeof(processInfo));
 }
-
-/* ---------------- Thread Management Section ---------------- */
 
 volatile bool threadRunning = false;
 
@@ -151,7 +146,6 @@ int main()
     cout << "Process Management Demo :" << endl
          << endl;
 
-    // --- Process Demo ---
     cout << "[1] Starting Notepad process..." << endl;
     TCHAR processPath[] = _T("notepad.exe");
     PROCESS_INFORMATION processInfo = {0};

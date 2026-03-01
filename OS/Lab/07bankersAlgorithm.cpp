@@ -27,7 +27,6 @@ bool isSafe(vector<vector<int>> &allocation, vector<vector<int>> &max, vector<in
     vector<bool> finished(n, false);
     vector<int> safeSeq;
 
-    // Calculate Need matrix
     for (int i = 0; i < n; i++)
         for (int j = 0; j < m; j++)
             need[i][j] = max[i][j] - allocation[i][j];
@@ -40,7 +39,6 @@ bool isSafe(vector<vector<int>> &allocation, vector<vector<int>> &max, vector<in
 
     printMatrix("Need", need, n, m);
 
-    // Find safe sequence
     for (int count = 0; count < n; count++)
     {
         int found = -1;
@@ -62,7 +60,7 @@ bool isSafe(vector<vector<int>> &allocation, vector<vector<int>> &max, vector<in
             }
 
         if (found == -1)
-            return false; // Unsafe state
+            return false;
 
         finished[found] = true;
         safeSeq.push_back(found);

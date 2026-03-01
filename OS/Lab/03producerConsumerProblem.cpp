@@ -9,7 +9,6 @@
 
 using namespace std;
 
-// Global variables
 queue<int> buffer;
 sem_t emptySem, fullSem;
 mutex bufferMutex, printMutex;
@@ -75,26 +74,25 @@ int main()
     sem_init(&emptySem, 0, bufferSize);
     sem_init(&fullSem, 0, 0);
 
-    cout << endl<<"Buffer : " << bufferSize << " | Items : " << totalItems
-         << " | Producers : " << numProducers << " | Consumers : " << numConsumers << endl<< string(50, '-') << endl;
+    cout << endl
+         << "Buffer : " << bufferSize << " | Items : " << totalItems
+         << " | Producers : " << numProducers << " | Consumers : " << numConsumers << endl
+         << string(50, '-') << endl;
 
     vector<thread> producers, consumers;
     vector<int> prodItems(numProducers, totalItems / numProducers);
     vector<int> consItems(numConsumers, totalItems / numConsumers);
 
-    // Distribute remainder
     for (int i = 0; i < totalItems % numProducers; i++)
         prodItems[i]++;
     for (int i = 0; i < totalItems % numConsumers; i++)
         consItems[i]++;
 
-    // Start threads
     for (int i = 0; i < numProducers; i++)
         producers.emplace_back(producer, i, prodItems[i]);
     for (int i = 0; i < numConsumers; i++)
         consumers.emplace_back(consumer, i, consItems[i]);
 
-    // Wait for completion
     for (auto &p : producers)
         p.join();
     for (auto &c : consumers)

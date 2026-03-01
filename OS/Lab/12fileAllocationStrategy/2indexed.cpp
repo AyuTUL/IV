@@ -1,5 +1,4 @@
 // Lab 12.2: WAP to simulate indexed file allocation strategy
-
 #include <iostream>
 #include <vector>
 #include <string>

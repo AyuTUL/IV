@@ -1,5 +1,4 @@
 // Lab 12.1: WAP to simulate sequential file allocation strategy
-
 #include <iostream>
 #include <vector>
 #include <string>

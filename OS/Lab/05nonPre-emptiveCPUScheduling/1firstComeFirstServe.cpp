@@ -1,5 +1,4 @@
 // Lab 5.1: WAP to simulate non pre-emptive FCFS scheduling algorithm to find turn around & waiting time
-
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -152,7 +151,7 @@ int main()
 
     cout << fixed << setprecision(2);
     cout << endl
-         << "Average Turnaround Time = " << (avgTurnaround / n)<< endl
+         << "Average Turnaround Time = " << (avgTurnaround / n) << endl
          << "Average Waiting Time = " << (avgWaiting / n) << endl;
 
     return 0;
