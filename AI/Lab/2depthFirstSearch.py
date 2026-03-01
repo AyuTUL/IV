@@ -1,3 +1,4 @@
+# Lab 2: Implementation of Depth First Search (DFS) algorithm
 adj_list = {
     "a": ["b", "c", "d"],
     "b": ["e", "f"],

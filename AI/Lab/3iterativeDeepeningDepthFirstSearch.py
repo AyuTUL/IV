@@ -1,4 +1,4 @@
-# Graph definition
+# Lab 3: Implementation of Iterative Deepening Depth First Search (IDDFS) algorithm
 graph = {
     "a": ["b", "c"],
     "b": ["d", "e"],

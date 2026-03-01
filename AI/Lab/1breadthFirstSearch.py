@@ -1,3 +1,4 @@
+# Lab 1: Implementation of Breadth First Search (BFS) algorithm
 adj_list = {
     "a": ["b", "c", "d"],
     "b": ["e", "f"],

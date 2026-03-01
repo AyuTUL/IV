@@ -1,13 +1,14 @@
-regions = ['WA', 'NT', 'SA', 'Q', 'NSW', 'V']
-colors = ['Red', 'Green', 'Blue']
+# Lab 12: Implementation of constraint satisfaction problem
+regions = ["WA", "NT", "SA", "Q", "NSW", "V"]
+colors = ["Red", "Green", "Blue"]
 
 neighbors = {
-    'WA':  ['NT', 'SA'],
-    'NT':  ['WA', 'SA', 'Q'],
-    'SA':  ['WA', 'NT', 'Q', 'NSW', 'V'],
-    'Q':   ['NT', 'SA', 'NSW'],
-    'NSW': ['Q', 'SA', 'V'],
-    'V':   ['SA', 'NSW']
+    "WA": ["NT", "SA"],
+    "NT": ["WA", "SA", "Q"],
+    "SA": ["WA", "NT", "Q", "NSW", "V"],
+    "Q": ["NT", "SA", "NSW"],
+    "NSW": ["Q", "SA", "V"],
+    "V": ["SA", "NSW"],
 }
 
 print("------ Map Coloring Problem ------\n")
@@ -20,17 +21,17 @@ for r in neighbors:
             print(f"  {r} - {neigh}")
 print()
 
+
 def is_valid(assignment, region, color):
-    return all(
-        assignment.get(neigh) != color
-        for neigh in neighbors[region]
-    )
+    return all(assignment.get(neigh) != color for neigh in neighbors[region])
+
 
 def select_unassigned_region(assignment):
     unassigned = [r for r in regions if r not in assignment]
-    return min(unassigned, key=lambda r: sum(
-        is_valid(assignment, r, c) for c in colors
-    ))
+    return min(
+        unassigned, key=lambda r: sum(is_valid(assignment, r, c) for c in colors)
+    )
+
 
 def backtrack(assignment):
     if len(assignment) == len(regions):
@@ -47,6 +48,7 @@ def backtrack(assignment):
             del assignment[region]
 
     return None
+
 
 solution = backtrack({})
 

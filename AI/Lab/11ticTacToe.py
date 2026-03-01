@@ -1,3 +1,4 @@
+# Lab 11: Implementation of tic tac toe
 import os
 
 EMPTY = " "

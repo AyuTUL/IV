@@ -1,3 +1,4 @@
+# Lab 7: Implementation of water jug problem
 j1 = 0
 j2 = 0
 

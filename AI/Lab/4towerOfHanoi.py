@@ -1,3 +1,4 @@
+# Lab 4: Implementation of Tower Of Hanoi (TOH)
 def tower_of_hanoi(n, source, destination, intermediate):
     if n == 1:
         print(f"Move disk 1 from {source} to {destination}")

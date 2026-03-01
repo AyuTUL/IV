@@ -1,3 +1,4 @@
+# Lab 6: Implementation of A* search algorithm
 graph = {
     "s": [("a", 1), ("g", 10)],
     "a": [("b", 2), ("c", 1)],

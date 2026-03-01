@@ -1,3 +1,4 @@
+# Lab 13: Implementation of perceptron algorithm
 def unit_step(v):
     return 1 if v >= 0 else 0
 

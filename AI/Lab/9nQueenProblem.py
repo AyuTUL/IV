@@ -1,3 +1,4 @@
+# Lab 9: Implementation of n queen problem
 def is_safe(board, row, col, n):
     for c in range(col, -1, -1):
         if board[row][c] == 1:

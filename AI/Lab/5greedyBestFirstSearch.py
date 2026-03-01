@@ -1,3 +1,4 @@
+# Lab 5: Implementation of Greedy Best First Search (GBFS) algorithm
 graph = {
     "s": {"a": 3, "b": 2},
     "a": {"c": 4, "d": 1},

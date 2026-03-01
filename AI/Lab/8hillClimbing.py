@@ -1,3 +1,4 @@
+# Lab 8: Implementation of hill climbing algorithm
 sussList = {
     "a": [["b", 10], ["j", 8], ["f", 7]],
     "b": [["d", 1], ["c", 2]],

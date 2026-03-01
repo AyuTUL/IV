@@ -1,3 +1,4 @@
+# Lab 10: Implementation of alpha-beta pruning algorithm
 tree = [[[5, 1, 2], [8, -8, -9]], [[9, 4, 5], [-3, 4, 3]]]
 pruned = 0
 
