@@ -1,4 +1,4 @@
-// Lab 5.3: PDA for L = {WW^R | W ∈ (a+b)*}. Test with abba.
+// Lab 5.3: Wap to design PDA for L = {WW^R | W ∈ (a+b)*}. Test with abba.
 #include <iostream>
 #include <stack>
 #include <string>

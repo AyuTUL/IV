@@ -8,7 +8,7 @@ bool pda(string &input)
 	char state = 'A';
 	stack<char> s;
 	s.push('z');
-	int aCount=0,bCount=0;
+	int aCount = 0, bCount = 0;
 	for (int i = 0; i < input.length(); i++)
 	{
 		switch (state)
@@ -29,12 +29,12 @@ bool pda(string &input)
 				return false;
 			break;
 		case 'B':
-			if (input[i] == 'b' && s.top() == 'a' )
+			if (input[i] == 'b' && s.top() == 'a')
 			{
 				bCount++;
 				state = 'B';
 			}
-			else if (input[i] == 'c' && s.top() == 'a' && bCount==2*aCount)
+			else if (input[i] == 'c' && s.top() == 'a' && bCount == 2 * aCount)
 			{
 				s.pop();
 				state = 'C';

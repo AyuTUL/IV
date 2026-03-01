@@ -1,3 +1,4 @@
+// Lab 2.3: WAP to convert NFA accepting 1001 to DFA
 #include <iostream>
 #include <map>
 #include <set>

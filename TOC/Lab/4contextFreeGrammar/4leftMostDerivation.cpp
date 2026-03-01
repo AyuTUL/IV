@@ -5,14 +5,13 @@ Grammar:
 String:
     -(id*id)+id
 */
-
 #include <iostream>
 #include <string>
 using namespace std;
 
 void replaceLeftmostS(string &expr, const string &replacement)
 {
-    int pos = expr.find('S'); // leftmost occurrence
+    int pos = expr.find('S');
     if (pos != string::npos)
         expr.replace(pos, 1, replacement);
 }
